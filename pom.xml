@@ -21,6 +21,7 @@
         <spring.version>3.0.6.RELEASE</spring.version>
         <sade-generic.version>1.0-SNAPSHOT</sade-generic.version>
         <jodatime.version>1.6.2</jodatime.version>
+        <atomikos.version>3.6.6</atomikos.version>
     </properties>
 
 	<distributionManagement>
@@ -87,6 +88,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
+                <version>1.0.1</version>
                 <executions>
                     <execution>
                         <id>enforce-java</id>
