@@ -12,6 +12,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jetty.module>${artifactId}</jetty.module>
+        <jetty.webApp>../${jetty.module}/target/${jetty.module}.war</jetty.webApp>
         <generic.version>1.0-SNAPSHOT</generic.version>
         <cxf.version>2.4.6</cxf.version>
         <camel.version>2.8.3</camel.version>
@@ -21,6 +23,9 @@
         <spring.version>3.0.6.RELEASE</spring.version>
         <sade-generic.version>1.0-SNAPSHOT</sade-generic.version>
         <jodatime.version>1.6.2</jodatime.version>
+        <dbunit.version>2.4.8</dbunit.version>
+        <slf4j.version>1.6.1</slf4j.version>
+        <jpa-api.version>1.99.0</jpa-api.version>
         <atomikos.version>3.6.6</atomikos.version>
         
         <project.svn.base>https://penaali.hard.ware.fi/svn/generic/${artifactId}</project.svn.base>
@@ -67,8 +72,17 @@
     </repositories>
 
     <build>
+        <!--<extensions>-->
+            <!--<extension>-->
+                <!--<groupId>fi.vm.sade.generic</groupId>-->
+                <!--<artifactId>generic-maven-extension</artifactId>-->
+                <!--<version>1.0-SNAPSHOT</version>-->
+            <!--</extension>-->
+        <!--</extensions>-->
+
         <pluginManagement>
             <plugins>
+<!--
                 <plugin>
                     <groupId>org.mortbay.jetty</groupId>
                     <artifactId>maven-jetty-plugin</artifactId>
@@ -77,10 +91,13 @@
                         <scanIntervalSeconds>1</scanIntervalSeconds>
                         <stopKey>foo</stopKey>
                         <stopPort>9999</stopPort>
+-->
                         <!-- false if we want to keep jetty running -->
+<!--
                         <daemon>false</daemon>
                     </configuration>
                 </plugin>
+-->
             </plugins>
         </pluginManagement>
         <plugins>
@@ -113,6 +130,73 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Attach sources with distribute package -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.1.2</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- separate unit tests and integration/system tests -->
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>**/selenium/**</exclude>
+                        <exclude>**/it/**</exclude>
+                        <exclude>**/itest/**</exclude>
+                        <exclude>**/stest/**</exclude>
+                        <exclude>**/systemtest/**</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <includes>
+                        <include>**/selenium/**</include>
+                        <include>**/it/**</include>
+                        <include>**/itest/**</include>
+                        <include>**/stest/**</include>
+                        <include>**/systemtest/**</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- print active profiles -->
+            <!-- TODO: näyttää profiilit vain current pomista, ei parenttien
+            <plugin>
+                <artifactId>maven-help-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>active-profiles</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            -->
+
 			<plugin>
 				<!-- explicitly define maven-deploy-plugin after other to force exec order -->
 				<artifactId>maven-deploy-plugin</artifactId>
@@ -139,19 +223,34 @@
     </build>
 
     <profiles>
+
         <profile>
-            <!--<id>run</id>-->
-            <id>start</id>
+            <id>jetty</id>
+            <activation>
+                <file>
+                    <exists>profile.jetty</exists>
+                </file>
+            </activation>
             <build>
                 <plugins>
                     <plugin>
+                        <groupId>org.mortbay.jetty</groupId>
                         <artifactId>maven-jetty-plugin</artifactId>
+                        <configuration>
+                            <webApp>${jetty.webApp}</webApp>
+                            <contextPath>/${jetty.module}</contextPath>
+                            <!-- false if we want to keep jetty running -->
+                            <daemon>true</daemon>
+                            <!--<daemon>false</daemon>-->
+                            <stopKey>stop</stopKey>
+                            <stopPort>8888</stopPort>
+                        </configuration>
                         <executions>
                             <execution>
                                 <id>start-jetty</id>
                                 <phase>pre-integration-test</phase>
                                 <goals>
-                                    <goal>run</goal>
+                                    <goal>run-war</goal>
                                 </goals>
                             </execution>
                             <execution>
@@ -163,9 +262,152 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <!--
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <echo message=" ***** JETTY PROFILE ACTIVE *****"/>
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    -->
+                </plugins>
+            </build>
+
+        </profile>
+
+        <!-- servicemix installation profile - TODO: replace with more elegant solution when available -->
+        <profile>
+            <id>servicemix-install</id>
+            <activation>
+                <file>
+                    <exists>profile.servicemix</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <!-- run servicemix -->
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.2.1</version>
+                        <executions>
+                            <execution>
+                                <id>exec-servicemix-start</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>java</goal>
+                                </goals>
+                                <configuration>
+                                    <mainClass>fi.vm.sade.servicemix.ServicemixStart</mainClass>
+                                    <arguments>
+                                        <argument>${project.basedir}/target/servers/apache-servicemix-4.4.1/bin</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>exec-servicemix-stop</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>java</goal>
+                                </goals>
+                                <configuration>
+                                    <mainClass>fi.vm.sade.servicemix.ServicemixStop</mainClass>
+                                    <arguments>
+                                        <argument>${project.basedir}/target/servers/apache-servicemix-4.4.1/bin</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- TODO: antrun not so elegant but works for now, replace with some dependency system -->
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>servicemix-install-server</id>
+                                <!-- package phase so this runs before smx start, which is at pre-integration-test -->
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath" />
+                                        <if>
+                                            <!--<equals arg1="${foo}" arg2="bar" />-->
+                                            <os family="windows"/>
+                                            <then>
+                                                <get src="http://www.nic.funet.fi/pub/mirrors/apache.org/servicemix/servicemix-4/4.4.1/apache-servicemix-4.4.1.zip" dest="target/apache-servicemix-4.4.1.zip"/>
+                                                <unzip src="target/apache-servicemix-4.4.1.zip" dest="target/servers"/>
+                                                <!--<exec command="cmd /c " dir="${basedir}/target/servers/apache-servicemix-4.4.1/bin/servicemix.bat"/>-->
+                                                <copy file="karaf.bat" todir="target/servers/apache-servicemix-4.4.1/bin" failonerror="false"/>
+                                                <copy file="servicemix.bat" todir="target/servers/apache-servicemix-4.4.1/bin" failonerror="false"/>
+                                            </then>
+                                            <else>
+                                                <get src="http://www.nic.funet.fi/pub/mirrors/apache.org/servicemix/servicemix-4/4.4.1/apache-servicemix-4.4.1.tar.gz" dest="target/apache-servicemix-4.4.1.tar.gz"/>
+                                                <gunzip src="target/apache-servicemix-4.4.1.tar.gz" dest="target/apache-servicemix-4.4.1.tar"/>
+                                                <untar src="target/apache-servicemix-4.4.1.tar" dest="target/servers"/>
+                                                <copy file="karaf" todir="target/servers/apache-servicemix-4.4.1/bin" failonerror="false"/>
+                                                <copy file="servicemix" todir="target/servers/apache-servicemix-4.4.1/bin" failonerror="false"/>
+                                                <chmod file="target/servers/apache-servicemix-4.4.1/bin/servicemix" perm="755" verbose="true"/>
+                                                <chmod file="target/servers/apache-servicemix-4.4.1/bin/karaf" perm="755" verbose="true"/>
+                                                <chmod file="target/servers/apache-servicemix-4.4.1/bin/start" perm="755" verbose="true"/>
+                                                <chmod file="target/servers/apache-servicemix-4.4.1/bin/stop" perm="755" verbose="true"/>
+                                            </else>
+                                        </if>
+                                        <!--
+                                        <copy file="../koodisto-webservice/target/koodisto-webservice-1.0-SNAPSHOT.jar" todir="target/servers/apache-servicemix-4.4.1"/>
+                                        -->
+                                        <!-- better memory for jvm in custom karaf script -->
+
+                                        <!-- copy bundles/features - TODO: hack, depsuina! -->
+                                        <copy todir="target/servers/apache-servicemix-4.4.1/deploy" verbose="true">
+                                            <!--<fileset dir="../../../generic/trunk/generic-dao/target" includes="*.jar"/>-->
+                                            <!--<fileset dir="../../../generic/trunk/generic-service/target" includes="*.jar"/>-->
+                                            <!--<fileset dir="../koodisto-logic/target" includes="*.jar"/>-->
+                                            <!--<fileset dir="../koodisto-webservice/target" includes="*.jar"/>-->
+                                            <fileset dir="../koodisto-features/target/classes" includes="*.xml"/>
+                                        </copy>
+
+                                        <!--<path id="project.class.path">-->
+                                        <!--<pathelement path="target/classes/"/>-->
+                                        <!--<fileset dir="target/dependency" includes="*.jar"/>-->
+                                        <!--</path>-->
+                                        <!--<java classname="fi.vm.sade.servicemix.ServicemixStartAndInstallAndInstall" classpathref="project.class.path" fork="true"/>-->
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>ant-contrib</groupId>
+                                <artifactId>ant-contrib</artifactId>
+                                <version>1.0b3</version>
+                                <exclusions>
+                                    <exclusion>
+                                        <groupId>ant</groupId>
+                                        <artifactId>ant</artifactId>
+                                    </exclusion>
+                                </exclusions>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+
                 </plugins>
             </build>
         </profile>
+
     </profiles>
 
 </project>
