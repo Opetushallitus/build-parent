@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <!-- default build configuration for all projects and modules, can be overridden -->
@@ -11,41 +12,65 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jetty.module>${artifactId}</jetty.module>
+        <jetty.module>${project.artifactId}</jetty.module>
         <jetty.webApp>../${jetty.module}/target/${jetty.module}.war</jetty.webApp>
-        <generic.version>1.0-SNAPSHOT</generic.version>
-        <cxf.version>2.4.6</cxf.version>
-        <camel.version>2.8.3</camel.version>
+        
+        <!-- UI libraries -->
         <vaadin.version>6.7.5</vaadin.version>
         <gwt.version>2.3.0</gwt.version>
         <gwt.plugin.version>2.2.0</gwt.plugin.version>
-        <spring.version>3.0.6.RELEASE</spring.version>
+        
+        <!-- Our generic components -->
         <sade-generic.version>1.0-SNAPSHOT</sade-generic.version>
-        <jodatime.version>1.6.2</jodatime.version>
-        <dbunit.version>2.4.8</dbunit.version>
+        
+        <!-- ServiceMix components / frameworks -->
+        <cxf.version>2.4.6</cxf.version>
+        <camel.version>2.8.3</camel.version>
+        <spring.version>3.0.6.RELEASE</spring.version>
+        <spring.osgi.version>1.2.1</spring.osgi.version>
+        
+        <!-- Logging -->
         <slf4j.version>1.6.1</slf4j.version>
+        
+        <!-- Database -->
         <jpa-api.version>1.99.0</jpa-api.version>
         <atomikos.version>3.6.6</atomikos.version>
-
-        <project.svn.base>https://penaali.hard.ware.fi/svn/generic/${artifactId}</project.svn.base>
+        <jta.version>1.1</jta.version>
+        
+        <!-- Testing -->
+        <junit.version>4.10</junit.version>
+        <selenium.version>2.20.0</selenium.version>
+        <dbunit.version>2.4.8</dbunit.version>
+        
+        <!-- Plugins versions -->
+        <compiler.plugin.version>2.3.2</compiler.plugin.version>
+        <enforcer.plugin.version>1.0.1</enforcer.plugin.version>
+        <surefire.plugin.version>2.7.1</surefire.plugin.version>
+        <failsafe.plugin.version>2.6</failsafe.plugin.version>
+        <deploy.plugin.version>2.7</deploy.plugin.version>
+        <release.plugin.version>2.2.1</release.plugin.version>
+        <source.plugin.version>2.1.2</source.plugin.version>
+        <bundle.plugin.version>2.3.7</bundle.plugin.version>
+        
+        <project.svn.base>https://penaali.hard.ware.fi/svn/generic/${project.artifactId}</project.svn.base>
     </properties>
 
-     <scm>
-        <connection>scm:svn:${project.svn.base}/trunk</connection>
-        <developerConnection>scm:svn:${project.svn.base}/trunk</developerConnection>
-        <url>${project.svn.base}</url>
-    </scm>
+	 <scm>
+		<connection>scm:svn:${project.svn.base}/trunk</connection>
+		<developerConnection>scm:svn:${project.svn.base}/trunk</developerConnection>
+		<url>${project.svn.base}</url>
+	</scm>
 
-    <distributionManagement>
-        <repository>
-            <id>internal-nexus</id>
-            <url>http://penaali.hard.ware.fi/nexus/content/repositories/releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>internal-nexus-snapshots</id>
-            <url>http://penaali.hard.ware.fi/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
+	<distributionManagement>
+		<repository>
+			<id>internal-nexus</id>
+			<url>http://penaali.hard.ware.fi/nexus/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>internal-nexus-snapshots</id>
+			<url>http://penaali.hard.ware.fi/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
 
     <repositories>
         <repository>
@@ -88,6 +113,43 @@
 
         <pluginManagement>
             <plugins>
+                <plugin>
+	                <groupId>org.apache.maven.plugins</groupId>
+	                <artifactId>maven-compiler-plugin</artifactId>
+	                <version>${compiler.plugin.version}</version>
+                </plugin>
+                <plugin>
+	                <groupId>org.apache.maven.plugins</groupId>
+	                <artifactId>maven-enforcer-plugin</artifactId>
+	                <version>${enforcer.plugin.version}</version>
+	            </plugin>
+	            <plugin>
+	                <groupId>org.apache.maven.plugins</groupId>
+	                <artifactId>maven-source-plugin</artifactId>
+	                <version>${source.plugin.version}</version>
+	            </plugin>
+	            <plugin>
+	                <artifactId>maven-surefire-plugin</artifactId>
+	                <version>${surefire.plugin.version}</version>
+	            </plugin>
+	            <plugin>
+	                <artifactId>maven-failsafe-plugin</artifactId>
+	                <version>${failsafe.plugin.version}</version>
+	            </plugin>
+	            <plugin>
+	                <artifactId>maven-deploy-plugin</artifactId>
+	                <version>${deploy.plugin.version}</version>
+	            </plugin>
+	            <plugin>
+	                <groupId>org.apache.maven.plugins</groupId>
+	                <artifactId>maven-release-plugin</artifactId>
+	                <version>${release.plugin.version}</version>
+	            </plugin>
+	            <plugin>
+	                <groupId>org.apache.felix</groupId>
+	                <artifactId>maven-bundle-plugin</artifactId>
+	                <version>${bundle.plugin.version}</version>
+	            </plugin>
 <!--
                 <plugin>
                     <groupId>org.mortbay.jetty</groupId>
@@ -110,7 +172,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
@@ -119,7 +180,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>1.0.1</version>
                 <executions>
                     <execution>
                         <id>enforce-java</id>
@@ -141,7 +201,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.1.2</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -168,7 +227,6 @@
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.6</version>
                 <configuration>
                     <includes>
                         <include>**/selenium/**</include>
@@ -203,11 +261,10 @@
             </plugin>
             -->
 
-            <plugin>
-                <!-- explicitly define maven-deploy-plugin after other to force exec order -->
-                <artifactId>maven-deploy-plugin</artifactId>
-                <version>2.7</version>
-                <executions>
+			<plugin>
+				<!-- explicitly define maven-deploy-plugin after other to force exec order -->
+				<artifactId>maven-deploy-plugin</artifactId>
+				<executions>
                     <execution>
                         <id>deploy</id>
                         <phase>deploy</phase>
@@ -220,7 +277,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
-                <version>2.2.1</version>
                 <configuration>
                     <tagBase>${project.svn.base}/releases</tagBase>
                 </configuration>
@@ -397,12 +453,14 @@
                                 </goals>
                                 <configuration>
                                     <tasks>
-                                        <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath"/>
+                                        <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath" />
                                         <if>
+                                            <!--<equals arg1="${foo}" arg2="bar" />-->
                                             <os family="windows"/>
                                             <then>
                                                 <get src="http://www.nic.funet.fi/pub/mirrors/apache.org/servicemix/servicemix-4/4.4.1/apache-servicemix-4.4.1.zip" dest="target/apache-servicemix-4.4.1.zip"/>
                                                 <unzip src="target/apache-servicemix-4.4.1.zip" dest="target/servers"/>
+                                                <!--<exec command="cmd /c " dir="${basedir}/target/servers/apache-servicemix-4.4.1/bin/servicemix.bat"/>-->
                                                 <copy file="karaf.bat" todir="target/servers/apache-servicemix-4.4.1/bin" failonerror="false"/>
                                                 <copy file="servicemix.bat" todir="target/servers/apache-servicemix-4.4.1/bin" failonerror="false"/>
                                             </then>
@@ -418,6 +476,10 @@
                                                 <chmod file="target/servers/apache-servicemix-4.4.1/bin/stop" perm="755" verbose="true"/>
                                             </else>
                                         </if>
+                                        <!--
+                                        <copy file="../koodisto-webservice/target/koodisto-webservice-1.0-SNAPSHOT.jar" todir="target/servers/apache-servicemix-4.4.1"/>
+                                        -->
+                                        <!-- better memory for jvm in custom karaf script -->
 
                                         <!-- copy bundles/features - TODO: hack, depsuina! -->
                                         <copy todir="target/servers/apache-servicemix-4.4.1/deploy" verbose="true">
