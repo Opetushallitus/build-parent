@@ -14,6 +14,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <dependencies>
-    </dependencies>
+    <distributionManagement>
+        <repository>
+            <id>internal-nexus</id>
+            <url>http://penaali.hard.ware.fi/nexus/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>internal-nexus-snapshots</id>
+            <url>http://penaali.hard.ware.fi/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
 </project>
