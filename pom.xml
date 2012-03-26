@@ -233,6 +233,7 @@
                 <version>2.9.1</version>
                 <executions>
                     <execution>
+                        <id>check</id>
                         <phase>post-integration-test</phase>
                         <goals>
                             <goal>check</goal>
