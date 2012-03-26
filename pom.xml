@@ -31,22 +31,22 @@
         <project.svn.base>https://penaali.hard.ware.fi/svn/generic/${artifactId}</project.svn.base>
     </properties>
 
-	 <scm>
-		<connection>scm:svn:${project.svn.base}/trunk</connection>
-		<developerConnection>scm:svn:${project.svn.base}/trunk</developerConnection>
-		<url>${project.svn.base}</url>
-	</scm>
+     <scm>
+        <connection>scm:svn:${project.svn.base}/trunk</connection>
+        <developerConnection>scm:svn:${project.svn.base}/trunk</developerConnection>
+        <url>${project.svn.base}</url>
+    </scm>
 
-	<distributionManagement>
-		<repository>
-			<id>internal-nexus</id>
-			<url>http://penaali.hard.ware.fi/nexus/content/repositories/releases/</url>
-		</repository>
-		<snapshotRepository>
-			<id>internal-nexus-snapshots</id>
-			<url>http://penaali.hard.ware.fi/nexus/content/repositories/snapshots/</url>
-		</snapshotRepository>
-	</distributionManagement>
+    <distributionManagement>
+        <repository>
+            <id>internal-nexus</id>
+            <url>http://penaali.hard.ware.fi/nexus/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>internal-nexus-snapshots</id>
+            <url>http://penaali.hard.ware.fi/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <repositories>
         <repository>
@@ -204,11 +204,11 @@
             </plugin>
             -->
 
-			<plugin>
-				<!-- explicitly define maven-deploy-plugin after other to force exec order -->
-				<artifactId>maven-deploy-plugin</artifactId>
-				<version>2.7</version>
-				<executions>
+            <plugin>
+                <!-- explicitly define maven-deploy-plugin after other to force exec order -->
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.7</version>
+                <executions>
                     <execution>
                         <id>deploy</id>
                         <phase>deploy</phase>
@@ -226,8 +226,49 @@
                     <tagBase>${project.svn.base}/releases</tagBase>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.9.1</version>
+                <executions>
+                    <execution>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <configLocation>checkstyle-oph.xml</configLocation>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>fi.vm.sade.generic</groupId>
+                        <artifactId>generic-build-support</artifactId>
+                        <version>1.0-SNAPSHOT</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <!--<plugin>-->
+                <!--<groupId>com.googlecode.maven-java-formatter-plugin</groupId>-->
+                <!--<artifactId>maven-java-formatter-plugin</artifactId>-->
+            <!--</plugin>-->
+            <!--<version>0.3.1</version>-->
+
         </plugins>
     </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.9.1</version>
+            </plugin>
+        </plugins>
+    </reporting>
 
     <profiles>
 
@@ -353,12 +394,10 @@
                                     <tasks>
                                         <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath" />
                                         <if>
-                                            <!--<equals arg1="${foo}" arg2="bar" />-->
                                             <os family="windows"/>
                                             <then>
                                                 <get src="http://www.nic.funet.fi/pub/mirrors/apache.org/servicemix/servicemix-4/4.4.1/apache-servicemix-4.4.1.zip" dest="target/apache-servicemix-4.4.1.zip"/>
                                                 <unzip src="target/apache-servicemix-4.4.1.zip" dest="target/servers"/>
-                                                <!--<exec command="cmd /c " dir="${basedir}/target/servers/apache-servicemix-4.4.1/bin/servicemix.bat"/>-->
                                                 <copy file="karaf.bat" todir="target/servers/apache-servicemix-4.4.1/bin" failonerror="false"/>
                                                 <copy file="servicemix.bat" todir="target/servers/apache-servicemix-4.4.1/bin" failonerror="false"/>
                                             </then>
@@ -374,25 +413,12 @@
                                                 <chmod file="target/servers/apache-servicemix-4.4.1/bin/stop" perm="755" verbose="true"/>
                                             </else>
                                         </if>
-                                        <!--
-                                        <copy file="../koodisto-webservice/target/koodisto-webservice-1.0-SNAPSHOT.jar" todir="target/servers/apache-servicemix-4.4.1"/>
-                                        -->
-                                        <!-- better memory for jvm in custom karaf script -->
 
                                         <!-- copy bundles/features - TODO: hack, depsuina! -->
                                         <copy todir="target/servers/apache-servicemix-4.4.1/deploy" verbose="true">
-                                            <!--<fileset dir="../../../generic/trunk/generic-dao/target" includes="*.jar"/>-->
-                                            <!--<fileset dir="../../../generic/trunk/generic-service/target" includes="*.jar"/>-->
-                                            <!--<fileset dir="../koodisto-logic/target" includes="*.jar"/>-->
-                                            <!--<fileset dir="../koodisto-webservice/target" includes="*.jar"/>-->
-                                            <fileset dir="../koodisto-features/target/classes" includes="*.xml"/>
+                                            <fileset dir="${servicemix.features.xml.path}" includes="*.xml"/>
                                         </copy>
 
-                                        <!--<path id="project.class.path">-->
-                                        <!--<pathelement path="target/classes/"/>-->
-                                        <!--<fileset dir="target/dependency" includes="*.jar"/>-->
-                                        <!--</path>-->
-                                        <!--<java classname="fi.vm.sade.servicemix.ServicemixStartAndInstallAndInstall" classpathref="project.class.path" fork="true"/>-->
                                     </tasks>
                                 </configuration>
                             </execution>
