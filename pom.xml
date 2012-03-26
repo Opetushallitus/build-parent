@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <!-- default build configuration for all projects and modules, can be overridden -->
@@ -27,7 +26,7 @@
         <slf4j.version>1.6.1</slf4j.version>
         <jpa-api.version>1.99.0</jpa-api.version>
         <atomikos.version>3.6.6</atomikos.version>
-        
+
         <project.svn.base>https://penaali.hard.ware.fi/svn/generic/${artifactId}</project.svn.base>
     </properties>
 
@@ -240,13 +239,15 @@
                         </goals>
                     </execution>
                 </executions>
+                <!--
                 <configuration>
                     <configLocation>checkstyle-oph.xml</configLocation>
                 </configuration>
+                -->
                 <dependencies>
                     <dependency>
                         <groupId>fi.vm.sade.generic</groupId>
-                        <artifactId>generic-build-support</artifactId>
+                        <artifactId>build-utilities</artifactId>
                         <version>1.0-SNAPSHOT</version>
                     </dependency>
                 </dependencies>
@@ -267,6 +268,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>2.9.1</version>
+                <configuration>
+                    <configLocation>checkstyle-oph.xml</configLocation>
+                </configuration>
             </plugin>
         </plugins>
     </reporting>
@@ -393,7 +397,7 @@
                                 </goals>
                                 <configuration>
                                     <tasks>
-                                        <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath" />
+                                        <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath"/>
                                         <if>
                                             <os family="windows"/>
                                             <then>
@@ -445,4 +449,7 @@
 
     </profiles>
 
+  <modules>
+    <module>build-utilities</module>
+  </modules>
 </project>
