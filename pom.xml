@@ -295,11 +295,9 @@
                         </goals>
                     </execution>
                 </executions>
-                <!--
                 <configuration>
                     <configLocation>checkstyle-oph.xml</configLocation>
                 </configuration>
-                -->
                 <dependencies>
                     <dependency>
                         <groupId>fi.vm.sade.generic</groupId>
