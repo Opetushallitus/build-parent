@@ -72,6 +72,13 @@
     </repositories>
 
     <build>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+
         <!--<extensions>-->
             <!--<extension>-->
                 <!--<groupId>fi.vm.sade.generic</groupId>-->
@@ -295,6 +302,7 @@
             </activation>
             <build>
                 <plugins>
+
                     <!-- run servicemix -->
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
