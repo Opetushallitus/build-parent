@@ -41,6 +41,7 @@
         <hsqldb.version>1.8.0.10</hsqldb.version>
         <hibernate.version>3.3.2.GA</hibernate.version>
         <hibernate.ejb.version>3.4.0.GA-A</hibernate.ejb.version>
+        <hibernate.annotations.common.version>3.3.0.ga</hibernate.annotations.common.version>
         <commons-dbcp.version>1.4_1</commons-dbcp.version>
         
         <!-- Utils -->
