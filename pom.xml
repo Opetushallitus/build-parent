@@ -14,6 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jetty.module>${project.artifactId}</jetty.module>
         <jetty.webApp>../${jetty.module}/target/${jetty.module}.war</jetty.webApp>
+        <daemon>true</daemon>
         
         <!-- UI libraries -->
         <vaadin.version>6.7.5</vaadin.version>
@@ -347,7 +348,7 @@
                             <webApp>${jetty.webApp}</webApp>
                             <contextPath>/${jetty.module}</contextPath>
                             <!-- false if we want to keep jetty running -->
-                            <daemon>true</daemon>
+                            <daemon>${daemon}</daemon>
                             <!--<daemon>false</daemon>-->
                             <stopKey>stop</stopKey>
                             <stopPort>8888</stopPort>
