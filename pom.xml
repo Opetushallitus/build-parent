@@ -110,7 +110,14 @@
 
         <resources>
             <resource>
+                <directory>src/main/profile/${env}</directory>
+            </resource>
+            <resource>
                 <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*</include>
+                </includes>
             </resource>
         </resources>
 
@@ -236,6 +243,7 @@
                         <exclude>**/selenium/**</exclude>
                         <exclude>**/it/**</exclude>
                         <exclude>**/itest/**</exclude>
+                        <exclude>**/integrationtest/**</exclude>
                         <exclude>**/stest/**</exclude>
                         <exclude>**/systemtest/**</exclude>
                     </excludes>
@@ -248,6 +256,7 @@
                         <include>**/selenium/**</include>
                         <include>**/it/**</include>
                         <include>**/itest/**</include>
+                        <include>**/integrationtest/**</include>
                         <include>**/stest/**</include>
                         <include>**/systemtest/**</include>
                     </includes>
@@ -434,6 +443,7 @@
                                     <mainClass>fi.vm.sade.servicemix.ServicemixStart</mainClass>
                                     <arguments>
                                         <argument>${project.basedir}/target/servers/apache-servicemix-4.4.1/bin</argument>
+                                        <argument>${servicemix.waitforBundle}</argument>
                                     </arguments>
                                 </configuration>
                             </execution>
@@ -451,6 +461,9 @@
                                 </configuration>
                             </execution>
                         </executions>
+                        <configuration>
+                            <classpathScope>test</classpathScope>
+                        </configuration>
                     </plugin>
 
                     <!-- TODO: antrun not so elegant but works for now, replace with some dependency system -->
@@ -468,26 +481,33 @@
                                     <tasks>
                                         <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath" />
                                         <if>
-                                            <!--<equals arg1="${foo}" arg2="bar" />-->
-                                            <os family="windows"/>
+                                            <not>
+                                                <available file="${project.basedir}/target/servers/apache-servicemix-4.4.1"/>
+                                            </not>
                                             <then>
-                                                <get src="http://www.nic.funet.fi/pub/mirrors/apache.org/servicemix/servicemix-4/4.4.1/apache-servicemix-4.4.1.zip" dest="target/apache-servicemix-4.4.1.zip"/>
-                                                <unzip src="target/apache-servicemix-4.4.1.zip" dest="target/servers"/>
-                                                <!--<exec command="cmd /c " dir="${basedir}/target/servers/apache-servicemix-4.4.1/bin/servicemix.bat"/>-->
-                                                <copy file="karaf.bat" todir="target/servers/apache-servicemix-4.4.1/bin" failonerror="false"/>
-                                                <copy file="servicemix.bat" todir="target/servers/apache-servicemix-4.4.1/bin" failonerror="false"/>
+                                                <if>
+                                                    <!--<equals arg1="${foo}" arg2="bar" />-->
+                                                    <os family="windows"/>
+                                                    <then>
+                                                        <get src="http://www.nic.funet.fi/pub/mirrors/apache.org/servicemix/servicemix-4/4.4.1/apache-servicemix-4.4.1.zip" dest="${project.basedir}/target/apache-servicemix-4.4.1.zip"/>
+                                                        <unzip src="${project.basedir}/target/apache-servicemix-4.4.1.zip" dest="${project.basedir}/target/servers"/>
+                                                        <!--<exec command="cmd /c " dir="${basedir}/target/servers/apache-servicemix-4.4.1/bin/servicemix.bat"/>-->
+                                                        <copy file="${project.basedir}/karaf.bat" todir="${project.basedir}/target/servers/apache-servicemix-4.4.1/bin" failonerror="false"/>
+                                                        <copy file="${project.basedir}/servicemix.bat" todir="${project.basedir}/target/servers/apache-servicemix-4.4.1/bin" failonerror="false"/>
+                                                    </then>
+                                                    <else>
+                                                        <get src="http://www.nic.funet.fi/pub/mirrors/apache.org/servicemix/servicemix-4/4.4.1/apache-servicemix-4.4.1.tar.gz" dest="${project.basedir}/target/apache-servicemix-4.4.1.tar.gz"/>
+                                                        <gunzip src="${project.basedir}/target/apache-servicemix-4.4.1.tar.gz" dest="${project.basedir}/target/apache-servicemix-4.4.1.tar"/>
+                                                        <untar src="${project.basedir}/target/apache-servicemix-4.4.1.tar" dest="${project.basedir}/target/servers"/>
+                                                        <copy file="${project.basedir}/karaf" todir="${project.basedir}/target/servers/apache-servicemix-4.4.1/bin" failonerror="false"/>
+                                                        <copy file="${project.basedir}/servicemix" todir="${project.basedir}/target/servers/apache-servicemix-4.4.1/bin" failonerror="false"/>
+                                                        <chmod file="${project.basedir}/target/servers/apache-servicemix-4.4.1/bin/servicemix" perm="755" verbose="true"/>
+                                                        <chmod file="${project.basedir}/target/servers/apache-servicemix-4.4.1/bin/karaf" perm="755" verbose="true"/>
+                                                        <chmod file="${project.basedir}/target/servers/apache-servicemix-4.4.1/bin/start" perm="755" verbose="true"/>
+                                                        <chmod file="${project.basedir}/target/servers/apache-servicemix-4.4.1/bin/stop" perm="755" verbose="true"/>
+                                                    </else>
+                                                </if>
                                             </then>
-                                            <else>
-                                                <get src="http://www.nic.funet.fi/pub/mirrors/apache.org/servicemix/servicemix-4/4.4.1/apache-servicemix-4.4.1.tar.gz" dest="target/apache-servicemix-4.4.1.tar.gz"/>
-                                                <gunzip src="target/apache-servicemix-4.4.1.tar.gz" dest="target/apache-servicemix-4.4.1.tar"/>
-                                                <untar src="target/apache-servicemix-4.4.1.tar" dest="target/servers"/>
-                                                <copy file="karaf" todir="target/servers/apache-servicemix-4.4.1/bin" failonerror="false"/>
-                                                <copy file="servicemix" todir="target/servers/apache-servicemix-4.4.1/bin" failonerror="false"/>
-                                                <chmod file="target/servers/apache-servicemix-4.4.1/bin/servicemix" perm="755" verbose="true"/>
-                                                <chmod file="target/servers/apache-servicemix-4.4.1/bin/karaf" perm="755" verbose="true"/>
-                                                <chmod file="target/servers/apache-servicemix-4.4.1/bin/start" perm="755" verbose="true"/>
-                                                <chmod file="target/servers/apache-servicemix-4.4.1/bin/stop" perm="755" verbose="true"/>
-                                            </else>
                                         </if>
                                         <!--
                                         <copy file="../koodisto-webservice/target/koodisto-webservice-1.0-SNAPSHOT.jar" todir="target/servers/apache-servicemix-4.4.1"/>
@@ -495,9 +515,8 @@
                                         <!-- better memory for jvm in custom karaf script -->
 
                                         <!-- copy bundles/features - TODO: hack, depsuina! -->
-                                        <copy todir="target/servers/apache-servicemix-4.4.1/deploy" verbose="true">
-                                            <fileset dir="${servicemix.features.xml.path}" includes="*.xml"/>
-                                        </copy>
+                                        <copy todir="target/servers/apache-servicemix-4.4.1/deploy" verbose="true" failonerror="false"
+                                               file="${servicemix.features.xml.path}" />
 
                                     </tasks>
                                 </configuration>
@@ -533,7 +552,7 @@
                         <version>1.2.1</version>
                         <executions>
                             <execution>
-                                <id>exec-servicemix-start</id>
+                                <id>exec-servicemix-run</id>
                                 <phase>compile</phase>
                                 <goals>
                                     <goal>java</goal>
@@ -542,6 +561,7 @@
                                     <mainClass>fi.vm.sade.servicemix.ServicemixRun</mainClass>
                                     <arguments>
                                         <argument>${project.basedir}/target/servers/apache-servicemix-4.4.1/bin</argument>
+                                        <argument>${servicemix.waitforBundle}</argument>
                                     </arguments>
                                 </configuration>
                             </execution>
