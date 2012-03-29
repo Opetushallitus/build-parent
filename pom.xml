@@ -37,6 +37,14 @@
         <jpa-api.version>1.99.0</jpa-api.version>
         <atomikos.version>3.6.6</atomikos.version>
         <jta.version>1.1</jta.version>
+        <postgresql.version>8.3.604</postgresql.version>
+        <hsqldb.version>1.8.0.10</hsqldb.version>
+        <hibernate.version>3.3.2.GA</hibernate.version>
+        <hibernate.ejb.version>3.4.0.GA-A</hibernate.ejb.version>
+        <commons-dbcp.version>1.4_1</commons-dbcp.version>
+        
+        <!-- Utils -->
+        <jodatime.version></jodatime.version>
         
         <!-- Testing -->
         <junit.version>4.10</junit.version>
@@ -52,6 +60,7 @@
         <release.plugin.version>2.2.1</release.plugin.version>
         <source.plugin.version>2.1.2</source.plugin.version>
         <bundle.plugin.version>2.3.7</bundle.plugin.version>
+        <checkstyle.plugin.version>2.9.1</checkstyle.plugin.version>
         
         <project.svn.base>https://penaali.hard.ware.fi/svn/generic/${project.artifactId}</project.svn.base>
     </properties>
@@ -151,6 +160,11 @@
 	                <artifactId>maven-bundle-plugin</artifactId>
 	                <version>${bundle.plugin.version}</version>
 	            </plugin>
+	            <plugin>
+	               <groupId>org.apache.maven.plugins</groupId>
+	               <artifactId>maven-checkstyle-plugin</artifactId>
+	               <version>${checkstyle.plugin.version}</version>
+	            </plugin>
 <!--
                 <plugin>
                     <groupId>org.mortbay.jetty</groupId>
@@ -236,6 +250,7 @@
                         <include>**/stest/**</include>
                         <include>**/systemtest/**</include>
                     </includes>
+                    <argLine>-XX:MaxPermSize=256M -Xmx512m</argLine>
                 </configuration>
                 <executions>
                     <execution>
@@ -286,7 +301,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.9.1</version>
                 <executions>
                     <execution>
                         <id>check</id>
@@ -322,7 +336,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.9.1</version>
                 <configuration>
                     <configLocation>checkstyle-oph.xml</configLocation>
                 </configuration>
