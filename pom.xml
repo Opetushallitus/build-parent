@@ -11,6 +11,8 @@
     <packaging>pom</packaging>
 
     <properties>
+        <env>development</env>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jetty.module>${project.artifactId}</jetty.module>
         <jetty.webApp>../${jetty.module}/target/${jetty.module}.war</jetty.webApp>
@@ -64,6 +66,8 @@
         <checkstyle.plugin.version>2.9.1</checkstyle.plugin.version>
         
         <project.svn.base>https://penaali.hard.ware.fi/svn/generic/${project.artifactId}</project.svn.base>
+
+        <embedService.serviceArtifactId>${project.parent.artifactId}-service</embedService.serviceArtifactId>
     </properties>
 
 	 <scm>
@@ -110,11 +114,15 @@
 
         <resources>
             <resource>
-                <directory>src/main/profile/${env}</directory>
-            </resource>
-            <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+            <!-- profiilikohtaiset resurssit tässä että ne ylikirjoittavat oletusresurssit -->
+            <resource>
+                <directory>src/main/profile/${env}</directory>
                 <includes>
                     <include>**/*</include>
                 </includes>
@@ -337,6 +345,13 @@
                 <!--<artifactId>maven-java-formatter-plugin</artifactId>-->
             <!--</plugin>-->
             <!--<version>0.3.1</version>-->
+
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <overwrite>true</overwrite>
+                </configuration>
+            </plugin>
 
         </plugins>
     </build>
@@ -569,6 +584,46 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+
+        <!-- profile to embed service dependency inside war in app module -->
+        <profile>
+            <id>embedService</id>
+            <properties>
+                <env>embedService</env>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>${project.groupId}</groupId>
+                    <artifactId>${embedService.serviceArtifactId}</artifactId>
+                    <version>${project.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>development</id>
+            <properties>
+                <env>development</env>
+            </properties>
+        </profile>
+        <profile>
+            <id>ui-development</id>
+            <properties>
+                <env>ui-development</env>
+            </properties>
+        </profile>
+        <profile>
+            <id>QA</id>
+            <properties>
+                <env>QA</env>
+            </properties>
+        </profile>
+        <profile>
+            <id>PRODUCTION</id>
+            <properties>
+                <env>PRODUCTION</env>
+            </properties>
         </profile>
 
     </profiles>
