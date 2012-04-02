@@ -14,6 +14,8 @@
         <env>development</env>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
         <jetty.module>${project.artifactId}</jetty.module>
         <jetty.webApp>../${jetty.module}/target/${jetty.module}.war</jetty.webApp>
         <daemon>true</daemon>
