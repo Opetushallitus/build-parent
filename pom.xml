@@ -181,6 +181,10 @@
 	               <artifactId>maven-checkstyle-plugin</artifactId>
 	               <version>${checkstyle.plugin.version}</version>
 	            </plugin>
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.5</version>
+                </plugin>
 <!--
                 <plugin>
                     <groupId>org.mortbay.jetty</groupId>
@@ -457,7 +461,7 @@
                                 <configuration>
                                     <mainClass>fi.vm.sade.servicemix.ServicemixStart</mainClass>
                                     <arguments>
-                                        <argument>${project.basedir}/target/servers/apache-servicemix-4.4.1/bin</argument>
+                                        <argument>${project.basedir}/target/servers/apache-servicemix-4.4.1</argument>
                                         <argument>${servicemix.waitforBundle}</argument>
                                     </arguments>
                                 </configuration>
@@ -471,7 +475,7 @@
                                 <configuration>
                                     <mainClass>fi.vm.sade.servicemix.ServicemixStop</mainClass>
                                     <arguments>
-                                        <argument>${project.basedir}/target/servers/apache-servicemix-4.4.1/bin</argument>
+                                        <argument>${project.basedir}/target/servers/apache-servicemix-4.4.1</argument>
                                     </arguments>
                                 </configuration>
                             </execution>
@@ -500,22 +504,31 @@
                                                 <available file="${project.basedir}/target/servers/apache-servicemix-4.4.1"/>
                                             </not>
                                             <then>
+                                                <!--<unzip src="${settings.localRepository}/apache/servicemix/4.4.1/servicemix-4.4.1.zip" dest="${project.basedir}/target/servers"/>-->
                                                 <if>
-                                                    <!--<equals arg1="${foo}" arg2="bar" />-->
                                                     <os family="windows"/>
                                                     <then>
                                                         <get src="http://www.nic.funet.fi/pub/mirrors/apache.org/servicemix/servicemix-4/4.4.1/apache-servicemix-4.4.1.zip" dest="${project.basedir}/target/apache-servicemix-4.4.1.zip"/>
                                                         <unzip src="${project.basedir}/target/apache-servicemix-4.4.1.zip" dest="${project.basedir}/target/servers"/>
-                                                        <!--<exec command="cmd /c " dir="${basedir}/target/servers/apache-servicemix-4.4.1/bin/servicemix.bat"/>-->
-                                                        <copy file="${project.basedir}/karaf.bat" todir="${project.basedir}/target/servers/apache-servicemix-4.4.1/bin" failonerror="false"/>
-                                                        <copy file="${project.basedir}/servicemix.bat" todir="${project.basedir}/target/servers/apache-servicemix-4.4.1/bin" failonerror="false"/>
+                                                        <!--<copy file="${project.basedir}/karaf.bat" todir="${project.basedir}/target/servers/apache-servicemix-4.4.1/bin" failonerror="false"/>-->
+                                                        <!--<copy file="${project.basedir}/servicemix.bat" todir="${project.basedir}/target/servers/apache-servicemix-4.4.1/bin" failonerror="false"/>-->
                                                     </then>
                                                     <else>
                                                         <get src="http://www.nic.funet.fi/pub/mirrors/apache.org/servicemix/servicemix-4/4.4.1/apache-servicemix-4.4.1.tar.gz" dest="${project.basedir}/target/apache-servicemix-4.4.1.tar.gz"/>
                                                         <gunzip src="${project.basedir}/target/apache-servicemix-4.4.1.tar.gz" dest="${project.basedir}/target/apache-servicemix-4.4.1.tar"/>
                                                         <untar src="${project.basedir}/target/apache-servicemix-4.4.1.tar" dest="${project.basedir}/target/servers"/>
-                                                        <copy file="${project.basedir}/karaf" todir="${project.basedir}/target/servers/apache-servicemix-4.4.1/bin" failonerror="false"/>
-                                                        <copy file="${project.basedir}/servicemix" todir="${project.basedir}/target/servers/apache-servicemix-4.4.1/bin" failonerror="false"/>
+                                                        <!--<copy file="${project.basedir}/karaf" todir="${project.basedir}/target/servers/apache-servicemix-4.4.1/bin" failonerror="false"/>-->
+                                                        <!--<copy file="${project.basedir}/servicemix" todir="${project.basedir}/target/servers/apache-servicemix-4.4.1/bin" failonerror="false"/>-->
+                                                    </else>
+                                                </if>
+                                                <copy todir="${project.basedir}/target/servers/apache-servicemix-4.4.1" failonerror="false" verbose="true" overwrite="true">
+                                                    <fileset dir="${project.basedir}/smx" includes="**/*.*"/>
+                                                </copy>
+                                                <if>
+                                                    <os family="windows"/>
+                                                    <then>
+                                                    </then>
+                                                    <else>
                                                         <chmod file="${project.basedir}/target/servers/apache-servicemix-4.4.1/bin/servicemix" perm="755" verbose="true"/>
                                                         <chmod file="${project.basedir}/target/servers/apache-servicemix-4.4.1/bin/karaf" perm="755" verbose="true"/>
                                                         <chmod file="${project.basedir}/target/servers/apache-servicemix-4.4.1/bin/start" perm="755" verbose="true"/>
@@ -530,8 +543,8 @@
                                         <!-- better memory for jvm in custom karaf script -->
 
                                         <!-- copy bundles/features - TODO: hack, depsuina! -->
-                                        <copy todir="target/servers/apache-servicemix-4.4.1/deploy" verbose="true" failonerror="false"
-                                               file="${servicemix.features.xml.path}" />
+                                        <!--<copy todir="target/servers/apache-servicemix-4.4.1/deploy" verbose="true" failonerror="false" file="${settings.localRepository}/fi/vm/sade/generic/generic-features/1.0-SNAPSHOT/generic-features-1.0-SNAPSHOT-features.xml" />-->
+                                        <copy todir="target/servers/apache-servicemix-4.4.1/deploy" verbose="true" failonerror="false" file="${servicemix.features.xml.path}" />
 
                                     </tasks>
                                 </configuration>
@@ -575,7 +588,7 @@
                                 <configuration>
                                     <mainClass>fi.vm.sade.servicemix.ServicemixRun</mainClass>
                                     <arguments>
-                                        <argument>${project.basedir}/target/servers/apache-servicemix-4.4.1/bin</argument>
+                                        <argument>${project.basedir}/target/servers/apache-servicemix-4.4.1</argument>
                                         <argument>${servicemix.waitforBundle}</argument>
                                     </arguments>
                                 </configuration>
