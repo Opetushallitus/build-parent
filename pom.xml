@@ -36,7 +36,7 @@
         <slf4j.version>1.6.1</slf4j.version>
         
         <!-- Database -->
-        <jpa-api.version>2.0.0</jpa-api.version>
+        <jpa-api.version>1.99.0</jpa-api.version>
         <atomikos.version>3.6.6</atomikos.version>
         <jta.version>1.1</jta.version>
         <postgresql.version>8.3.604</postgresql.version>
