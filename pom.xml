@@ -140,6 +140,8 @@
             <!--</extension>-->
         <!--</extensions>-->
 
+
+
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -250,17 +252,30 @@
                 </executions>
             </plugin>
 
+            <!-- create also tests jar -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             <!-- separate unit tests and integration/system tests -->
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <excludes>
-                        <exclude>**/selenium/**</exclude>
+                        <exclude>**/selenium/*Test*</exclude>
                         <exclude>**/it/**</exclude>
-                        <exclude>**/itest/**</exclude>
-                        <exclude>**/integrationtest/**</exclude>
-                        <exclude>**/stest/**</exclude>
-                        <exclude>**/systemtest/**</exclude>
+                        <exclude>**/itest/*Test*</exclude>
+                        <exclude>**/integrationtest/*Test*</exclude>
+                        <exclude>**/stest/*Test*</exclude>
+                        <exclude>**/systemtest/*Test*</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -268,12 +283,12 @@
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <configuration>
                     <includes>
-                        <include>**/selenium/**</include>
-                        <include>**/it/**</include>
-                        <include>**/itest/**</include>
-                        <include>**/integrationtest/**</include>
-                        <include>**/stest/**</include>
-                        <include>**/systemtest/**</include>
+                        <include>**/selenium/*Test*</include>
+                        <include>**/it/*Test*</include>
+                        <include>**/itest/*Test*</include>
+                        <include>**/integrationtest/*Test*</include>
+                        <include>**/stest/*Test*</include>
+                        <include>**/systemtest/*Test*</include>
                     </includes>
                     <argLine>-XX:MaxPermSize=256M -Xmx512m</argLine>
                 </configuration>
@@ -362,6 +377,106 @@
 
         </plugins>
     </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-api</artifactId>
+                <version>${cxf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+                <version>${cxf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.transaction</groupId>
+                <artifactId>jta</artifactId>
+                <version>${jta.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.atomikos</groupId>
+                <artifactId>transactions-jdbc</artifactId>
+                <version>${atomikos.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.atomikos</groupId>
+                <artifactId>transactions-hibernate3</artifactId>
+                <version>${atomikos.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.osgi</groupId>
+                <artifactId>spring-osgi-core</artifactId>
+                <version>${spring.osgi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>fi.vm.sade.generic</groupId>
+                <artifactId>generic-test-support</artifactId>
+                <version>${sade-generic.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>com.springsource.org.hibernate</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>com.springsource.org.hibernate.ejb</artifactId>
+                <version>${hibernate.ejb.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>com.springsource.org.hibernate.annotations</artifactId>
+                <version>${hibernate.ejb.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>com.springsource.org.hibernate.annotations.common</artifactId>
+                <version>${hibernate.annotations.common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>fi.vm.sade.generic</groupId>
+                <artifactId>generic-dao</artifactId>
+                <version>${sade-generic.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>fi.vm.sade.generic</groupId>
+                <artifactId>generic-service</artifactId>
+                <version>${sade-generic.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>com.springsource.org.postgresql.jdbc4</artifactId>
+                <version>${postgresql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hsqldb</groupId>
+                <artifactId>com.springsource.org.hsqldb</artifactId>
+                <version>${hsqldb.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-orm</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>${jodatime.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.servicemix.bundles</groupId>
+                <artifactId>org.apache.servicemix.bundles.commons-dbcp</artifactId>
+                <version>${commons-dbcp.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <reporting>
         <plugins>
