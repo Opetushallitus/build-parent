@@ -24,6 +24,8 @@
         <vaadin.version>6.7.5</vaadin.version>
         <gwt.version>2.3.0</gwt.version>
         <gwt.plugin.version>2.2.0</gwt.plugin.version>
+        <servlet.version>2.5</servlet.version>
+        <vaadin.formbinder.version>2.1.1</vaadin.formbinder.version>
         
         <!-- Our generic components -->
         <sade-generic.version>1.0-SNAPSHOT</sade-generic.version>
@@ -50,6 +52,9 @@
         
         <!-- Utils -->
         <jodatime.version></jodatime.version>
+        <log4j.version>1.2.14</log4j.version>
+        <aopalliance.version>1.0</aopalliance.version>
+        <aspectj.version>1.6.3</aspectj.version>
         
         <!-- Testing -->
         <junit.version>4.10</junit.version>
@@ -111,6 +116,11 @@
             <name>Central Maven Repository</name>
             <url>http://penaali.hard.ware.fi/nexus/content/repositories/central/</url>
         </repository>
+        <repository>
+            <id>vaadin-addons</id>
+            <name>Vaadin addons</name>
+            <url>http://penaali.hard.ware.fi/nexus/content/repositories/vaadin-addons/</url>
+        </repository>
     </repositories>
 
     <build>
@@ -139,8 +149,6 @@
                 <!--<version>1.0-SNAPSHOT</version>-->
             <!--</extension>-->
         <!--</extensions>-->
-
-
 
         <pluginManagement>
             <plugins>
@@ -271,7 +279,7 @@
                 <configuration>
                     <excludes>
                         <exclude>**/selenium/*Test*</exclude>
-                        <exclude>**/it/**</exclude>
+                        <exclude>**/it/*Test*</exclude>
                         <exclude>**/itest/*Test*</exclude>
                         <exclude>**/integrationtest/*Test*</exclude>
                         <exclude>**/stest/*Test*</exclude>
