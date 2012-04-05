@@ -140,6 +140,12 @@
                     <include>**/*</include>
                 </includes>
             </resource>
+            <resource>
+                <directory>src/main/profile/${profileEnv}</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
         </resources>
 
         <!--<extensions>-->
@@ -278,12 +284,12 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <excludes>
-                        <exclude>**/selenium/*Test*</exclude>
-                        <exclude>**/it/*Test*</exclude>
-                        <exclude>**/itest/*Test*</exclude>
-                        <exclude>**/integrationtest/*Test*</exclude>
-                        <exclude>**/stest/*Test*</exclude>
-                        <exclude>**/systemtest/*Test*</exclude>
+                        <exclude>**/selenium/**/*</exclude>
+                        <exclude>**/it/**/*</exclude>
+                        <exclude>**/itest/**/*</exclude>
+                        <exclude>**/integrationtest/**/*</exclude>
+                        <exclude>**/stest/**/*</exclude>
+                        <exclude>**/systemtest/**/*</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -291,12 +297,12 @@
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <configuration>
                     <includes>
-                        <include>**/selenium/*Test*</include>
-                        <include>**/it/*Test*</include>
-                        <include>**/itest/*Test*</include>
-                        <include>**/integrationtest/*Test*</include>
-                        <include>**/stest/*Test*</include>
-                        <include>**/systemtest/*Test*</include>
+                        <include>**/selenium/**/*Test*</include>
+                        <include>**/it/**/*Test*</include>
+                        <include>**/itest/**/*Test*</include>
+                        <include>**/integrationtest/**/*Test*</include>
+                        <include>**/stest/**/*Test*</include>
+                        <include>**/systemtest/**/*Test*</include>
                     </includes>
                     <argLine>-XX:MaxPermSize=256M -Xmx512m</argLine>
                 </configuration>
@@ -729,7 +735,7 @@
         <profile>
             <id>embedService</id>
             <properties>
-                <env>embedService</env>
+                <profileEnv>embedService</profileEnv>
             </properties>
             <dependencies>
                 <dependency>
