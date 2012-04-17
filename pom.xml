@@ -49,6 +49,7 @@
 		<hibernate.ejb.version>3.4.0.GA-A</hibernate.ejb.version>
 		<hibernate.annotations.common.version>3.3.0.ga</hibernate.annotations.common.version>
 		<commons-dbcp.version>1.4_1</commons-dbcp.version>
+        <commons-lang.version>2.6</commons-lang.version>
 
 		<!-- Utils -->
 		<jodatime.version></jodatime.version>
@@ -492,7 +493,12 @@
 				<artifactId>org.apache.servicemix.bundles.commons-dbcp</artifactId>
 				<version>${commons-dbcp.version}</version>
 			</dependency>
-		</dependencies>
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>${commons-lang.version}</version>
+            </dependency>
+        </dependencies>
 	</dependencyManagement>
 
 	<reporting>
