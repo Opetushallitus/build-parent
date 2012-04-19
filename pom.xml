@@ -355,6 +355,7 @@
 				</executions>
 				<configuration>
 					<configLocation>checkstyle-oph.xml</configLocation>
+					<consoleOutput>true</consoleOutput>
 				</configuration>
 				<dependencies>
 					<dependency>
