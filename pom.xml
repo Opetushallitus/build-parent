@@ -79,6 +79,12 @@
 		<project.svn.base>https://penaali.hard.ware.fi/svn/generic/${project.artifactId}</project.svn.base>
 
 		<embedService.serviceArtifactId>${project.parent.artifactId}-service</embedService.serviceArtifactId>
+		
+		<clover.version>3.1.4</clover.version>
+		<clover.snapshot>${user.home}/.clover/atlassian-plugins-clover.snapshot</clover.snapshot>
+		<!-- ${user.home}/.clover/${groupId}-${artifactId}/clover.snapshot -->
+		<clover.singleCloverDatabase>true</clover.singleCloverDatabase>
+		<clover.fullRunEvery>500</clover.fullRunEvery> 
 	</properties>
 
 	<scm>
@@ -344,6 +350,11 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
+				<configuration>
+					<configLocation>checkstyle-oph.xml</configLocation>
+					<failsOnError>false</failsOnError>
+                    <consoleOutput>true</consoleOutput>
+				</configuration>
 				<executions>
 					<execution>
 						<id>check</id>
@@ -353,10 +364,6 @@
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<configLocation>checkstyle-oph.xml</configLocation>
-					<consoleOutput>true</consoleOutput>
-				</configuration>
 				<dependencies>
 					<dependency>
 						<groupId>fi.vm.sade.generic</groupId>
@@ -515,7 +522,155 @@
 	</reporting>
 
 	<profiles>
+		<profile>
+			<id>clover.all</id>
+			<properties>
+                <checkstyle.excludes>**/*.java</checkstyle.excludes>
+            </properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.atlassian.maven.plugins</groupId>
+						<artifactId>maven-clover2-plugin</artifactId>
+						<version>${clover.version}</version>
+						<configuration>
+							<!-- 
+							<license><![CDATA[rpRQNMNVbDQGOEFKsVQKeIihqPnFbdDEHvvNdDVKJlFhJhemj2KgKqUCcBA763sFqgbibB52L0Cp0MzNnhQ88tyJuOnONlmQQqssopQmnQMMroQMPVTqPQRnpqrQNQOPTtWuTusvWnvSsvtWXTmTTTTSosUoWSxxStWuswtMRnmnmUUnppnpuqqmmmmmUUnppnpuqqmmmmmUU6fkkfpeWEXqflkXiW2lXoaWlcW5arZXqflkUUor]]>
+							</license> -->
+							<snapshot>${clover.snapshot}</snapshot> 
+     						<singleCloverDatabase>${clover.singleCloverDatabase}</singleCloverDatabase>
+     						<alwaysReport>true</alwaysReport>
+						</configuration>
+						<executions>
+							<execution>
+								<id>clover</id>
+								<goals>
+									<goal>setup</goal>
+									<goal>optimize</goal>
+									<goal>snapshot</goal>
+								</goals>
+							</execution>
+							<execution>
+								<phase>verify</phase>
+								<goals>
+									<goal>aggregate</goal>
+									<goal>clover</goal>
+									<goal>log</goal>
+									<goal>check</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+			<reporting>
+                 <plugins>
+                     <plugin>
+                         <groupId>com.atlassian.maven.plugins</groupId>
+                         <artifactId>maven-clover2-plugin</artifactId>
+                         <version>${clover.version}</version>
+						<configuration>
+							<!-- 
+							<license><![CDATA[rpRQNMNVbDQGOEFKsVQKeIihqPnFbdDEHvvNdDVKJlFhJhemj2KgKqUCcBA763sFqgbibB52L0Cp0MzNnhQ88tyJuOnONlmQQqssopQmnQMMroQMPVTqPQRnpqrQNQOPTtWuTusvWnvSsvtWXTmTTTTSosUoWSxxStWuswtMRnmnmUUnppnpuqqmmmmmUUnppnpuqqmmmmmUU6fkkfpeWEXqflkXiW2lXoaWlcW5arZXqflkUUor]]>
+							</license> -->
+							<snapshot>${clover.snapshot}</snapshot> 
+     						<singleCloverDatabase>${clover.singleCloverDatabase}</singleCloverDatabase>
+     						<alwaysReport>true</alwaysReport>
+						</configuration>
+                     </plugin>
+                 </plugins>
+            </reporting>
+            <dependencies>
+            	 <dependency>
+		            <groupId>com.cenqua.clover</groupId>
+		            <artifactId>clover</artifactId>
+		            <version>3.1.4</version>
+		        </dependency>
+            </dependencies>
+		</profile>
+		
+<!-- kaytoonottetaan myohemmin. 
+		<profile>
+            <id>clover.optimize</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.atlassian.maven.plugins</groupId>
+                        <artifactId>maven-clover2-plugin</artifactId>
+                        <version>${clover.version}</version>
+						<configuration>
+							<snapshot>${clover.snapshot}</snapshot> 
+     						<singleCloverDatabase>${clover.singleCloverDatabase}</singleCloverDatabase>
+						</configuration>
+                        <executions>
+                            <execution>
+                                <id>clover</id>
+                                <goals>
+                                    <goal>setup</goal>
+                                    <goal>optimize</goal>
+                                    <goal>snapshot</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <dependencies>
+            	 <dependency>
+		            <groupId>com.cenqua.clover</groupId>
+		            <artifactId>clover</artifactId>
+		            <version>3.1.4</version>
+		        </dependency>
+            </dependencies>
+        </profile>
 
+		<profile>
+            <id>clover.report</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.atlassian.maven.plugins</groupId>
+                        <artifactId>maven-clover2-plugin</artifactId>
+                        <version>${clover.version}</version>
+                        <configuration>
+                        	<snapshot>${clover.snapshot}</snapshot> 
+     						<singleCloverDatabase>${clover.singleCloverDatabase}</singleCloverDatabase>
+						  	<generatePdf>false</generatePdf>
+						  	<generateXml>false</generateXml>
+						  	<generateHtml>true</generateHtml>
+						</configuration>
+                        <executions>
+                            <execution>
+                                <id>clover</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>instrument</goal>
+                                    <goal>check</goal>
+                                    <goal>clover</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <reporting>
+                 <plugins>
+					<plugin>
+            			<groupId>com.atlassian.maven.plugins</groupId>
+            			<artifactId>maven-clover2-plugin</artifactId>
+            			<version>${clover.version}</version>
+            			<configuration>
+                        	<snapshot>${user.home}/.clover/atlassian-plugins-clover.snapshot</snapshot>
+     						<singleCloverDatabase>true</singleCloverDatabase>
+						  <generatePdf>false</generatePdf>
+						  <generateXml>false</generateXml>
+						  <generateHtml>true</generateHtml>
+						</configuration>
+        			</plugin>
+                 </plugins>
+             </reporting>
+        </profile>
+-->
 		<profile>
 			<id>jetty</id>
 			<activation>
