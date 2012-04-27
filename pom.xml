@@ -50,6 +50,7 @@
 		<hibernate.annotations.common.version>3.3.0.ga</hibernate.annotations.common.version>
 		<commons-dbcp.version>1.4_1</commons-dbcp.version>
         <commons-lang.version>2.6</commons-lang.version>
+        <jetty.version>6.1.25</jetty.version>
 
 		<!-- Utils -->
 		<jodatime.version></jodatime.version>
@@ -80,11 +81,40 @@
 
 		<embedService.serviceArtifactId>${project.parent.artifactId}-service</embedService.serviceArtifactId>
 		
+		<!--  clover.version>3.1.4</clover.version>-->
 		<clover.version>3.1.4</clover.version>
-		<clover.snapshot>${user.home}/.clover/atlassian-plugins-clover.snapshot</clover.snapshot>
-		<!-- ${user.home}/.clover/${groupId}-${artifactId}/clover.snapshot -->
-		<clover.singleCloverDatabase>true</clover.singleCloverDatabase>
-		<clover.fullRunEvery>500</clover.fullRunEvery> 
+        
+        <clover.fullRunEvery>500</clover.fullRunEvery>
+		<clover.generateHistorical>true</clover.generateHistorical>
+		<clover.historyDir>${user.home}/.clover/${project.artifactId}/history</clover.historyDir>
+		
+		<clover.snapshot>${user.home}/.clover/${project.artifactId}/clover.snapshot</clover.snapshot>
+		<clover.outputDirectory>${user.home}/.clover/output</clover.outputDirectory>
+        
+		<clover.cloverDatabase>${user.home}/.clover/clover.db</clover.cloverDatabase>
+        <clover.singleCloverDatabase>true</clover.singleCloverDatabase>
+        
+		
+		<checkstyle.excludes>**/clover/**,**/target/**/src/**,**/target/**/src-test/**,**/ytj-generated-model/**</checkstyle.excludes>
+		<checkstyle.skip>false</checkstyle.skip>
+		<checkstyle.failsOnError>false</checkstyle.failsOnError>
+        <checkstyle.consoleOutput>true</checkstyle.consoleOutput>
+        <checkstyle.configLocation>checkstyle-oph.xml</checkstyle.configLocation>
+                    
+        <!-- Dynamic analysis relates to unit tests. By default, those unit tests are executed but you can 
+             optionally decide to do only static analysis or to reuse existing reports which have been previously generated. 
+             Possible values are true, false, reuseReports. -->
+        <sonar.dynamicAnalysis>true</sonar.dynamicAnalysis>
+		
+		<!--  The absolute or relative path of the surefire reports directory. 
+		      Used only if sonar.dynamicAnalysis is reuseReports. -->
+		<sonar.surefire.reportsPath>${user.home}/.surefire/reports/${project.artifactId}</sonar.surefire.reportsPath>
+		
+        <!--  The absolute or relative path of the clover xml report file. 
+              Used only if sonar.dynamicAnalysis is reuseReports. -->
+        <sonar.core.codeCoveragePlugin>clover</sonar.core.codeCoveragePlugin>
+        <sonar.clover.reportPath>${clover.outputDirectory}/clover.xml</sonar.clover.reportPath>
+		
 	</properties>
 
 	<scm>
@@ -218,11 +248,28 @@
 					<artifactId>maven-jar-plugin</artifactId>
 					<version>${jar.plugin.version}</version>
 				</plugin>
-				<!-- <plugin> <groupId>org.mortbay.jetty</groupId> <artifactId>maven-jetty-plugin</artifactId> 
-					<version>6.1.10</version> <configuration> <scanIntervalSeconds>1</scanIntervalSeconds> 
-					<stopKey>foo</stopKey> <stopPort>9999</stopPort> -->
-				<!-- false if we want to keep jetty running -->
-				<!-- <daemon>false</daemon> </configuration> </plugin> -->
+				<plugin>
+					<groupId>com.atlassian.maven.plugins</groupId>
+					<artifactId>maven-clover2-plugin</artifactId>
+					<version>${clover.version}</version>
+					<configuration>
+						<license><![CDATA[rpRQNMNVbDQGOEFKsVQKeIihqPnFbdDEHvvNdDVKJlFhJhe
+                                          mj2KgKqUCcBA763sFqgbibB52L0Cp0MzNnhQ88tyJuOnONl
+                                          mQQqssopQmnQMMroQMPVTqPQRnpqrQNQOPTtWuTusvWnvSs
+                                          vtWXTmTTTTSosUoWSxxStWuswtMRnmnmUUnppnpuqqmmmmm
+                                          UUnppnpuqqmmmmmUU6fkkfpeWEXqflkXiW2lXoaWlcW5arZ
+                                          XqflkUUor]]>
+						</license>
+						<snapshot>${clover.snapshot}</snapshot>
+						<singleCloverDatabase>${clover.singleCloverDatabase}</singleCloverDatabase>
+						<cloverDatabase>${clover.cloverDatabase}</cloverDatabase>
+						<outputDirectory>${clover.outputDirectory}</outputDirectory>
+						<generateHistorical>${clover.generateHistorical}</generateHistorical>
+						<historyDir>${clover.historyDir}</historyDir>
+						<alwaysReport>true</alwaysReport>
+                        <generateXml>true</generateXml>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
@@ -286,6 +333,8 @@
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
+                    <reportsDirectory>${user.home}/.surefire/reports/${project.artifactId}</reportsDirectory>
+                    <outputDirectory>${user.home}/.surefire/output/${project.artifactId}</outputDirectory>
 					<excludes>
 						<exclude>**/selenium/**/*</exclude>
 						<exclude>**/it/**/*</exclude>
@@ -298,7 +347,10 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-failsafe-plugin</artifactId>
-				<configuration>
+                <configuration>
+                    <reportsDirectory>${user.home}/.surefire/reports/${project.artifactId}</reportsDirectory>
+                    <outputDirectory>${user.home}/.surefire/output/${project.artifactId}</outputDirectory> 
+                    <alwaysGenerateFailsafeReport>true</alwaysGenerateFailsafeReport>
 					<includes>
 						<include>**/selenium/**/*Test*</include>
 						<include>**/it/**/*Test*</include>
@@ -347,13 +399,15 @@
 				</configuration>
 			</plugin>
 
-			<plugin>
+		<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<configuration>
-					<configLocation>checkstyle-oph.xml</configLocation>
-					<failsOnError>false</failsOnError>
-                    <consoleOutput>true</consoleOutput>
+					<excludes>${checkstyle.excludes}</excludes>
+					<skip>${checkstyle.skip}</skip>
+					<configLocation>${checkstyle.configLocation}</configLocation>
+                    <failsOnError>${checkstyle.failsOnError}</failsOnError>
+                    <consoleOutput>${checkstyle.consoleOutput}</consoleOutput>
 				</configuration>
 				<executions>
 					<execution>
@@ -385,8 +439,7 @@
 					<overwrite>true</overwrite>
 				</configuration>
 			</plugin>
-
-		</plugins>
+        </plugins>
 	</build>
 
 	<dependencyManagement>
@@ -511,28 +564,74 @@
 
 	<reporting>
 		<plugins>
-            <plugin>
-		        <groupId>org.apache.maven.plugins</groupId>
-		        <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>${surefire.plugin.versio}</version>
-                <configuration>
-                    <aggregate>true</aggregate>
-                </configuration>   
-            </plugin>   
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${checkstyle.plugin.version}</version>
 				<configuration>
-					<configLocation>checkstyle-oph.xml</configLocation>
-				</configuration>
+                    <excludes>${checkstyle.excludes}</excludes>
+                    <skip>${checkstyle.skip}</skip>
+                    <configLocation>${checkstyle.configLocation}</configLocation>
+                    <failsOnError>${checkstyle.failsOnError}</failsOnError>
+                    <consoleOutput>${checkstyle.consoleOutput}</consoleOutput>
+                </configuration>
 			</plugin>
 		</plugins>
 	</reporting>
 
 	<profiles>
+
+        <profile>
+            <id>make.reports</id>
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-report-plugin</artifactId>
+                        <version>${surefire.plugin.version}</version>
+                        <configuration>
+                            <reportsDirectory>${user.home}/.surefire/reports/${project.artifactId}</reportsDirectory>
+                            <outputDirectory>${user.home}/.surefire/output/${project.artifactId}</outputDirectory>
+                            <alwaysGenerateFailsafeReport>true</alwaysGenerateFailsafeReport>
+                        </configuration>
+                    </plugin>   
+                </plugins>
+            </reporting>
+        </profile>
+        
+        <profile>
+		    <id>sonar</id>
+		    <activation>
+		        <activeByDefault>true</activeByDefault>
+		    </activation>
+		    <properties>
+		        <checkstyle.skip>true</checkstyle.skip>
+		        <checkstyle.excludes>**/*.java</checkstyle.excludes>
+		        <!-- EXAMPLE FOR MYSQL -->
+		        <sonar.jdbc.url>
+		          jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8
+		        </sonar.jdbc.url>
+		        <sonar.jdbc.driverClassName>com.mysql.jdbc.Driver</sonar.jdbc.driverClassName>
+		        <sonar.jdbc.username>sonar</sonar.jdbc.username>
+		        <sonar.jdbc.password>Dx4k7T23x3ox8yS</sonar.jdbc.password>
+		        <!-- optional URL to server. Default value is http://localhost:9000 -->
+		        <sonar.host.url>
+		          http://pulpetti.hard.ware.fi:9000/sonar
+		        </sonar.host.url>
+		    </properties>
+		    <dependencies>
+			    <dependency>
+				   <groupId>org.codehaus.sonar-plugins</groupId>
+				   <artifactId>sonar-clover-plugin</artifactId>
+				   <version>2.8</version>
+				</dependency>
+			</dependencies>
+		</profile>
+
 		<profile>
 			<id>clover.all</id>
 			<properties>
+                <checkstyle.skip>true</checkstyle.skip>
                 <checkstyle.excludes>**/*.java</checkstyle.excludes>
             </properties>
 			<build>
@@ -540,15 +639,6 @@
 					<plugin>
 						<groupId>com.atlassian.maven.plugins</groupId>
 						<artifactId>maven-clover2-plugin</artifactId>
-						<version>${clover.version}</version>
-						<configuration>
-							<!-- 
-							<license><![CDATA[rpRQNMNVbDQGOEFKsVQKeIihqPnFbdDEHvvNdDVKJlFhJhemj2KgKqUCcBA763sFqgbibB52L0Cp0MzNnhQ88tyJuOnONlmQQqssopQmnQMMroQMPVTqPQRnpqrQNQOPTtWuTusvWnvSsvtWXTmTTTTSosUoWSxxStWuswtMRnmnmUUnppnpuqqmmmmmUUnppnpuqqmmmmmUU6fkkfpeWEXqflkXiW2lXoaWlcW5arZXqflkUUor]]>
-							</license> -->
-							<snapshot>${clover.snapshot}</snapshot> 
-     						<singleCloverDatabase>${clover.singleCloverDatabase}</singleCloverDatabase>
-     						<alwaysReport>true</alwaysReport>
-						</configuration>
 						<executions>
 							<execution>
 								<id>clover</id>
@@ -561,10 +651,11 @@
 							<execution>
 								<phase>verify</phase>
 								<goals>
-									<goal>aggregate</goal>
+									<!--  goal>aggregate</goal-->
 									<goal>clover</goal>
 									<goal>log</goal>
 									<goal>check</goal>
+									<goal>save-history</goal>
 								</goals>
 							</execution>
 						</executions>
@@ -577,14 +668,6 @@
                          <groupId>com.atlassian.maven.plugins</groupId>
                          <artifactId>maven-clover2-plugin</artifactId>
                          <version>${clover.version}</version>
-						<configuration>
-							<!-- 
-							<license><![CDATA[rpRQNMNVbDQGOEFKsVQKeIihqPnFbdDEHvvNdDVKJlFhJhemj2KgKqUCcBA763sFqgbibB52L0Cp0MzNnhQ88tyJuOnONlmQQqssopQmnQMMroQMPVTqPQRnpqrQNQOPTtWuTusvWnvSsvtWXTmTTTTSosUoWSxxStWuswtMRnmnmUUnppnpuqqmmmmmUUnppnpuqqmmmmmUU6fkkfpeWEXqflkXiW2lXoaWlcW5arZXqflkUUor]]>
-							</license> -->
-							<snapshot>${clover.snapshot}</snapshot> 
-     						<singleCloverDatabase>${clover.singleCloverDatabase}</singleCloverDatabase>
-     						<alwaysReport>true</alwaysReport>
-						</configuration>
                      </plugin>
                  </plugins>
             </reporting>
@@ -592,7 +675,7 @@
             	 <dependency>
 		            <groupId>com.cenqua.clover</groupId>
 		            <artifactId>clover</artifactId>
-		            <version>3.1.4</version>
+		            <version>${clover.version}</version>
 		        </dependency>
             </dependencies>
 		</profile>
@@ -691,6 +774,7 @@
 					<plugin>
 						<groupId>org.mortbay.jetty</groupId>
 						<artifactId>maven-jetty-plugin</artifactId>
+						<version>${jetty.version}</version>
 						<configuration>
 							<webApp>${jetty.webApp}</webApp>
 							<contextPath>/${jetty.module}</contextPath>
