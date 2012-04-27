@@ -97,7 +97,7 @@
 		
 		<checkstyle.excludes>**/clover/**,**/target/**/src/**,**/target/**/src-test/**,**/ytj-generated-model/**</checkstyle.excludes>
 		<checkstyle.skip>false</checkstyle.skip>
-		<checkstyle.failsOnError>false</checkstyle.failsOnError>
+		<checkstyle.failsOnError>true</checkstyle.failsOnError>
         <checkstyle.consoleOutput>true</checkstyle.consoleOutput>
         <checkstyle.configLocation>checkstyle-oph.xml</checkstyle.configLocation>
                     
