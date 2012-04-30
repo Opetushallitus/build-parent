@@ -50,7 +50,6 @@
 		<hibernate.annotations.common.version>3.3.0.ga</hibernate.annotations.common.version>
 		<commons-dbcp.version>1.4_1</commons-dbcp.version>
         <commons-lang.version>2.6</commons-lang.version>
-        <jetty.version>6.1.25</jetty.version>
 
 		<!-- Utils -->
 		<jodatime.version></jodatime.version>
@@ -159,6 +158,11 @@
 			<id>vaadin-addons</id>
 			<name>Vaadin addons</name>
 			<url>http://penaali.hard.ware.fi/nexus/content/repositories/vaadin-addons/</url>
+		</repository>
+		<repository>
+		    <id>cpdetector</id>
+		    <name>Repository containing cpdetector</name>
+		    <url>http://penaali.hard.ware.fi/nexus/content/repositories/cpdetector/</url>
 		</repository>
 	</repositories>
 
@@ -399,7 +403,7 @@
 				</configuration>
 			</plugin>
 
-		<plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<configuration>
@@ -439,7 +443,8 @@
 					<overwrite>true</overwrite>
 				</configuration>
 			</plugin>
-        </plugins>
+
+		</plugins>
 	</build>
 
 	<dependencyManagement>
