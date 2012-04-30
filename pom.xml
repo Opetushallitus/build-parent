@@ -50,6 +50,7 @@
 		<hibernate.annotations.common.version>3.3.0.ga</hibernate.annotations.common.version>
 		<commons-dbcp.version>1.4_1</commons-dbcp.version>
         <commons-lang.version>2.6</commons-lang.version>
+        <jetty.version>6.1.25</jetty.version>
 
 		<!-- Utils -->
 		<jodatime.version></jodatime.version>
