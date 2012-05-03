@@ -81,39 +81,29 @@
 
 		<embedService.serviceArtifactId>${project.parent.artifactId}-service</embedService.serviceArtifactId>
 		
-		<!--  clover.version>3.1.4</clover.version>-->
 		<clover.version>3.1.4</clover.version>
-        
         <clover.fullRunEvery>500</clover.fullRunEvery>
 		<clover.generateHistorical>true</clover.generateHistorical>
+		
+        <clover.historyDir>${user.home}/.clover/history/${project.artifactId}</clover.historyDir>
+        <clover.snapshot>${user.home}/.clover/${project.groupId}-${project.artifactId}/clover.snapshot</clover.snapshot>
+        <clover.outputDirectory>${user.home}/.clover/output/${project.artifactId}</clover.outputDirectory>
+        <clover.cloverDatabase>${user.home}/.clover/db/${project.artifactId}/clover.db</clover.cloverDatabase>
+        
+      <!-- 
 		<clover.historyDir>${user.home}/.clover/${project.artifactId}/history</clover.historyDir>
-		
-		<clover.snapshot>${user.home}/.clover/${project.artifactId}/clover.snapshot</clover.snapshot>
+		<clover.snapshot>${user.home}/.clover/${project.groupId}-${project.artifactId}/clover.snapshot</clover.snapshot>
 		<clover.outputDirectory>${user.home}/.clover/output</clover.outputDirectory>
-        
 		<clover.cloverDatabase>${user.home}/.clover/clover.db</clover.cloverDatabase>
-        <clover.singleCloverDatabase>true</clover.singleCloverDatabase>
-        
-		
+	    <clover.singleCloverDatabase>true</clover.singleCloverDatabase> -->
+    
 		<checkstyle.excludes>**/clover/**,**/target/**/src/**,**/target/**/src-test/**,**/ytj-generated-model/**</checkstyle.excludes>
 		<checkstyle.skip>false</checkstyle.skip>
 		<checkstyle.failsOnError>true</checkstyle.failsOnError>
         <checkstyle.consoleOutput>true</checkstyle.consoleOutput>
         <checkstyle.configLocation>checkstyle-oph.xml</checkstyle.configLocation>
-                    
-        <!-- Dynamic analysis relates to unit tests. By default, those unit tests are executed but you can 
-             optionally decide to do only static analysis or to reuse existing reports which have been previously generated. 
-             Possible values are true, false, reuseReports. -->
-        <sonar.dynamicAnalysis>true</sonar.dynamicAnalysis>
-		
-		<!--  The absolute or relative path of the surefire reports directory. 
-		      Used only if sonar.dynamicAnalysis is reuseReports. -->
-		<sonar.surefire.reportsPath>${user.home}/.surefire/reports/${project.artifactId}</sonar.surefire.reportsPath>
-		
-        <!--  The absolute or relative path of the clover xml report file. 
-              Used only if sonar.dynamicAnalysis is reuseReports. -->
-        <sonar.core.codeCoveragePlugin>clover</sonar.core.codeCoveragePlugin>
-        <sonar.clover.reportPath>${clover.outputDirectory}/clover.xml</sonar.clover.reportPath>
+
+		<surefire.reportsDirectory>${project.build.directory}/surefire-reports</surefire.reportsDirectory>
 		
 	</properties>
 
@@ -274,7 +264,12 @@
 						<alwaysReport>true</alwaysReport>
                         <generateXml>true</generateXml>
 					</configuration>
-				</plugin>
+				</plugin> 
+				<plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>1.7</version>
+		        </plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
@@ -338,8 +333,8 @@
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-                    <reportsDirectory>${user.home}/.surefire/reports/${project.artifactId}</reportsDirectory>
-                    <outputDirectory>${user.home}/.surefire/output/${project.artifactId}</outputDirectory>
+				    <reportsDirectory>${surefire.reportsDirectory}</reportsDirectory>
+				    <alwaysGenerateFailsafeReport>true</alwaysGenerateFailsafeReport>
 					<excludes>
 						<exclude>**/selenium/**/*</exclude>
 						<exclude>**/it/**/*</exclude>
@@ -353,8 +348,7 @@
 			<plugin>
 				<artifactId>maven-failsafe-plugin</artifactId>
                 <configuration>
-                    <reportsDirectory>${user.home}/.surefire/reports/${project.artifactId}</reportsDirectory>
-                    <outputDirectory>${user.home}/.surefire/output/${project.artifactId}</outputDirectory> 
+                    <reportsDirectory>${surefire.reportsDirectory}</reportsDirectory>
                     <alwaysGenerateFailsafeReport>true</alwaysGenerateFailsafeReport>
 					<includes>
 						<include>**/selenium/**/*Test*</include>
@@ -588,48 +582,47 @@
                     <consoleOutput>${checkstyle.consoleOutput}</consoleOutput>
                 </configuration>
 			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>${surefire.plugin.version}</version>
+                <configuration>
+                    <reportsDirectory>${surefire.reportsDirectory}</reportsDirectory>
+                    <alwaysGenerateFailsafeReport>true</alwaysGenerateFailsafeReport>
+                </configuration>
+            </plugin>
 		</plugins>
 	</reporting>
 
 	<profiles>
-
-        <profile>
-            <id>make.reports</id>
-            <reporting>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-report-plugin</artifactId>
-                        <version>${surefire.plugin.version}</version>
-                        <configuration>
-                            <reportsDirectory>${user.home}/.surefire/reports/${project.artifactId}</reportsDirectory>
-                            <outputDirectory>${user.home}/.surefire/output/${project.artifactId}</outputDirectory>
-                            <alwaysGenerateFailsafeReport>true</alwaysGenerateFailsafeReport>
-                        </configuration>
-                    </plugin>   
-                </plugins>
-            </reporting>
-        </profile>
-        
         <profile>
 		    <id>sonar</id>
 		    <activation>
 		        <activeByDefault>true</activeByDefault>
 		    </activation>
 		    <properties>
+		        <!-- Dynamic analysis relates to unit tests. By default, those unit tests are executed but you can 
+                optionally decide to do only static analysis or to reuse existing reports which have been previously generated. 
+                Possible values are true, false, reuseReports. -->
+		        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+		        
+		        <!--  The absolute or relative path of the surefire reports directory. 
+		              Used only if sonar.dynamicAnalysis is reuseReports. -->
+		        <sonar.surefire.reportsPath>${surefire.reportsDirectory}</sonar.surefire.reportsPath>
+		        <!--  The absolute or relative path of the clover xml report file. 
+		              Used only if sonar.dynamicAnalysis is reuseReports. -->
+		        <sonar.core.codeCoveragePlugin>clover</sonar.core.codeCoveragePlugin>
+		        <sonar.clover.reportPath>${clover.outputDirectory}/clover.xml</sonar.clover.reportPath>
+                
 		        <checkstyle.skip>true</checkstyle.skip>
 		        <checkstyle.excludes>**/*.java</checkstyle.excludes>
 		        <!-- EXAMPLE FOR MYSQL -->
-		        <sonar.jdbc.url>
-		          jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8
-		        </sonar.jdbc.url>
+		        <sonar.jdbc.url>jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8</sonar.jdbc.url>
 		        <sonar.jdbc.driverClassName>com.mysql.jdbc.Driver</sonar.jdbc.driverClassName>
 		        <sonar.jdbc.username>sonar</sonar.jdbc.username>
 		        <sonar.jdbc.password>Dx4k7T23x3ox8yS</sonar.jdbc.password>
 		        <!-- optional URL to server. Default value is http://localhost:9000 -->
-		        <sonar.host.url>
-		          http://pulpetti.hard.ware.fi:9000/sonar
-		        </sonar.host.url>
+		        <sonar.host.url>http://pulpetti.hard.ware.fi:9000/sonar</sonar.host.url>
 		    </properties>
 		    <dependencies>
 			    <dependency>
