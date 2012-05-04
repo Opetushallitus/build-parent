@@ -89,13 +89,6 @@
         <clover.snapshot>${user.home}/.clover/${project.groupId}-${project.artifactId}/clover.snapshot</clover.snapshot>
         <clover.outputDirectory>${user.home}/.clover/output/${project.artifactId}</clover.outputDirectory>
         <clover.cloverDatabase>${user.home}/.clover/db/${project.artifactId}/clover.db</clover.cloverDatabase>
-        
-      <!-- 
-		<clover.historyDir>${user.home}/.clover/${project.artifactId}/history</clover.historyDir>
-		<clover.snapshot>${user.home}/.clover/${project.groupId}-${project.artifactId}/clover.snapshot</clover.snapshot>
-		<clover.outputDirectory>${user.home}/.clover/output</clover.outputDirectory>
-		<clover.cloverDatabase>${user.home}/.clover/clover.db</clover.cloverDatabase>
-	    <clover.singleCloverDatabase>true</clover.singleCloverDatabase> -->
     
 		<checkstyle.excludes>**/clover/**,**/target/**/src/**,**/target/**/src-test/**,**/ytj-generated-model/**</checkstyle.excludes>
 		<checkstyle.skip>false</checkstyle.skip>
