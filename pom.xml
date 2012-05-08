@@ -176,6 +176,11 @@
 			<name>Spring Framework Maven Milestone Releases (Maven Central Format)</name>
 			<url>http://penaali.hard.ware.fi/nexus/content/repositories/com.springsource.repository.maven.milestone/</url>
 		</repository>
+        <repository>
+            <id>3rdparty-nexus</id>
+            <name></name>
+            <url>http://penaali.hard.ware.fi/nexus/content/repositories/3rdparty</url>
+        </repository>
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
