@@ -499,12 +499,12 @@
 				<configuration>
 					<threshold>High</threshold>
 					<effort>Default</effort>
-					<failOnError>false</failOnError>
+					<failOnError>true</failOnError>
 					<outputDirectory>${project.build.directory}/findbugs</outputDirectory>
 					<findbugsXmlOutputDirectory>${project.build.directory}/findbugs</findbugsXmlOutputDirectory>
 				</configuration>
 			</plugin>
-			<!--<plugin>
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>xml-maven-plugin</artifactId>
 				<version>1.0</version>
@@ -521,12 +521,12 @@
 						<transformationSet>
 							<dir>${project.build.directory}/findbugs</dir>
 							<outputDir>${project.build.directory}/findbugs</outputDir>
-							<stylesheet>fancy-hist.xsl</stylesheet>-->
+							<stylesheet>fancy-hist.xsl</stylesheet>
 							<!--<stylesheet>default.xsl</stylesheet> -->
 							<!--<stylesheet>plain.xsl</stylesheet> -->
 							<!--<stylesheet>fancy.xsl</stylesheet> -->
 							<!--<stylesheet>summary.xsl</stylesheet> -->
-							<!-- <fileMappers>
+							<fileMappers>
 								<fileMapper implementation="org.codehaus.plexus.components.io.filemappers.FileExtensionMapper">
 									<targetExtension>.html</targetExtension>
 								</fileMapper>
@@ -541,7 +541,7 @@
 						<version>2.0.0</version>
 					</dependency>
 				</dependencies>
-			</plugin> -->
+			</plugin>
 		</plugins>
 	</build>
 
@@ -752,6 +752,11 @@
             </dependency>
 			
 			<!-- Spring libraries used in APP and Service -->
+			<dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-expression</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-orm</artifactId>
