@@ -725,6 +725,11 @@
                 <version>${hibernate.annotations.common.version}</version>
             </dependency>
             
+            <dependency>
+                <groupId>fi.vm.sade.generic</groupId>
+                <artifactId>generic-common</artifactId>
+                <version>${sade-generic.version}</version>
+            </dependency>
 			<dependency>
 				<groupId>fi.vm.sade.generic</groupId>
 				<artifactId>generic-dao</artifactId>
