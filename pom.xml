@@ -24,7 +24,7 @@
 		<vaadin.version>6.7.5</vaadin.version>
 		<gwt.version>2.3.0</gwt.version>
 		<gwt.plugin.version>2.2.0</gwt.plugin.version>
-		<servlet.version>2.5</servlet.version>
+		<servlet.version>3.0.1</servlet.version>
 		<vaadin.formbinder.version>2.1.1</vaadin.formbinder.version>
 		<portlet.api.version>2.0</portlet.api.version>
 
@@ -34,21 +34,22 @@
 		<!-- ServiceMix components / frameworks -->
 		<cxf.version>2.4.6</cxf.version>
 		<camel.version>2.8.3</camel.version>
-		<spring.version>3.0.6.RELEASE</spring.version>
+		<spring.version>3.1.1.RELEASE</spring.version>
+		<osgi.spring.version>3.0.6.RELEASE</osgi.spring.version>
 		<spring.osgi.version>1.2.1</spring.osgi.version>
 
 		<!-- Logging -->
 		<slf4j.version>1.6.1</slf4j.version>
 
 		<!-- Database -->
-		<jpa-api.version>1.99.0</jpa-api.version>
+		<jpa-api.version>2.0.0</jpa-api.version>
 		<atomikos.version>3.6.6</atomikos.version>
 		<jta.version>1.1</jta.version>
-		<postgresql.version>8.3.604</postgresql.version>
-		<hsqldb.version>1.8.0.10</hsqldb.version>
-		<hibernate.version>3.3.2.GA</hibernate.version>
-		<hibernate.ejb.version>3.4.0.GA-A</hibernate.ejb.version>
-		<hibernate.annotations.common.version>3.3.0.ga</hibernate.annotations.common.version>
+		<postgresql.version>9.1-901-1.jdbc4</postgresql.version>
+		<hsqldb.version>2.0.0</hsqldb.version>
+		<hibernate.version>4.1.0.Final</hibernate.version>
+        <hibernate.ejb.version>4.1.0.Final</hibernate.ejb.version>
+        <hibernate.annotations.common.version>4.1.0.Final</hibernate.annotations.common.version>
 		<commons-dbcp.version>1.4_1</commons-dbcp.version>
         <commons-lang.version>2.6</commons-lang.version>
         <jetty.version>6.1.25</jetty.version>
@@ -498,12 +499,12 @@
 				<configuration>
 					<threshold>High</threshold>
 					<effort>Default</effort>
-					<failOnError>true</failOnError>
+					<failOnError>false</failOnError>
 					<outputDirectory>${project.build.directory}/findbugs</outputDirectory>
 					<findbugsXmlOutputDirectory>${project.build.directory}/findbugs</findbugsXmlOutputDirectory>
 				</configuration>
 			</plugin>
-			<plugin>
+			<!--<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>xml-maven-plugin</artifactId>
 				<version>1.0</version>
@@ -520,12 +521,12 @@
 						<transformationSet>
 							<dir>${project.build.directory}/findbugs</dir>
 							<outputDir>${project.build.directory}/findbugs</outputDir>
-							<stylesheet>fancy-hist.xsl</stylesheet>
+							<stylesheet>fancy-hist.xsl</stylesheet>-->
 							<!--<stylesheet>default.xsl</stylesheet> -->
 							<!--<stylesheet>plain.xsl</stylesheet> -->
 							<!--<stylesheet>fancy.xsl</stylesheet> -->
 							<!--<stylesheet>summary.xsl</stylesheet> -->
-							<fileMappers>
+							<!-- <fileMappers>
 								<fileMapper implementation="org.codehaus.plexus.components.io.filemappers.FileExtensionMapper">
 									<targetExtension>.html</targetExtension>
 								</fileMapper>
@@ -540,21 +541,59 @@
 						<version>2.0.0</version>
 					</dependency>
 				</dependencies>
-			</plugin>
+			</plugin> -->
 		</plugins>
 	</build>
 
 	<dependencyManagement>
 		<dependencies>
+            <!-- Testing -->
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>${mockito.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>fi.vm.sade.generic</groupId>
+                <artifactId>generic-test-support</artifactId>
+                <version>${sade-generic.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>fi.vm.sade.generic</groupId>
+                <artifactId>dbunit-support</artifactId>
+                <version>${sade-generic.version}</version>
+            </dependency>
+            
+            <!-- Logging -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+            
+            <dependency>
                 <groupId>javax.servlet</groupId>
-                <artifactId>servlet-api</artifactId>
+                <artifactId>javax.servlet-api</artifactId>
                 <version>${servlet.version}</version>
             </dependency>
             <dependency>
@@ -562,41 +601,97 @@
                 <artifactId>portlet-api</artifactId>
                 <version>${portlet.api.version}</version>
             </dependency>
-			<dependency>
-				<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-api</artifactId>
-				<version>${cxf.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-rt-frontend-jaxrs</artifactId>
-				<version>${cxf.version}</version>
-			</dependency>
-			<dependency>
+            
+			<!-- CXF dependencies -->
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-api</artifactId>
+                <version>${cxf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-bundle</artifactId>
+                <version>${cxf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+                <version>${cxf.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.cxf</groupId>
                 <artifactId>cxf-rt-frontend-jaxws</artifactId>
                 <version>${cxf.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.cxf</groupId>
-                <artifactId>cxf-rt-transports-http-jetty</artifactId>
+                <artifactId>cxf-rt-core</artifactId>
                 <version>${cxf.version}</version>
             </dependency>
-			<dependency>
-				<groupId>javax.transaction</groupId>
-				<artifactId>jta</artifactId>
-				<version>${jta.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.atomikos</groupId>
-				<artifactId>transactions-jdbc</artifactId>
-				<version>${atomikos.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.atomikos</groupId>
-				<artifactId>transactions-hibernate3</artifactId>
-				<version>${atomikos.version}</version>
-			</dependency>
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-transports-local</artifactId>
+                <version>${cxf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-transports-http</artifactId>
+                <version>${cxf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-common-utilities</artifactId>
+                <version>${cxf.version}</version>
+            </dependency>
+            
+            <!-- Camel dependencies -->
+            <!-- Camel libraries -->
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-core</artifactId>
+                <version>${camel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-spring</artifactId>
+                <version>${camel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-bindy</artifactId>
+                <version>${camel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-csv</artifactId>
+                <version>${camel.version}</version>
+            </dependency>
+            <dependency>
+              <groupId>org.apache.camel</groupId>
+              <artifactId>camel-castor</artifactId>
+              <version>${camel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-cxf</artifactId>
+                <version>${camel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-http</artifactId>
+                <version>${camel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-jms</artifactId>
+                <version>${camel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-test</artifactId>
+                <version>${camel.version}</version>
+            </dependency>
+            
 			<dependency>
 				<groupId>org.springframework.osgi</groupId>
 				<artifactId>spring-osgi-core</artifactId>
@@ -607,26 +702,29 @@
 				<artifactId>generic-test-support</artifactId>
 				<version>${sade-generic.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>com.springsource.org.hibernate</artifactId>
-				<version>${hibernate.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>com.springsource.org.hibernate.ejb</artifactId>
-				<version>${hibernate.ejb.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>com.springsource.org.hibernate.annotations</artifactId>
-				<version>${hibernate.ejb.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>com.springsource.org.hibernate.annotations.common</artifactId>
-				<version>${hibernate.annotations.common.version}</version>
-			</dependency>
+			
+			<!-- Hibernate libraries -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>com.springsource.org.hibernate</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>com.springsource.org.hibernate.ejb</artifactId>
+                <version>${hibernate.ejb.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>com.springsource.org.hibernate.annotations</artifactId>
+                <version>${hibernate.ejb.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate.common</groupId>
+                <artifactId>com.springsource.org.hibernate.annotations.common</artifactId>
+                <version>${hibernate.annotations.common.version}</version>
+            </dependency>
+            
 			<dependency>
 				<groupId>fi.vm.sade.generic</groupId>
 				<artifactId>generic-dao</artifactId>
@@ -638,39 +736,176 @@
 				<version>${sade-generic.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.postgresql</groupId>
-				<artifactId>com.springsource.org.postgresql.jdbc4</artifactId>
-				<version>${postgresql.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.hsqldb</groupId>
-				<artifactId>com.springsource.org.hsqldb</artifactId>
-				<version>${hsqldb.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-orm</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-context</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
+                <groupId>postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hsqldb</groupId>
+                <artifactId>hsqldb</artifactId>
+                <version>${hsqldb.version}</version>
+            </dependency>
+			
+			<!-- Spring libraries used in APP and Service -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-orm</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-tx</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aspects</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            
+            <!-- Spring libraries used in ServiceMix -->
+            <dependency>
+                <groupId>org.springframework.osgi</groupId>
+                <artifactId>spring-osgi-core</artifactId>
+                <version>${spring.osgi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>org.springframework.context</artifactId>
+                <version>${osgi.spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>org.springframework.beans</artifactId>
+                <version>${osgi.spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>org.springframework.core</artifactId>
+                <version>${osgi.spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>org.springframework.transaction</artifactId>
+                <version>${osgi.spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>org.springframework.web</artifactId>
+                <version>${osgi.spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>org.springframework.expression</artifactId>
+                <version>${osgi.spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>org.springframework.asm</artifactId>
+                <version>${osgi.spring.version}</version>
+            </dependency>
+            
+            <!-- Utilities -->
 			<dependency>
 				<groupId>joda-time</groupId>
 				<artifactId>joda-time</artifactId>
 				<version>${jodatime.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>org.apache.servicemix.bundles</groupId>
-				<artifactId>org.apache.servicemix.bundles.commons-dbcp</artifactId>
-				<version>${commons-dbcp.version}</version>
-			</dependency>
             <dependency>
                 <groupId>commons-lang</groupId>
                 <artifactId>commons-lang</artifactId>
                 <version>${commons-lang.version}</version>
+            </dependency>
+            
+            <!-- Database -->
+            <dependency>
+                <groupId>javax.transaction</groupId>
+                <artifactId>jta</artifactId>
+                <version>${jta.version}</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.apache.servicemix.bundles</groupId>
+                <artifactId>org.apache.servicemix.bundles.commons-dbcp</artifactId>
+                <version>${commons-dbcp.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.persistence</groupId>
+                <artifactId>com.springsource.javax.persistence</artifactId>
+                <version>${jpa-api.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            
+            <!-- UI -->
+            <dependency>
+                <groupId>com.vaadin</groupId>
+                <artifactId>vaadin</artifactId>
+                <version>${vaadin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${servlet.version}</version>
+            </dependency>
+            <dependency>
+                 <groupId>javax.portlet</groupId>
+                 <artifactId>portlet-api</artifactId>
+                 <version>${portlet.api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjrt</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjtools</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>aopalliance</groupId>
+                <artifactId>aopalliance</artifactId>
+                <version>${aopalliance.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.vaadin.addons</groupId>
+                <artifactId>formbinder</artifactId>
+                <version>${vaadin.formbinder.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.activation</groupId>
+                <artifactId>activation</artifactId>
+                <version>1.1.1</version>
             </dependency>
         </dependencies>
 	</dependencyManagement>
