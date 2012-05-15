@@ -488,18 +488,31 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>
 				<version>${findbugs.plugin.version}</version>
+                <!--
 				<executions>
 					<execution>
-						<phase>verify</phase>
+                        <id>findbugs</id>
+						<phase>post-integration-test</phase>
 						<goals>
 							<goal>check</goal>
 						</goals>
 					</execution>
-				</executions>
-				<configuration>
+                    <execution>
+                        <id>findbugs-failonerror</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <failOnError>true</failOnError>
+                        </configuration>
+                    </execution>
+                </executions>
+                -->
+                <configuration>
 					<threshold>High</threshold>
 					<effort>Default</effort>
-					<failOnError>true</failOnError>
+					<failOnError>false</failOnError>
 					<outputDirectory>${project.build.directory}/findbugs</outputDirectory>
 					<findbugsXmlOutputDirectory>${project.build.directory}/findbugs</findbugsXmlOutputDirectory>
 				</configuration>
@@ -509,12 +522,14 @@
 				<artifactId>xml-maven-plugin</artifactId>
 				<version>1.0</version>
 				<executions>
+                    <!--
 					<execution>
-						<phase>verify</phase>
+						<phase>post-integration-test</phase>
 						<goals>
 							<goal>transform</goal>
 						</goals>
 					</execution>
+					-->
 				</executions>
 				<configuration>
 					<transformationSets>
