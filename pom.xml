@@ -88,10 +88,11 @@
         <clover.fullRunEvery>500</clover.fullRunEvery>
 		<clover.generateHistorical>true</clover.generateHistorical>
 		
-        <clover.historyDir>${user.home}/.clover/history/${project.groupId}-${project.artifactId}</clover.historyDir>
-        <clover.snapshot>${user.home}/.clover/snapshot/${project.groupId}-${project.artifactId}/clover.snapshot</clover.snapshot>
-        <clover.outputDirectory>${user.home}/.clover/output/${project.groupId}-${project.artifactId}</clover.outputDirectory>
-        <clover.cloverDatabase>${user.home}/.clover/db/${project.groupId}-${project.artifactId}/clover.db</clover.cloverDatabase>
+		<clover.base>/data00/atlassian/application-data/bamboo/clover</clover.base>
+        <clover.historyDir>${clover.base}/history/${project.groupId}-${project.artifactId}</clover.historyDir>
+        <clover.snapshot>${clover.base}/snapshot/${project.groupId}-${project.artifactId}/clover.snapshot</clover.snapshot>
+        <clover.outputDirectory>${clover.base}/output/${project.groupId}-${project.artifactId}</clover.outputDirectory>
+        <clover.cloverDatabase>${clover.base}/db/${project.groupId}-${project.artifactId}/clover.db</clover.cloverDatabase>
     
 		<checkstyle.excludes>**/clover/**,**/target/**/src/**,**/target/**/src-test/**,**/ytj-generated-model/**</checkstyle.excludes>
 		<checkstyle.skip>false</checkstyle.skip>
