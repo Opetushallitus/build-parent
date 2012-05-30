@@ -37,6 +37,7 @@
 		<spring.version>3.1.1.RELEASE</spring.version>
 		<osgi.spring.version>3.0.6.RELEASE</osgi.spring.version>
 		<spring.osgi.version>1.2.1</spring.osgi.version>
+		<activemq.version>5.5.1</activemq.version>
 
 		<!-- Logging -->
 		<slf4j.version>1.6.1</slf4j.version>
@@ -70,7 +71,7 @@
 		<compiler.plugin.version>2.3.2</compiler.plugin.version>
 		<enforcer.plugin.version>1.0.1</enforcer.plugin.version>
 		<surefire.plugin.version>2.12</surefire.plugin.version>
-		<failsafe.plugin.version>2.12</failsafe.plugin.version>
+		<failsafe.plugin.version>2.6</failsafe.plugin.version>
 		<deploy.plugin.version>2.7</deploy.plugin.version>
 		<release.plugin.version>2.2.1</release.plugin.version>
 		<source.plugin.version>2.1.2</source.plugin.version>
@@ -639,6 +640,33 @@
                 <artifactId>camel-test</artifactId>
                 <version>${camel.version}</version>
             </dependency>
+            <dependency>
+	            <groupId>org.apache.camel</groupId>
+	            <artifactId>camel-mail</artifactId>
+	            <version>${camel.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.apache.camel</groupId>
+	            <artifactId>camel-velocity</artifactId>
+	            <version>${camel.version}</version>
+	        </dependency>
+            
+            <!-- ActiveMQ -->
+            <dependency>
+	            <groupId>org.apache.activemq</groupId>
+	            <artifactId>activemq-camel</artifactId>
+	            <version>${activemq.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.apache.activemq</groupId>
+	            <artifactId>activemq-core</artifactId>
+	            <version>${activemq.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.apache.activemq</groupId>
+	            <artifactId>activemq-pool</artifactId>
+	            <version>${activemq.version}</version>
+	        </dependency>
             
 			<dependency>
 				<groupId>org.springframework.osgi</groupId>
@@ -740,6 +768,11 @@
                 <artifactId>spring-test</artifactId>
                 <version>${spring.version}</version>
             </dependency>
+            <dependency>
+	            <groupId>org.springframework</groupId>
+	            <artifactId>spring-jms</artifactId>
+	            <version>${spring.version}</version>
+	        </dependency>
             
             <!-- Spring libraries used in ServiceMix -->
             <dependency>
