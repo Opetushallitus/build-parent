@@ -1516,6 +1516,7 @@
 	</profiles>
 
 	<modules>
-		<module>build-utilities</module>
-	</modules>
+        <module>build-utilities</module>
+        <module>generic-vaadin-app</module>
+    </modules>
 </project>
