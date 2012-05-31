@@ -37,6 +37,7 @@
 		<spring.version>3.1.1.RELEASE</spring.version>
 		<osgi.spring.version>3.0.6.RELEASE</osgi.spring.version>
 		<spring.osgi.version>1.2.1</spring.osgi.version>
+		<activemq.version>5.5.1</activemq.version>
 
 		<!-- Logging -->
 		<slf4j.version>1.6.1</slf4j.version>
@@ -645,6 +646,33 @@
                 <artifactId>camel-test</artifactId>
                 <version>${camel.version}</version>
             </dependency>
+            <dependency>
+	            <groupId>org.apache.camel</groupId>
+	            <artifactId>camel-mail</artifactId>
+	            <version>${camel.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.apache.camel</groupId>
+	            <artifactId>camel-velocity</artifactId>
+	            <version>${camel.version}</version>
+	        </dependency>
+            
+            <!-- ActiveMQ -->
+            <dependency>
+	            <groupId>org.apache.activemq</groupId>
+	            <artifactId>activemq-camel</artifactId>
+	            <version>${activemq.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.apache.activemq</groupId>
+	            <artifactId>activemq-core</artifactId>
+	            <version>${activemq.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.apache.activemq</groupId>
+	            <artifactId>activemq-pool</artifactId>
+	            <version>${activemq.version}</version>
+	        </dependency>
             
 			<dependency>
 				<groupId>org.springframework.osgi</groupId>
@@ -746,9 +774,14 @@
                 <artifactId>spring-test</artifactId>
                 <version>${spring.version}</version>
             </dependency>
+            <dependency>
+	            <groupId>org.springframework</groupId>
+	            <artifactId>spring-jms</artifactId>
+	            <version>${spring.version}</version>
+	        </dependency>
             
             <!-- Spring libraries used in ServiceMix -->
-            <!-- this is dublicate  
+            <!-- this is duplicate  
             <dependency>
                 <groupId>org.springframework.osgi</groupId>
                 <artifactId>spring-osgi-core</artifactId>
@@ -832,14 +865,14 @@
                 <artifactId>spring-web</artifactId>
                 <version>${spring.version}</version>
             </dependency>
-            <!--  dublicate 
+            <!--  duplicate 
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
                 <version>${servlet.version}</version>
             </dependency>
             -->
-            <!--  dublicate 
+            <!--  duplicate 
             <dependency>
                  <groupId>javax.portlet</groupId>
                  <artifactId>portlet-api</artifactId>
