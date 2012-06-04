@@ -27,8 +27,9 @@
 		<servlet.version>3.0.1</servlet.version>
 		<vaadin.formbinder.version>2.1.1</vaadin.formbinder.version>
 		<portlet.api.version>2.0</portlet.api.version>
+        <google.map.widget.version>0.9.13</google.map.widget.version>
 
-		<!-- Our generic components -->
+        <!-- Our generic components -->
 		<sade-generic.version>1.0-SNAPSHOT</sade-generic.version>
 
 		<!-- ServiceMix components / frameworks -->

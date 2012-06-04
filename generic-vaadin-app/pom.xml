@@ -142,7 +142,11 @@
             <artifactId>blackboard</artifactId>
             <version>${blackboard.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>googlemapwidget</artifactId>
+            <version>${google.map.widget.version}</version>
+        </dependency>
 
         <!-- testing dependencies -->
 
