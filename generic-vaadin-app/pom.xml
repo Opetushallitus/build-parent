@@ -94,12 +94,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.bsb.common.vaadin</groupId>
-            <artifactId>com.bsb.common.vaadin.embed</artifactId>
-            <version>0.4</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.vaadin.addons</groupId>
             <artifactId>formbinder</artifactId>
         </dependency>
