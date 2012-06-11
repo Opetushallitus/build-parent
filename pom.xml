@@ -27,9 +27,9 @@
 		<servlet.version>3.0.1</servlet.version>
 		<vaadin.formbinder.version>2.1.1</vaadin.formbinder.version>
 		<portlet.api.version>2.0</portlet.api.version>
-        <google.map.widget.version>0.9.13</google.map.widget.version>
+		<google.map.widget.version>0.9.13</google.map.widget.version>
 
-        <!-- Our generic components -->
+		<!-- Our generic components -->
 		<sade-generic.version>1.0-SNAPSHOT</sade-generic.version>
 
 		<!-- ServiceMix components / frameworks -->
@@ -50,12 +50,13 @@
 		<postgresql.version>9.1-901-1.jdbc4</postgresql.version>
 		<hsqldb.version>2.0.0</hsqldb.version>
 		<hibernate.version>4.1.0.Final</hibernate.version>
-        <hibernate.ejb.version>4.1.0.Final</hibernate.ejb.version>
-        <hibernate.annotations.common.version>4.1.0.Final</hibernate.annotations.common.version>
+		<hibernate.ejb.version>4.1.0.Final</hibernate.ejb.version>
+		<hibernate.annotations.common.version>4.1.0.Final</hibernate.annotations.common.version>
 		<commons-dbcp.version>1.4_1</commons-dbcp.version>
-        <commons-lang.version>2.6</commons-lang.version>
-        <jetty.version>6.1.25</jetty.version>
-
+		<commons-lang.version>2.6</commons-lang.version>
+		<jetty.version>6.1.25</jetty.version>
+        <querydsl.version>2.6.0</querydsl.version>
+        
 		<!-- Utils -->
 		<jodatime.version></jodatime.version>
 		<log4j.version>1.2.14</log4j.version>
@@ -80,30 +81,30 @@
 		<checkstyle.plugin.version>2.9.1</checkstyle.plugin.version>
 		<jar.plugin.version>2.4</jar.plugin.version>
 		<resources.plugin.version>2.5</resources.plugin.version>
-        <findbugs.plugin.version>2.3.3</findbugs.plugin.version>
+		<findbugs.plugin.version>2.3.3</findbugs.plugin.version>
 
 		<project.svn.base>https://penaali.hard.ware.fi/svn/generic/${project.artifactId}</project.svn.base>
 
 		<embedService.serviceArtifactId>${project.parent.artifactId}-service</embedService.serviceArtifactId>
-		
+
 		<clover.version>3.1.4</clover.version>
-        <clover.fullRunEvery>500</clover.fullRunEvery>
+		<clover.fullRunEvery>500</clover.fullRunEvery>
 		<clover.generateHistorical>true</clover.generateHistorical>
-		
+
 		<clover.base>/data00/atlassian/application-data/bamboo/clover</clover.base>
-        <clover.historyDir>${clover.base}/history/${project.groupId}-${project.artifactId}</clover.historyDir>
-        <clover.snapshot>${clover.base}/snapshot/${project.groupId}-${project.artifactId}/clover.snapshot</clover.snapshot>
-        <clover.outputDirectory>${clover.base}/output/${project.groupId}-${project.artifactId}</clover.outputDirectory>
-        <clover.cloverDatabase>${clover.base}/db/${project.groupId}-${project.artifactId}/clover.db</clover.cloverDatabase>
-    
+		<clover.historyDir>${clover.base}/history/${project.groupId}-${project.artifactId}</clover.historyDir>
+		<clover.snapshot>${clover.base}/snapshot/${project.groupId}-${project.artifactId}/clover.snapshot</clover.snapshot>
+		<clover.outputDirectory>${clover.base}/output/${project.groupId}-${project.artifactId}</clover.outputDirectory>
+		<clover.cloverDatabase>${clover.base}/db/${project.groupId}-${project.artifactId}/clover.db</clover.cloverDatabase>
+
 		<checkstyle.excludes>**/clover/**,**/target/**/src/**,**/target/**/src-test/**,**/ytj-generated-model/**</checkstyle.excludes>
 		<checkstyle.skip>false</checkstyle.skip>
 		<checkstyle.failsOnError>true</checkstyle.failsOnError>
-        <checkstyle.consoleOutput>true</checkstyle.consoleOutput>
-        <checkstyle.configLocation><![CDATA[http://pulpetti.hard.ware.fi:9000/sonar/profiles/export?format=checkstyle&language=java&name=Sonar%2520way%2520with%2520Findbugs%2520and%2520OPH%2520Checkstyle]]></checkstyle.configLocation>
+		<checkstyle.consoleOutput>true</checkstyle.consoleOutput>
+		<checkstyle.configLocation><![CDATA[http://pulpetti.hard.ware.fi:9000/sonar/profiles/export?format=checkstyle&language=java&name=Sonar%2520way%2520with%2520Findbugs%2520and%2520OPH%2520Checkstyle]]></checkstyle.configLocation>
 
 		<surefire.reportsDirectory>${project.build.directory}/surefire-reports</surefire.reportsDirectory>
-		
+
 		<compiler.debug>false</compiler.debug>
 	</properties>
 
@@ -151,27 +152,27 @@
 			<name>Vaadin addons</name>
 			<url>http://penaali.hard.ware.fi/nexus/content/repositories/vaadin-addons/</url>
 		</repository>
-        <repository>
-            <id>vaadin-snapshots</id>
-            <url>http://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>vaadin-addons2</id>
-            <url>http://maven.vaadin.com/vaadin-addons</url>
-        </repository>
-        <repository>
-            <id>bedatadriven-public</id>
-            <name>Bedatadriven Public Repo</name>
-            <url>http://nexus.bedatadriven.com/content/groups/public</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
+		<repository>
+			<id>vaadin-snapshots</id>
+			<url>http://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>vaadin-addons2</id>
+			<url>http://maven.vaadin.com/vaadin-addons</url>
+		</repository>
+		<repository>
+			<id>bedatadriven-public</id>
+			<name>Bedatadriven Public Repo</name>
+			<url>http://nexus.bedatadriven.com/content/groups/public</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
 		<repository>
 			<id>cpdetector</id>
 			<name>Repository containing cpdetector</name>
@@ -204,11 +205,16 @@
 			<name>Spring Framework Maven Milestone Releases (Maven Central Format)</name>
 			<url>http://penaali.hard.ware.fi/nexus/content/repositories/com.springsource.repository.maven.milestone/</url>
 		</repository>
-        <repository>
-            <id>3rdparty-nexus</id>
-            <name></name>
-            <url>http://penaali.hard.ware.fi/nexus/content/repositories/3rdparty</url>
-        </repository>
+		<repository>
+			<id>3rdparty-nexus</id>
+			<name></name>
+			<url>http://penaali.hard.ware.fi/nexus/content/repositories/3rdparty</url>
+		</repository>
+		<repository>
+			<id>mysema</id>
+			<name>Mysema source</name>
+			<url>http://penaali.hard.ware.fi/nexus/content/repositories/mysema/</url>
+		</repository>
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
@@ -333,20 +339,20 @@
 						<generateHistorical>${clover.generateHistorical}</generateHistorical>
 						<historyDir>${clover.historyDir}</historyDir>
 						<alwaysReport>true</alwaysReport>
-                        <generateXml>true</generateXml>
-                        <excludes>
-                            <exclude>**/src/test/**/*.*</exclude>
-                            <exclude>**/test-classes/**/*.*</exclude>
-                            <exclude>**/selenium/**/*.*</exclude>
-                            <exclude>**/selenium/**/*Test.java</exclude>
-                        </excludes>
+						<generateXml>true</generateXml>
+						<excludes>
+							<exclude>**/src/test/**/*.*</exclude>
+							<exclude>**/test-classes/**/*.*</exclude>
+							<exclude>**/selenium/**/*.*</exclude>
+							<exclude>**/selenium/**/*Test.java</exclude>
+						</excludes>
 					</configuration>
-				</plugin> 
+				</plugin>
 				<plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-antrun-plugin</artifactId>
-                    <version>1.7</version>
-		        </plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<version>1.7</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
@@ -395,10 +401,16 @@
 			</plugin>
 
 			<!-- create also tests jar -->
-            <!--
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-jar-plugin</artifactId> 
+				<executions> <execution> <goals> <goal>test-jar</goal> </goals> </execution> 
+				</executions> </plugin> -->
+			<!-- build test-jar which can be used to reuse module's tests from another 
+				module (case: system tests) -->
+			<!-- suositeltiin käyttämään ennemmin tätä urlissa: http://stackoverflow.com/questions/1725476/maven-test-dependency-in-multi-module-project -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.2</version>
 				<executions>
 					<execution>
 						<goals>
@@ -407,30 +419,15 @@
 					</execution>
 				</executions>
 			</plugin>
-			-->
-            <!-- build test-jar which can be used to reuse module's tests from another module (case: system tests) -->
-            <!-- suositeltiin käyttämään ennemmin tätä urlissa: http://stackoverflow.com/questions/1725476/maven-test-dependency-in-multi-module-project -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.2</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>test-jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
 
 
-            <!-- separate unit tests and integration/system tests -->
+			<!-- separate unit tests and integration/system tests -->
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-				    <reportsDirectory>${surefire.reportsDirectory}</reportsDirectory>
-				    <alwaysGenerateFailsafeReport>true</alwaysGenerateFailsafeReport>
-                    <excludes>
+					<reportsDirectory>${surefire.reportsDirectory}</reportsDirectory>
+					<alwaysGenerateFailsafeReport>true</alwaysGenerateFailsafeReport>
+					<excludes>
 						<exclude>**/selenium/**/*</exclude>
 						<exclude>**/it/**/*</exclude>
 						<exclude>**/itest/**/*</exclude>
@@ -442,9 +439,9 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-failsafe-plugin</artifactId>
-                <configuration>
-                    <reportsDirectory>${surefire.reportsDirectory}</reportsDirectory>
-                    <alwaysGenerateFailsafeReport>true</alwaysGenerateFailsafeReport>
+				<configuration>
+					<reportsDirectory>${surefire.reportsDirectory}</reportsDirectory>
+					<alwaysGenerateFailsafeReport>true</alwaysGenerateFailsafeReport>
 					<includes>
 						<include>**/selenium/**/*Test*</include>
 						<include>**/it/**/*Test*</include>
@@ -506,197 +503,197 @@
 				</configuration>
 			</plugin>
 
-            <plugin>
-                <groupId>org.zeroturnaround</groupId>
-                <artifactId>jrebel-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>generate-rebel-xml</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+			<plugin>
+				<groupId>org.zeroturnaround</groupId>
+				<artifactId>jrebel-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>generate-rebel-xml</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
 		</plugins>
 	</build>
 
 	<dependencyManagement>
 		<dependencies>
-            <!-- Testing -->
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junit.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-all</artifactId>
-                <version>${mockito.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>fi.vm.sade.generic</groupId>
-                <artifactId>generic-test-support</artifactId>
-                <version>${sade-generic.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>fi.vm.sade.generic</groupId>
-                <artifactId>dbunit-support</artifactId>
-                <version>${sade-generic.version}</version>
-            </dependency>
-            
-            <!-- Logging -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-simple</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
-                <version>${log4j.version}</version>
-            </dependency>
-            
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>${servlet.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.portlet</groupId>
-                <artifactId>portlet-api</artifactId>
-                <version>${portlet.api.version}</version>
-            </dependency>
-            
+			<!-- Testing -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-all</artifactId>
+				<version>${mockito.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>fi.vm.sade.generic</groupId>
+				<artifactId>generic-test-support</artifactId>
+				<version>${sade-generic.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>fi.vm.sade.generic</groupId>
+				<artifactId>dbunit-support</artifactId>
+				<version>${sade-generic.version}</version>
+			</dependency>
+
+			<!-- Logging -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-simple</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${log4j.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>${servlet.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.portlet</groupId>
+				<artifactId>portlet-api</artifactId>
+				<version>${portlet.api.version}</version>
+			</dependency>
+
 			<!-- CXF dependencies -->
-            <dependency>
-                <groupId>org.apache.cxf</groupId>
-                <artifactId>cxf-api</artifactId>
-                <version>${cxf.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.cxf</groupId>
-                <artifactId>cxf-bundle</artifactId>
-                <version>${cxf.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.cxf</groupId>
-                <artifactId>cxf-rt-frontend-jaxrs</artifactId>
-                <version>${cxf.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.cxf</groupId>
-                <artifactId>cxf-rt-frontend-jaxws</artifactId>
-                <version>${cxf.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.cxf</groupId>
-                <artifactId>cxf-rt-core</artifactId>
-                <version>${cxf.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.cxf</groupId>
-                <artifactId>cxf-rt-transports-local</artifactId>
-                <version>${cxf.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.cxf</groupId>
-                <artifactId>cxf-rt-transports-http</artifactId>
-                <version>${cxf.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.cxf</groupId>
-                <artifactId>cxf-common-utilities</artifactId>
-                <version>${cxf.version}</version>
-            </dependency>
-            
-            <!-- Camel dependencies -->
-            <!-- Camel libraries -->
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-core</artifactId>
-                <version>${camel.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-spring</artifactId>
-                <version>${camel.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-bindy</artifactId>
-                <version>${camel.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-csv</artifactId>
-                <version>${camel.version}</version>
-            </dependency>
-            <dependency>
-              <groupId>org.apache.camel</groupId>
-              <artifactId>camel-castor</artifactId>
-              <version>${camel.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-cxf</artifactId>
-                <version>${camel.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-http</artifactId>
-                <version>${camel.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-jms</artifactId>
-                <version>${camel.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-test</artifactId>
-                <version>${camel.version}</version>
-            </dependency>
-            <dependency>
-	            <groupId>org.apache.camel</groupId>
-	            <artifactId>camel-mail</artifactId>
-	            <version>${camel.version}</version>
-	        </dependency>
-	        <dependency>
-	            <groupId>org.apache.camel</groupId>
-	            <artifactId>camel-velocity</artifactId>
-	            <version>${camel.version}</version>
-	        </dependency>
-            
-            <!-- ActiveMQ -->
-            <dependency>
-	            <groupId>org.apache.activemq</groupId>
-	            <artifactId>activemq-camel</artifactId>
-	            <version>${activemq.version}</version>
-	        </dependency>
-	        <dependency>
-	            <groupId>org.apache.activemq</groupId>
-	            <artifactId>activemq-core</artifactId>
-	            <version>${activemq.version}</version>
-	        </dependency>
-	        <dependency>
-	            <groupId>org.apache.activemq</groupId>
-	            <artifactId>activemq-pool</artifactId>
-	            <version>${activemq.version}</version>
-	        </dependency>
-            
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-api</artifactId>
+				<version>${cxf.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-bundle</artifactId>
+				<version>${cxf.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-frontend-jaxrs</artifactId>
+				<version>${cxf.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-frontend-jaxws</artifactId>
+				<version>${cxf.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-core</artifactId>
+				<version>${cxf.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-transports-local</artifactId>
+				<version>${cxf.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-transports-http</artifactId>
+				<version>${cxf.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-common-utilities</artifactId>
+				<version>${cxf.version}</version>
+			</dependency>
+
+			<!-- Camel dependencies -->
+			<!-- Camel libraries -->
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-core</artifactId>
+				<version>${camel.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-spring</artifactId>
+				<version>${camel.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-bindy</artifactId>
+				<version>${camel.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-csv</artifactId>
+				<version>${camel.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-castor</artifactId>
+				<version>${camel.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-cxf</artifactId>
+				<version>${camel.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-http</artifactId>
+				<version>${camel.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-jms</artifactId>
+				<version>${camel.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-test</artifactId>
+				<version>${camel.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-mail</artifactId>
+				<version>${camel.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-velocity</artifactId>
+				<version>${camel.version}</version>
+			</dependency>
+
+			<!-- ActiveMQ -->
+			<dependency>
+				<groupId>org.apache.activemq</groupId>
+				<artifactId>activemq-camel</artifactId>
+				<version>${activemq.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.activemq</groupId>
+				<artifactId>activemq-core</artifactId>
+				<version>${activemq.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.activemq</groupId>
+				<artifactId>activemq-pool</artifactId>
+				<version>${activemq.version}</version>
+			</dependency>
+
 			<dependency>
 				<groupId>org.springframework.osgi</groupId>
 				<artifactId>spring-osgi-core</artifactId>
@@ -707,34 +704,47 @@
 				<artifactId>generic-test-support</artifactId>
 				<version>${sade-generic.version}</version>
 			</dependency>
-			
+
 			<!-- Hibernate libraries -->
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>com.springsource.org.hibernate</artifactId>
-                <version>${hibernate.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>com.springsource.org.hibernate.ejb</artifactId>
-                <version>${hibernate.ejb.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>com.springsource.org.hibernate.annotations</artifactId>
-                <version>${hibernate.ejb.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate.common</groupId>
-                <artifactId>com.springsource.org.hibernate.annotations.common</artifactId>
-                <version>${hibernate.annotations.common.version}</version>
-            </dependency>
-            
-            <dependency>
-                <groupId>fi.vm.sade.generic</groupId>
-                <artifactId>generic-common</artifactId>
-                <version>${sade-generic.version}</version>
-            </dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>com.springsource.org.hibernate</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>com.springsource.org.hibernate.ejb</artifactId>
+				<version>${hibernate.ejb.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>com.springsource.org.hibernate.annotations</artifactId>
+				<version>${hibernate.ejb.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate.common</groupId>
+				<artifactId>com.springsource.org.hibernate.annotations.common</artifactId>
+				<version>${hibernate.annotations.common.version}</version>
+			</dependency>
+
+			<!-- QueryDSL -->
+			<dependency>
+				<groupId>com.mysema.querydsl</groupId>
+				<artifactId>querydsl-apt</artifactId>
+				<version>${querydsl.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.mysema.querydsl</groupId>
+				<artifactId>querydsl-jpa</artifactId>
+				<version>${querydsl.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>fi.vm.sade.generic</groupId>
+				<artifactId>generic-common</artifactId>
+				<version>${sade-generic.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>fi.vm.sade.generic</groupId>
 				<artifactId>generic-dao</artifactId>
@@ -746,205 +756,193 @@
 				<version>${sade-generic.version}</version>
 			</dependency>
 			<dependency>
-                <groupId>postgresql</groupId>
-                <artifactId>postgresql</artifactId>
-                <version>${postgresql.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.hsqldb</groupId>
-                <artifactId>hsqldb</artifactId>
-                <version>${hsqldb.version}</version>
-            </dependency>
-			
+				<groupId>postgresql</groupId>
+				<artifactId>postgresql</artifactId>
+				<version>${postgresql.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hsqldb</groupId>
+				<artifactId>hsqldb</artifactId>
+				<version>${hsqldb.version}</version>
+			</dependency>
+
 			<!-- Spring libraries used in APP and Service -->
 			<dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-expression</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-orm</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-beans</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-core</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-tx</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-aspects</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-test</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-	            <groupId>org.springframework</groupId>
-	            <artifactId>spring-jms</artifactId>
-	            <version>${spring.version}</version>
-	        </dependency>
-            
-            <!-- Spring libraries used in ServiceMix -->
-            <!-- this is duplicate  
-            <dependency>
-                <groupId>org.springframework.osgi</groupId>
-                <artifactId>spring-osgi-core</artifactId>
-                <version>${spring.osgi.version}</version>
-            </dependency>-->
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>org.springframework.context</artifactId>
-                <version>${osgi.spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>org.springframework.beans</artifactId>
-                <version>${osgi.spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>org.springframework.core</artifactId>
-                <version>${osgi.spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>org.springframework.transaction</artifactId>
-                <version>${osgi.spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>org.springframework.web</artifactId>
-                <version>${osgi.spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>org.springframework.expression</artifactId>
-                <version>${osgi.spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>org.springframework.asm</artifactId>
-                <version>${osgi.spring.version}</version>
-            </dependency>
-            
-            <!-- Utilities -->
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-expression</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-orm</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-tx</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aspects</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jms</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+
+			<!-- Spring libraries used in ServiceMix -->
+			<!-- this is duplicate <dependency> <groupId>org.springframework.osgi</groupId> 
+				<artifactId>spring-osgi-core</artifactId> <version>${spring.osgi.version}</version> 
+				</dependency> -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>org.springframework.context</artifactId>
+				<version>${osgi.spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>org.springframework.beans</artifactId>
+				<version>${osgi.spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>org.springframework.core</artifactId>
+				<version>${osgi.spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>org.springframework.transaction</artifactId>
+				<version>${osgi.spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>org.springframework.web</artifactId>
+				<version>${osgi.spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>org.springframework.expression</artifactId>
+				<version>${osgi.spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>org.springframework.asm</artifactId>
+				<version>${osgi.spring.version}</version>
+			</dependency>
+
+			<!-- Utilities -->
 			<dependency>
 				<groupId>joda-time</groupId>
 				<artifactId>joda-time</artifactId>
 				<version>${jodatime.version}</version>
 			</dependency>
-            <dependency>
-                <groupId>commons-lang</groupId>
-                <artifactId>commons-lang</artifactId>
-                <version>${commons-lang.version}</version>
-            </dependency>
-            
-            <!-- Database -->
-            <dependency>
-                <groupId>javax.transaction</groupId>
-                <artifactId>jta</artifactId>
-                <version>${jta.version}</version>
-            </dependency>
-            
-            <dependency>
-                <groupId>org.apache.servicemix.bundles</groupId>
-                <artifactId>org.apache.servicemix.bundles.commons-dbcp</artifactId>
-                <version>${commons-dbcp.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.persistence</groupId>
-                <artifactId>com.springsource.javax.persistence</artifactId>
-                <version>${jpa-api.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            
-            <!-- UI -->
-            <dependency>
-                <groupId>com.vaadin</groupId>
-                <artifactId>vaadin</artifactId>
-                <version>${vaadin.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-web</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <!--  duplicate 
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>${servlet.version}</version>
-            </dependency>
-            -->
-            <!--  duplicate 
-            <dependency>
-                 <groupId>javax.portlet</groupId>
-                 <artifactId>portlet-api</artifactId>
-                 <version>${portlet.api.version}</version>
-            </dependency> -->
-            <dependency>
-                <groupId>org.aspectj</groupId>
-                <artifactId>aspectjrt</artifactId>
-                <version>${aspectj.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.aspectj</groupId>
-                <artifactId>aspectjweaver</artifactId>
-                <version>${aspectj.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.aspectj</groupId>
-                <artifactId>aspectjtools</artifactId>
-                <version>${aspectj.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>aopalliance</groupId>
-                <artifactId>aopalliance</artifactId>
-                <version>${aopalliance.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.vaadin.addons</groupId>
-                <artifactId>formbinder</artifactId>
-                <version>${vaadin.formbinder.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.activation</groupId>
-                <artifactId>activation</artifactId>
-                <version>1.1.1</version>
-            </dependency>
-        </dependencies>
+			<dependency>
+				<groupId>commons-lang</groupId>
+				<artifactId>commons-lang</artifactId>
+				<version>${commons-lang.version}</version>
+			</dependency>
+
+			<!-- Database -->
+			<dependency>
+				<groupId>javax.transaction</groupId>
+				<artifactId>jta</artifactId>
+				<version>${jta.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.servicemix.bundles</groupId>
+				<artifactId>org.apache.servicemix.bundles.commons-dbcp</artifactId>
+				<version>${commons-dbcp.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.persistence</groupId>
+				<artifactId>com.springsource.javax.persistence</artifactId>
+				<version>${jpa-api.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- UI -->
+			<dependency>
+				<groupId>com.vaadin</groupId>
+				<artifactId>vaadin</artifactId>
+				<version>${vaadin.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-web</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<!-- duplicate <dependency> <groupId>javax.servlet</groupId> <artifactId>javax.servlet-api</artifactId> 
+				<version>${servlet.version}</version> </dependency> -->
+			<!-- duplicate <dependency> <groupId>javax.portlet</groupId> <artifactId>portlet-api</artifactId> 
+				<version>${portlet.api.version}</version> </dependency> -->
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjrt</artifactId>
+				<version>${aspectj.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjweaver</artifactId>
+				<version>${aspectj.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjtools</artifactId>
+				<version>${aspectj.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>aopalliance</groupId>
+				<artifactId>aopalliance</artifactId>
+				<version>${aopalliance.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.vaadin.addons</groupId>
+				<artifactId>formbinder</artifactId>
+				<version>${vaadin.formbinder.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.activation</groupId>
+				<artifactId>activation</artifactId>
+				<version>1.1.1</version>
+			</dependency>
+		</dependencies>
 	</dependencyManagement>
 
 	<reporting>
 		<plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>${surefire.plugin.version}</version>
-                <configuration>
-                    <reportsDirectory>${surefire.reportsDirectory}</reportsDirectory>
-                    <alwaysGenerateFailsafeReport>true</alwaysGenerateFailsafeReport>
-                </configuration>
-            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>${surefire.plugin.version}</version>
+				<configuration>
+					<reportsDirectory>${surefire.reportsDirectory}</reportsDirectory>
+					<alwaysGenerateFailsafeReport>true</alwaysGenerateFailsafeReport>
+				</configuration>
+			</plugin>
 		</plugins>
 	</reporting>
 
@@ -952,9 +950,9 @@
 		<profile>
 			<id>checkstyle</id>
 			<activation>
-			<property>
-                <name>!skipCheckstyle</name>
-              </property>
+				<property>
+					<name>!skipCheckstyle</name>
+				</property>
 			</activation>
 			<build>
 				<plugins>
@@ -987,7 +985,7 @@
 					</plugin>
 				</plugins>
 			</build>
-            <reporting>
+			<reporting>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -1004,7 +1002,7 @@
 				</plugins>
 			</reporting>
 		</profile>
-		
+
 		<profile>
 			<id>findbugs</id>
 			<activation>
@@ -1018,13 +1016,17 @@
 			</properties>
 			<build>
 				<plugins>
-					<!-- findbugs maven blugin is shit (vulgar. Expel feces from the body) --> 
+					<!-- findbugs maven blugin is shit (vulgar. Expel feces from the body) -->
 					<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>findbugs-maven-plugin</artifactId> 
-						<version>${findbugs.plugin.version}</version> <executions> <execution> <id>findbugs findbugs</id> <phase>post-integration-test</phase> <goals> <goal>findbugs</goal> 
-						</goals> </execution> <execution> <id>findbugs check</id> <phase>verify</phase> <goals> <goal>check</goal> </goals> </execution> </executions> <configuration> <threshold>High</threshold> 
-						<effort>Default</effort> <failOnError>true</failOnError> <findbugsXmlWithMessages>true</findbugsXmlWithMessages> <outputDirectory>${project.build.directory}/findbugs</outputDirectory> 
-						<findbugsXmlOutputDirectory>${project.build.directory}/findbugs</findbugsXmlOutputDirectory> </configuration> </plugin> -->
-	
+						<version>${findbugs.plugin.version}</version> <executions> <execution> <id>findbugs 
+						findbugs</id> <phase>post-integration-test</phase> <goals> <goal>findbugs</goal> 
+						</goals> </execution> <execution> <id>findbugs check</id> <phase>verify</phase> 
+						<goals> <goal>check</goal> </goals> </execution> </executions> <configuration> 
+						<threshold>High</threshold> <effort>Default</effort> <failOnError>true</failOnError> 
+						<findbugsXmlWithMessages>true</findbugsXmlWithMessages> <outputDirectory>${project.build.directory}/findbugs</outputDirectory> 
+						<findbugsXmlOutputDirectory>${project.build.directory}/findbugs</findbugsXmlOutputDirectory> 
+						</configuration> </plugin> -->
+
 					<plugin>
 						<artifactId>maven-antrun-plugin</artifactId>
 						<executions>
@@ -1036,27 +1038,27 @@
 								</goals>
 								<configuration>
 									<target>
-										<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath" />
+										<taskdef resource="net/sf/antcontrib/antcontrib.properties"
+											classpathref="maven.plugin.classpath" />
 										<if>
 											<available file="${project.build.directory}/classes/fi" />
 											<then>
-												<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpathref="maven.plugin.classpath" />
-	
+												<taskdef name="findbugs"
+													classname="edu.umd.cs.findbugs.anttask.FindBugsTask"
+													classpathref="maven.plugin.classpath" />
+
 												<property name="findbugsclasspath" refid="maven.plugin.classpath" />
 												<property name="runtime_classpath" refid="maven.runtime.classpath" />
 												<property name="compile_classpath" refid="maven.compile.classpath" />
-	
+
 												<mkdir dir="${project.build.directory}/findbugs" />
 												<echo>Using localRepository: ${settings.localRepository}</echo>
-												<findbugs 
-													    output="html" 
-													    outputFile="${project.build.directory}/findbugs/findbugs.html"
-													    classpath="${findbugsclasspath}"
-														pluginlist="${settings.localRepository}/net/sourceforge/findbugs/coreplugin/${findbugs.version}/coreplugin-${findbugs.version}.jar"
-														jvmargs="-Xmx256m"
-														reportLevel="medium"
-														effort="default"
-														failOnError="true">
+												<findbugs output="html"
+													outputFile="${project.build.directory}/findbugs/findbugs.html"
+													classpath="${findbugsclasspath}"
+													pluginlist="${settings.localRepository}/net/sourceforge/findbugs/coreplugin/${findbugs.version}/coreplugin-${findbugs.version}.jar"
+													jvmargs="-Xmx256m" reportLevel="medium" effort="default"
+													failOnError="true">
 													<sourcePath location="${project.basedir}/src/main/java" />
 													<class location="${project.build.directory}/classes" />
 													<auxClasspath>
@@ -1067,7 +1069,8 @@
 												</findbugs>
 											</then>
 											<else>
-												<echo>Skip findbugs, because directory '${project.build.directory}/classes/fi' not found.</echo>
+												<echo>Skip findbugs, because directory
+													'${project.build.directory}/classes/fi' not found.</echo>
 											</else>
 										</if>
 									</target>
@@ -1106,38 +1109,39 @@
 				</plugins>
 			</build>
 		</profile>
-	
-        <profile>
-		    <id>sonar</id>
-		    <properties>
-		        <!-- Dynamic analysis relates to unit tests. By default, those unit tests are executed but you can 
-                optionally decide to do only static analysis or to reuse existing reports which have been previously generated. 
-                Possible values are true, false, reuseReports. -->
-		        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-		        
-		        <!--  The absolute or relative path of the surefire reports directory. 
-		              Used only if sonar.dynamicAnalysis is reuseReports. -->
-		        <sonar.surefire.reportsPath>${surefire.reportsDirectory}</sonar.surefire.reportsPath>
-		        <!--  The absolute or relative path of the clover xml report file. 
-		              Used only if sonar.dynamicAnalysis is reuseReports. -->
-		        <sonar.core.codeCoveragePlugin>clover</sonar.core.codeCoveragePlugin>
-		        <sonar.clover.reportPath>${clover.outputDirectory}/clover.xml</sonar.clover.reportPath>
-                
-		        <checkstyle.skip>true</checkstyle.skip>
-		        <checkstyle.excludes>**/*.java</checkstyle.excludes>
-		        <!-- EXAMPLE FOR MYSQL -->
-		        <sonar.jdbc.url>jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8</sonar.jdbc.url>
-		        <sonar.jdbc.driverClassName>com.mysql.jdbc.Driver</sonar.jdbc.driverClassName>
-		        <sonar.jdbc.username>sonar</sonar.jdbc.username>
-		        <sonar.jdbc.password>Dx4k7T23x3ox8yS</sonar.jdbc.password>
-		        <!-- optional URL to server. Default value is http://localhost:9000 -->
-		        <sonar.host.url>http://pulpetti.hard.ware.fi:9000/sonar</sonar.host.url>
-		    </properties>
-		    <dependencies>
-			    <dependency>
-				   <groupId>org.codehaus.sonar-plugins</groupId>
-				   <artifactId>sonar-clover-plugin</artifactId>
-				   <version>2.8</version>
+
+		<profile>
+			<id>sonar</id>
+			<properties>
+				<!-- Dynamic analysis relates to unit tests. By default, those unit tests 
+					are executed but you can optionally decide to do only static analysis or 
+					to reuse existing reports which have been previously generated. Possible 
+					values are true, false, reuseReports. -->
+				<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+
+				<!-- The absolute or relative path of the surefire reports directory. 
+					Used only if sonar.dynamicAnalysis is reuseReports. -->
+				<sonar.surefire.reportsPath>${surefire.reportsDirectory}</sonar.surefire.reportsPath>
+				<!-- The absolute or relative path of the clover xml report file. Used 
+					only if sonar.dynamicAnalysis is reuseReports. -->
+				<sonar.core.codeCoveragePlugin>clover</sonar.core.codeCoveragePlugin>
+				<sonar.clover.reportPath>${clover.outputDirectory}/clover.xml</sonar.clover.reportPath>
+
+				<checkstyle.skip>true</checkstyle.skip>
+				<checkstyle.excludes>**/*.java</checkstyle.excludes>
+				<!-- EXAMPLE FOR MYSQL -->
+				<sonar.jdbc.url>jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8</sonar.jdbc.url>
+				<sonar.jdbc.driverClassName>com.mysql.jdbc.Driver</sonar.jdbc.driverClassName>
+				<sonar.jdbc.username>sonar</sonar.jdbc.username>
+				<sonar.jdbc.password>Dx4k7T23x3ox8yS</sonar.jdbc.password>
+				<!-- optional URL to server. Default value is http://localhost:9000 -->
+				<sonar.host.url>http://pulpetti.hard.ware.fi:9000/sonar</sonar.host.url>
+			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>org.codehaus.sonar-plugins</groupId>
+					<artifactId>sonar-clover-plugin</artifactId>
+					<version>2.8</version>
 				</dependency>
 			</dependencies>
 		</profile>
@@ -1174,7 +1178,7 @@
 				</plugins>
 			</build>
 		</profile>
-	
+
 		<profile>
 			<id>save.reports</id>
 			<build>
@@ -1199,7 +1203,7 @@
 										<copy failonerror="false" verbose="true"
 											todir="${user.home}/.surefire-reports/${project.groupId}-${project.artifactId}/surefire-reports">
 											<fileset dir="${project.build.directory}/surefire-reports" />
-	
+
 										</copy>
 									</target>
 								</configuration>
@@ -1209,14 +1213,14 @@
 				</plugins>
 			</build>
 		</profile>
-                                    
-                                    
+
+
 		<profile>
 			<id>clover.all</id>
 			<properties>
-                <checkstyle.skip>true</checkstyle.skip>
-                <checkstyle.excludes>**/*.java</checkstyle.excludes>
-            </properties>
+				<checkstyle.skip>true</checkstyle.skip>
+				<checkstyle.excludes>**/*.java</checkstyle.excludes>
+			</properties>
 			<build>
 				<plugins>
 					<plugin>
@@ -1236,7 +1240,8 @@
 								<goals>
 									<goal>clover</goal>
 									<goal>log</goal>
-									<!--  <goal>check</goal> disable check until we have selenium testi up and running in bamboo-->
+									<!-- <goal>check</goal> disable check until we have selenium testi 
+										up and running in bamboo -->
 									<goal>save-history</goal>
 								</goals>
 							</execution>
@@ -1245,21 +1250,21 @@
 				</plugins>
 			</build>
 			<reporting>
-                 <plugins>
-                     <plugin>
-                         <groupId>com.atlassian.maven.plugins</groupId>
-                         <artifactId>maven-clover2-plugin</artifactId>
-                         <version>${clover.version}</version>
-                     </plugin>
-                 </plugins>
-            </reporting>
-            <dependencies>
-            	 <dependency>
-		            <groupId>com.cenqua.clover</groupId>
-		            <artifactId>clover</artifactId>
-		            <version>${clover.version}</version>
-		        </dependency>
-            </dependencies>
+				<plugins>
+					<plugin>
+						<groupId>com.atlassian.maven.plugins</groupId>
+						<artifactId>maven-clover2-plugin</artifactId>
+						<version>${clover.version}</version>
+					</plugin>
+				</plugins>
+			</reporting>
+			<dependencies>
+				<dependency>
+					<groupId>com.cenqua.clover</groupId>
+					<artifactId>clover</artifactId>
+					<version>${clover.version}</version>
+				</dependency>
+			</dependencies>
 		</profile>
 		<profile>
 			<id>jetty</id>
@@ -1284,22 +1289,10 @@
 							<stopPort>8888</stopPort>
 						</configuration>
 						<executions>
-                            <!-- not needed anymore after embedded vaadin
-							<execution>
-								<id>start-jetty</id>
-								<phase>pre-integration-test</phase>
-								<goals>
-									<goal>run-war</goal>
-								</goals>
-							</execution>
-							<execution>
-								<id>stop-jetty</id>
-								<phase>post-integration-test</phase>
-								<goals>
-									<goal>stop</goal>
-								</goals>
-							</execution>
-							-->
+							<!-- not needed anymore after embedded vaadin <execution> <id>start-jetty</id> 
+								<phase>pre-integration-test</phase> <goals> <goal>run-war</goal> </goals> 
+								</execution> <execution> <id>stop-jetty</id> <phase>post-integration-test</phase> 
+								<goals> <goal>stop</goal> </goals> </execution> -->
 						</executions>
 					</plugin>
 					<!-- <plugin> <artifactId>maven-antrun-plugin</artifactId> <executions> 
