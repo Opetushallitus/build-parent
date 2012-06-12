@@ -153,22 +153,9 @@
 			<url>http://penaali.hard.ware.fi/nexus/content/repositories/vaadin-addons/</url>
 		</repository>
 		<repository>
-			<id>vaadin-snapshots</id>
-			<url>http://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>vaadin-addons2</id>
-			<url>http://maven.vaadin.com/vaadin-addons</url>
-		</repository>
-		<repository>
 			<id>bedatadriven-public</id>
 			<name>Bedatadriven Public Repo</name>
-			<url>http://nexus.bedatadriven.com/content/groups/public</url>
+			<url>http://penaali.hard.ware.fi/nexus/content/repositories/bedatadriven</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
@@ -214,6 +201,13 @@
 			<id>mysema</id>
 			<name>Mysema source</name>
 			<url>http://penaali.hard.ware.fi/nexus/content/repositories/mysema/</url>
+		</repository>
+		<repository>
+		    <id>internal-nexus-snapshots</id>
+            <url>http://penaali.hard.ware.fi/nexus/content/repositories/snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
 		</repository>
 	</repositories>
 	<pluginRepositories>
