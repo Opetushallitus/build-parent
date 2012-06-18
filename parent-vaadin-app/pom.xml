@@ -124,17 +124,14 @@
             <version>${google.map.widget.version}</version>
         </dependency>
 
-        <!-- testing dependencies -->
-
-        <!--<dependency>-->
-            <!--<groupId>fi.vm.sade.generic</groupId>-->
-            <!--<artifactId>generic-test-support</artifactId>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
 
         <!-- sade dependencies -->
 
         <dependency>
+		<!-- Not very nice, mutta pitää olla tässä jotta parent-vaadin-app:pin lapset saavat 
+		tämän. Buildi pitää huolen ettei  parent-vaadin-app oikeasti käytä 
+		mitään generic-common -paketista. 
+		-->
             <groupId>fi.vm.sade.generic</groupId>
             <artifactId>generic-common</artifactId>
             <version>${sade-generic.version}</version>
@@ -178,11 +175,7 @@
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-transports-http</artifactId>
         </dependency>
-        <!--<dependency>
-            <groupId>fi.vm.sade.koodisto</groupId>
-            <artifactId>koodisto-generated-model</artifactId>
-            <version>${project.version}</version>
-        </dependency>-->
+
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
