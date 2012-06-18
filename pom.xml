@@ -334,6 +334,7 @@
 						<historyDir>${clover.historyDir}</historyDir>
 						<alwaysReport>true</alwaysReport>
 						<generateXml>true</generateXml>
+						<includesAllSourceRoots>true</includesAllSourceRoots>
 						<excludes>
 							<exclude>**/src/test/**/*.*</exclude>
 							<exclude>**/test-classes/**/*.*</exclude>
