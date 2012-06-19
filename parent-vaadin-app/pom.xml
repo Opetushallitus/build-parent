@@ -17,6 +17,8 @@
 
     <properties>
         <blackboard.version>2.1.1</blackboard.version>
+        <liferay.dir>${project.basedir}/../../../servers/trunk/liferay/target/servers/liferay-portal-6.1.0-ce-ga1</liferay.dir>
+        <deploy.dir>${liferay.dir}/deploy</deploy.dir>
     </properties>
 
     <build>
@@ -232,8 +234,6 @@
                                 </goals>
                                 <configuration>
                                     <tasks>
-                                        <property name="liferay.dir" value="${project.basedir}/../../../servers/trunk/liferay/target/servers/liferay-portal-6.1.0-ce-ga1"/>
-                                        <property name="deploy.dir" value="${liferay.dir}/deploy"/>
                                         <mkdir dir="${deploy.dir}"/>
                                         <copy
                                                 todir="${deploy.dir}"
