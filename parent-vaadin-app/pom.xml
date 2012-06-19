@@ -13,7 +13,7 @@
     <groupId>fi.vm.sade.generic</groupId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>${artifactId}</name>
+    <name>${project.artifactId}</name>
 
     <properties>
         <blackboard.version>2.1.1</blackboard.version>
@@ -238,7 +238,7 @@
                                         <copy
                                                 todir="${deploy.dir}"
                                                 failonerror="true" verbose="true" overwrite="true"
-                                                file="${project.basedir}/target/${artifactId}.war"
+                                                file="${project.basedir}/target/${project.artifactId}.war"
                                                 >
                                         </copy>
                                     </tasks>
