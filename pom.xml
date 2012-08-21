@@ -20,6 +20,8 @@
 		<jetty.webApp>../${jetty.module}/target/${jetty.module}.war</jetty.webApp>
 		<daemon>true</daemon>
 
+		<liferay.version>6.1.0</liferay.version>
+		
 		<!-- UI libraries -->
 		<vaadin.version>6.7.5</vaadin.version>
 		<gwt.version>2.3.0</gwt.version>
