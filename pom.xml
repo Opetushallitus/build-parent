@@ -1572,6 +1572,12 @@
 			</properties>
 		</profile>
 		<profile>
+			<id>integration-test</id>
+			<properties>
+				<env>integration-test</env>
+			</properties>
+		</profile>
+		<profile>
 			<id>QA</id>
 			<properties>
 				<env>QA</env>
