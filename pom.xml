@@ -1566,18 +1566,45 @@
 			</properties>
 		</profile>
 		<profile>
-			<id>system-test</id>
-			<properties>
-				<env>system-test</env>
-			</properties>
-		</profile>
-		<profile>
 			<id>integration-test</id>
 			<properties>
 				<env>integration-test</env>
 			</properties>
-		</profile>
-		<profile>
+            <!-- in successful integration-test build artifacts are deployed into stable repo instead default repo -->
+            <distributionManagement>
+                <repository>
+                    <id>oph-sade-artifactory</id>
+                    <name>oph-sade-artifactory-releases</name>
+                    <url>http://penaali.hard.ware.fi/artifactory/oph-sade-release-integration</url>
+                </repository>
+                <snapshotRepository>
+                    <id>oph-sade-artifactory</id>
+                    <name>oph-sade-artifactory-snapshots</name>
+                    <url>http://penaali.hard.ware.fi/artifactory/oph-sade-snapshot-integration</url>
+                </snapshotRepository>
+            </distributionManagement>
+        </profile>
+        <profile>
+            <id>system-test</id>
+            <properties>
+                <env>system-test</env>
+            </properties>
+            <!-- in system-test build artifacts are loaded from stable repo instead default repo -->
+            <repositories>
+                <repository>
+                    <id>oph-sade-artifactory-snapshots</id>
+                    <url>http://penaali.hard.ware.fi/artifactory/oph-sade-snapshot-integration</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>oph-sade-artifactory-releases</id>
+                    <url>http://penaali.hard.ware.fi/artifactory/oph-sade-release-integration</url>
+                </repository>
+            </repositories>
+        </profile>
+        <profile>
 			<id>QA</id>
 			<properties>
 				<env>QA</env>
