@@ -990,11 +990,13 @@
 							</execution>
 						</executions>
 						<dependencies>
+                            <!--
 							<dependency>
 								<groupId>fi.vm.sade.generic</groupId>
 								<artifactId>build-utilities</artifactId>
 								<version>1.0-SNAPSHOT</version>
 							</dependency>
+							-->
 						</dependencies>
 					</plugin>
 				</plugins>
