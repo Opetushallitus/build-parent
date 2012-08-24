@@ -1583,6 +1583,22 @@
                     <url>http://penaali.hard.ware.fi/artifactory/oph-sade-snapshot-integration</url>
                 </snapshotRepository>
             </distributionManagement>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <configuration>
+                            <systemProperties>
+                                <property>
+                                    <name>ophServerUrl</name>
+                                    <!-- TODO: lue build propseista -->
+                                    <value>http://luokka.hard.ware.fi</value>
+                                </property>
+                            </systemProperties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
         <profile>
             <id>system-test</id>
@@ -1603,6 +1619,22 @@
                     <url>http://penaali.hard.ware.fi/artifactory/oph-sade-release-integration</url>
                 </repository>
             </repositories>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <configuration>
+                            <systemProperties>
+                                <property>
+                                    <name>ophServerUrl</name>
+                                    <!-- TODO: lue build propseista -->
+                                    <value>http://reppu.hard.ware.fi</value>
+                                </property>
+                            </systemProperties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
 		<profile>
             <id>cleanLocalRepo</id>
