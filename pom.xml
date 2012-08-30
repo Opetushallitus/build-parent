@@ -109,7 +109,9 @@
 		<surefire.reportsDirectory>${project.build.directory}/surefire-reports</surefire.reportsDirectory>
 
 		<compiler.debug>false</compiler.debug>
-	</properties>
+
+        <mongo.version>2.7.1</mongo.version>
+    </properties>
 
 	<scm>
 		<connection>scm:svn:${project.svn.base}/trunk</connection>
