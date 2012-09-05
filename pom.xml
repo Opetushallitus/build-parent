@@ -1657,6 +1657,7 @@
 								<configuration>
 									<failOnError>false</failOnError>
 									<target>
+										<echo message="cleanLocalRepo profile is active. Delete directory: ${settings.localRepository}/fi" />
 										<delete dir="${settings.localRepository}/fi" /> 
 									</target>
 								</configuration>
