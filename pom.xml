@@ -1640,46 +1640,6 @@
                 </plugins>
             </build>
         </profile>
-		<profile>
-            <id>cleanLocalRepo</id>
-			<build>
-				<plugins>
-					<plugin>
-						<artifactId>maven-antrun-plugin</artifactId>
-						<version>1.7</version> <!-- failOnError vasta tässä versiossa -->
-						<executions>
-							<execution>
-								<id>clean local repository</id>
-								<phase>pre-clean</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<failOnError>false</failOnError>
-									<target>
-										<echo message="cleanLocalRepo profile is active. Delete directory: ${settings.localRepository}/fi" />
-										<delete dir="${settings.localRepository}/fi" /> 
-									</target>
-								</configuration>
-							</execution>
-						</executions>
-						<dependencies>
-							<dependency>
-								<groupId>ant-contrib</groupId>
-								<artifactId>ant-contrib</artifactId>
-								<version>1.0b3</version>
-								<exclusions>
-									<exclusion>
-										<groupId>ant</groupId>
-										<artifactId>ant</artifactId>
-									</exclusion>
-								</exclusions>
-							</dependency>
-						</dependencies>
-					</plugin>
-				</plugins>
-			</build>
-        </profile>
         <profile>
 			<id>QA</id>
 			<properties>
