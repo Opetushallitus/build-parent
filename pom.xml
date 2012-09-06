@@ -965,11 +965,11 @@
 		</profile>
 		<profile>
 			<id>checkstyle</id>
-			<activation>
+			<!--<activation>
 				<property>
 					<name>checkstyle</name>
 				</property>
-			</activation>
+			</activation>-->
 			<build>
 				<plugins>
 					<plugin>
@@ -1023,11 +1023,11 @@
 
 		<profile>
 			<id>findbugs</id>
-			<activation>
+			<!--<activation>
 				<property>
 					<name>findbugs</name>
 				</property>
-			</activation>
+			</activation>-->
 			<properties>
 				<compiler.debug>true</compiler.debug>
 				<findbugs.version>1.3.2</findbugs.version>
