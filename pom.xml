@@ -967,7 +967,7 @@
 			<id>checkstyle</id>
 			<activation>
 				<property>
-					<name>!skipCheckstyle</name>
+					<name>checkstyle</name>
 				</property>
 			</activation>
 			<build>
@@ -1025,7 +1025,7 @@
 			<id>findbugs</id>
 			<activation>
 				<property>
-					<name>!skipFindbugs</name>
+					<name>findbugs</name>
 				</property>
 			</activation>
 			<properties>
