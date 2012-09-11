@@ -111,6 +111,12 @@
 		<compiler.debug>false</compiler.debug>
 
         <mongo.version>2.7.1</mongo.version>
+
+        <liferay.dir.old>${project.basedir}/../../../servers/trunk/liferay/target/servers/liferay-portal-6.1.0-ce-ga1</liferay.dir.old>
+        <liferay.dir.new>${user.home}/servers/liferay</liferay.dir.new>
+        <jboss.dir.old>${project.basedir}/../../../servers/trunk/jboss/target/servers/jboss-as-7.1.1.Final</jboss.dir.old>
+        <jboss.dir.new>${user.home}/servers/jboss</jboss.dir.new>
+
     </properties>
 
 	<scm>
@@ -1653,7 +1659,95 @@
 			</properties>
 		</profile>
 
-	</profiles>
+        <profile>
+            <id>deploy</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.7</version>
+                        <executions>
+                            <execution>
+                                <id>deploy-to-liferay-or-jboss</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="${maven.plugin.classpath}"  />
+
+                                        <!-- decide directory where to deploy -->
+                                        <!--<if>-->
+                                            <!--<isset property="deploy.dir"/>-->
+                                            <!--<then>-->
+                                                <!--<echo message=" ### DEPLOY: using predefined deploy.dir: ${deploy.dir}"/>-->
+                                            <!--</then>-->
+                                            <!--<else>-->
+                                                <if>
+                                                    <or>
+                                                        <available file="${project.basedir}/src/main/webapp/WEB-INF/portlet.xml"/>
+                                                        <equals arg1="${deploy.to.server}" arg2="liferay"/>
+                                                    </or>
+                                                    <then>
+                                                        <echo message=" ### DEPLOY: LIFERAY"/>
+                                                        <if>
+                                                            <available file="${liferay.dir.new}"/>
+                                                            <then>
+                                                                <var name="deploy.dir" value="${liferay.dir.new}/deploy"/>
+                                                            </then>
+                                                            <else>
+                                                                <var name="deploy.dir" value="${liferay.dir.old}/deploy"/>
+                                                            </else>
+                                                        </if>
+                                                    </then>
+                                                    <else>
+                                                        <echo message=" ### DEPLOY: JBOSS"/>
+                                                        <if>
+                                                            <available file="${jboss.dir.new}"/>
+                                                            <then>
+                                                                <var name="deploy.dir" value="${jboss.dir.new}/standalone/deployment"/>
+                                                            </then>
+                                                            <else>
+                                                                <var name="deploy.dir" value="${jboss.dir.old}/standalone/deployment"/>
+                                                            </else>
+                                                        </if>
+                                                    </else>
+                                                </if>
+                                            <!--</else>-->
+                                        <!--</if>-->
+                                        <echo message=" ### DEPLOY: DIR: ${deploy.dir}"/>
+
+                                        <!-- deploy webapp -->
+                                        <!--<mkdir dir="${deploy.dir}" />-->
+                                        <copy todir="${deploy.dir}"
+                                              failonerror="true" verbose="true"
+                                              overwrite="true"
+                                              file="${project.basedir}/target/${project.artifactId}.war">
+                                        </copy>
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>ant-contrib</groupId>
+                                <artifactId>ant-contrib</artifactId>
+                                <version>1.0b3</version>
+                                <exclusions>
+                                    <exclusion>
+                                        <groupId>ant</groupId>
+                                        <artifactId>ant</artifactId>
+                                    </exclusion>
+                                </exclusions>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>
 
 	<modules>
 		<module>build-utilities</module>

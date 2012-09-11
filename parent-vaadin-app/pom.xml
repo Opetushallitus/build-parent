@@ -17,8 +17,6 @@
 
     <properties>
         <blackboard.version>2.1.1</blackboard.version>
-        <liferay.dir>${project.basedir}/../../../servers/trunk/liferay/target/servers/liferay-portal-6.1.0-ce-ga1</liferay.dir>
-        <deploy.dir>${liferay.dir}/deploy</deploy.dir>
     </properties>
 
     <build>
@@ -209,57 +207,6 @@
             <scope>provided</scope>
         </dependency>
 
-
     </dependencies>
-
-    <profiles>
-
-        <!-- deploy war to liferay -->
-
-        <profile>
-            <id>deploy</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>liferay-deploy</id>
-                                <phase>install</phase>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                                <configuration>
-                                    <tasks>
-                                        <mkdir dir="${deploy.dir}"/>
-                                        <copy
-                                                todir="${deploy.dir}"
-                                                failonerror="true" verbose="true" overwrite="true"
-                                                file="${project.basedir}/target/${project.artifactId}.war"
-                                                >
-                                        </copy>
-                                    </tasks>
-                                </configuration>
-                            </execution>
-                        </executions>
-                        <dependencies>
-                            <dependency>
-                                <groupId>ant-contrib</groupId>
-                                <artifactId>ant-contrib</artifactId>
-                                <version>1.0b3</version>
-                                <exclusions>
-                                    <exclusion>
-                                        <groupId>ant</groupId>
-                                        <artifactId>ant</artifactId>
-                                    </exclusion>
-                                </exclusions>
-                            </dependency>
-                        </dependencies>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-    </profiles>
 
 </project>
