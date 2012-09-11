@@ -1706,10 +1706,10 @@
                                                         <if>
                                                             <available file="${jboss.dir.new}"/>
                                                             <then>
-                                                                <var name="deploy.dir" value="${jboss.dir.new}/standalone/deployment"/>
+                                                                <var name="deploy.dir" value="${jboss.dir.new}/standalone/deployments"/>
                                                             </then>
                                                             <else>
-                                                                <var name="deploy.dir" value="${jboss.dir.old}/standalone/deployment"/>
+                                                                <var name="deploy.dir" value="${jboss.dir.old}/standalone/deployments"/>
                                                             </else>
                                                         </if>
                                                     </else>
