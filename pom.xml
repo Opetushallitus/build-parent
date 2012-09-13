@@ -112,6 +112,10 @@
 
         <mongo.version>2.7.1</mongo.version>
 
+        <ant-contrib.version>1.0b3</ant-contrib.version>
+        <ant-jsch.version>1.8.1</ant-jsch.version>
+        <jsch.version>0.1.48</jsch.version>
+
         <liferay.dir.old>${project.basedir}/../../../servers/trunk/liferay/target/servers/liferay-portal-6.1.0-ce-ga1</liferay.dir.old>
         <liferay.dir.new>${user.home}/servers/liferay</liferay.dir.new>
         <jboss.dir.old>${project.basedir}/../../../servers/trunk/jboss/target/servers/jboss-as-7.1.1.Final</jboss.dir.old>
@@ -1120,7 +1124,7 @@
 							<dependency>
 								<groupId>ant-contrib</groupId>
 								<artifactId>ant-contrib</artifactId>
-								<version>1.0b3</version>
+								<version>${ant-contrib.version}</version>
 								<exclusions>
 									<exclusion>
 										<groupId>ant</groupId>
@@ -1503,7 +1507,7 @@
 							<dependency>
 								<groupId>ant-contrib</groupId>
 								<artifactId>ant-contrib</artifactId>
-								<version>1.0b3</version>
+								<version>${ant-contrib.version}</version>
 								<exclusions>
 									<exclusion>
 										<groupId>ant</groupId>
@@ -1733,7 +1737,7 @@
                             <dependency>
                                 <groupId>ant-contrib</groupId>
                                 <artifactId>ant-contrib</artifactId>
-                                <version>1.0b3</version>
+                                <version>${ant-contrib.version}</version>
                                 <exclusions>
                                     <exclusion>
                                         <groupId>ant</groupId>
