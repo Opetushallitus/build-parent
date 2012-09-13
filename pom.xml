@@ -1682,13 +1682,10 @@
                                     <tasks>
                                         <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="${maven.plugin.classpath}"  />
 
-                                        <!-- decide directory where to deploy -->
-                                        <!--<if>-->
-                                            <!--<isset property="deploy.dir"/>-->
-                                            <!--<then>-->
-                                                <!--<echo message=" ### DEPLOY: using predefined deploy.dir: ${deploy.dir}"/>-->
-                                            <!--</then>-->
-                                            <!--<else>-->
+                                        <if>
+                                            <equals arg1="${project.packaging}" arg2="war"/>
+                                            <then>
+
                                                 <if>
                                                     <or>
                                                         <available file="${project.basedir}/src/main/webapp/WEB-INF/portlet.xml"/>
@@ -1719,17 +1716,23 @@
                                                         </if>
                                                     </else>
                                                 </if>
-                                            <!--</else>-->
-                                        <!--</if>-->
-                                        <echo message=" ### DEPLOY: DIR: ${deploy.dir}"/>
 
-                                        <!-- deploy webapp -->
-                                        <!--<mkdir dir="${deploy.dir}" />-->
-                                        <copy todir="${deploy.dir}"
-                                              failonerror="true" verbose="true"
-                                              overwrite="true"
-                                              file="${project.basedir}/target/${project.artifactId}.war">
-                                        </copy>
+                                                <echo message=" ### DEPLOY: DIR: ${deploy.dir}"/>
+
+                                                <!-- deploy webapp -->
+                                                <!--<mkdir dir="${deploy.dir}" />-->
+                                                <copy todir="${deploy.dir}"
+                                                      failonerror="true" verbose="true"
+                                                      overwrite="true"
+                                                      file="${project.basedir}/target/${project.artifactId}.war">
+                                                </copy>
+
+                                            </then>
+                                            <else>
+                                                <echo message=" ### DEPLOY: skipped because packaging is not war"/>
+                                            </else>
+                                        </if>
+
                                     </tasks>
                                 </configuration>
                             </execution>
