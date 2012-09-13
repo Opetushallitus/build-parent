@@ -60,7 +60,8 @@
         <querydsl.version>2.6.0</querydsl.version>
         
 		<!-- Utils -->
-		<jodatime.version></jodatime.version>
+        <commons-codec.version>1.6</commons-codec.version>
+        <jodatime.version></jodatime.version>
 		<log4j.version>1.2.14</log4j.version>
 		<aopalliance.version>1.0</aopalliance.version>
 		<aspectj.version>1.6.3</aspectj.version>
