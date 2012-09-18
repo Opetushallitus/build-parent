@@ -1721,7 +1721,7 @@
 
                                                 <!-- deploy webapp -->
                                                 <!--<mkdir dir="${deploy.dir}" />-->
-                                                <copy todir="${deploy.dir}"
+                                                <copy tofile="${deploy.dir}/${project.artifactId}.war"
                                                       failonerror="true" verbose="true"
                                                       overwrite="true"
                                                       file="${project.basedir}/target/${project.build.finalName}.war">
