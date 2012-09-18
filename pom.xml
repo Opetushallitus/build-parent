@@ -1724,7 +1724,7 @@
                                                 <copy todir="${deploy.dir}"
                                                       failonerror="true" verbose="true"
                                                       overwrite="true"
-                                                      file="${project.basedir}/target/${project.artifactId}.war">
+                                                      file="${project.basedir}/target/${project.build.finalName}.war">
                                                 </copy>
 
                                             </then>
