@@ -36,6 +36,7 @@
 
 		<!-- ServiceMix components / frameworks -->
 		<cxf.version>2.4.6</cxf.version>
+        <wss4j.version>1.6.4</wss4j.version>
 		<camel.version>2.8.3</camel.version>
 		<spring.version>3.1.1.RELEASE</spring.version>
 		<osgi.spring.version>3.0.6.RELEASE</osgi.spring.version>
