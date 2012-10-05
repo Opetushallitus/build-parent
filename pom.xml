@@ -106,7 +106,7 @@
 		<checkstyle.failsOnError>true</checkstyle.failsOnError>
 		<checkstyle.consoleOutput>true</checkstyle.consoleOutput>
 		<checkstyle.configLocation>http://pulpetti.hard.ware.fi:9000/sonar/profiles/export?format=checkstyle&amp;language=java&amp;name=Sonar_way_with_Findbugs_and_OPH_Checkstyle</checkstyle.configLocation>
-
+§
 		<surefire.reportsDirectory>${project.build.directory}/surefire-reports</surefire.reportsDirectory>
 
 		<compiler.debug>false</compiler.debug>
@@ -256,7 +256,7 @@
 					<include>**/*</include>
 				</includes>
 			</resource>
-			<!-- profiilikohtaiset resurssit tässä että ne ylikirjoittavat oletusresurssit -->
+			<!-- profiilikohtaiset resurssit tassa etta ne ylikirjoittavat oletusresurssit -->
 			<resource>
 				<directory>src/main/profile/${env}</directory>
 				<includes>
@@ -419,7 +419,7 @@
 				</executions> </plugin> -->
 			<!-- build test-jar which can be used to reuse module's tests from another 
 				module (case: system tests) -->
-			<!-- suositeltiin käyttämään ennemmin tätä urlissa: http://stackoverflow.com/questions/1725476/maven-test-dependency-in-multi-module-project -->
+			<!-- suositeltiin kayttamaan ennemmin tata urlissa: http://stackoverflow.com/questions/1725476/maven-test-dependency-in-multi-module-project -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -476,7 +476,7 @@
 			</plugin>
 
 			<!-- print active profiles -->
-			<!-- TODO: näyttää profiilit vain current pomista, ei parenttien <plugin> 
+			<!-- TODO: nayttaa profiilit vain current pomista, ei parenttien <plugin> 
 				<artifactId>maven-help-plugin</artifactId> <executions> <execution> <phase>validate</phase> 
 				<goals> <goal>active-profiles</goal> </goals> </execution> </executions> 
 				</plugin> -->
