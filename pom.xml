@@ -106,7 +106,7 @@
 		<checkstyle.failsOnError>true</checkstyle.failsOnError>
 		<checkstyle.consoleOutput>true</checkstyle.consoleOutput>
 		<checkstyle.configLocation>http://pulpetti.hard.ware.fi:9000/sonar/profiles/export?format=checkstyle&amp;language=java&amp;name=Sonar_way_with_Findbugs_and_OPH_Checkstyle</checkstyle.configLocation>
-§
+
 		<surefire.reportsDirectory>${project.build.directory}/surefire-reports</surefire.reportsDirectory>
 
 		<compiler.debug>false</compiler.debug>
