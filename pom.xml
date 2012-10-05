@@ -105,7 +105,7 @@
 		<checkstyle.skip>false</checkstyle.skip>
 		<checkstyle.failsOnError>true</checkstyle.failsOnError>
 		<checkstyle.consoleOutput>true</checkstyle.consoleOutput>
-		<checkstyle.configLocation><![CDATA[http://pulpetti.hard.ware.fi:9000/sonar/profiles/export?format=checkstyle&language=java&name=Sonar%2520way%2520with%2520Findbugs%2520and%2520OPH%2520Checkstyle]]></checkstyle.configLocation>
+		<checkstyle.configLocation>http://pulpetti.hard.ware.fi:9000/sonar/profiles/export?format=checkstyle&amp;language=java&amp;name=Sonar%2520way%2520with%2520Findbugs%2520and%2520OPH%2520Checkstyle</checkstyle.configLocation>
 
 		<surefire.reportsDirectory>${project.build.directory}/surefire-reports</surefire.reportsDirectory>
 
