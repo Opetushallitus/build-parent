@@ -1703,6 +1703,13 @@
                                                             </else>
                                                         </if>
                                                     </then>
+                                                    <elseif>
+                                                        <equals arg1="${deploy.to.server}" arg2="tomcat"/>
+                                                        <then>
+                                                            <echo message=" ### DEPLOY: TOMCAT"/>
+                                                            <var name="deploy.dir" value="${liferay.dir.new}/tomcat-7.0.23/webapps"/>
+                                                        </then>
+                                                    </elseif>
                                                     <else>
                                                         <echo message=" ### DEPLOY: JBOSS"/>
                                                         <if>
