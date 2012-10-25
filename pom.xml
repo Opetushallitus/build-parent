@@ -90,15 +90,8 @@
 
 		<embedService.serviceArtifactId>${project.parent.artifactId}-service</embedService.serviceArtifactId>
 
-		<clover.version>3.1.4</clover.version>
-		<clover.fullRunEvery>500</clover.fullRunEvery>
-		<clover.generateHistorical>true</clover.generateHistorical>
-
 		<clover.base>/data00/atlassian/application-data/bamboo/clover</clover.base>
-		<clover.historyDir>${clover.base}/history/${project.groupId}-${project.artifactId}</clover.historyDir>
-		<clover.snapshot>${clover.base}/snapshot/${project.groupId}-${project.artifactId}/clover.snapshot</clover.snapshot>
 		<clover.outputDirectory>${clover.base}/output/${project.groupId}-${project.artifactId}</clover.outputDirectory>
-		<clover.cloverDatabase>${clover.base}/db/${project.groupId}-${project.artifactId}/clover.db</clover.cloverDatabase>
 
 		<checkstyle.excludes>**/clover/**,**/target/**/src/**,**/target/**/src-test/**,**/ytj-generated-model/**</checkstyle.excludes>
 		<checkstyle.skip>false</checkstyle.skip>
@@ -107,7 +100,7 @@
 		<checkstyle.configLocation><![CDATA[http://pulpetti.hard.ware.fi:9000/sonar/profiles/export?format=checkstyle&amp;language=java&amp;name=SonarWayWithFindbugsAndOPHCheckstyle]]></checkstyle.configLocation>
 
 		<surefire.reportsDirectory>${project.build.directory}/surefire-reports</surefire.reportsDirectory>
-
+		<surefire.testFailureIgnore>false</surefire.testFailureIgnore>
 		<compiler.debug>false</compiler.debug>
 
         <mongo.version>2.7.1</mongo.version>
@@ -331,35 +324,7 @@
 					<artifactId>maven-jar-plugin</artifactId>
 					<version>${jar.plugin.version}</version>
 				</plugin>
-				<plugin>
-					<groupId>com.atlassian.maven.plugins</groupId>
-					<artifactId>maven-clover2-plugin</artifactId>
-					<version>${clover.version}</version>
-					<configuration>
-						<license><![CDATA[rpRQNMNVbDQGOEFKsVQKeIihqPnFbdDEHvvNdDVKJlFhJhe
-                                          mj2KgKqUCcBA763sFqgbibB52L0Cp0MzNnhQ88tyJuOnONl
-                                          mQQqssopQmnQMMroQMPVTqPQRnpqrQNQOPTtWuTusvWnvSs
-                                          vtWXTmTTTTSosUoWSxxStWuswtMRnmnmUUnppnpuqqmmmmm
-                                          UUnppnpuqqmmmmmUU6fkkfpeWEXqflkXiW2lXoaWlcW5arZ
-                                          XqflkUUor]]>
-						</license>
-						<snapshot>${clover.snapshot}</snapshot>
-						<singleCloverDatabase>${clover.singleCloverDatabase}</singleCloverDatabase>
-						<cloverDatabase>${clover.cloverDatabase}</cloverDatabase>
-						<outputDirectory>${clover.outputDirectory}</outputDirectory>
-						<generateHistorical>${clover.generateHistorical}</generateHistorical>
-						<historyDir>${clover.historyDir}</historyDir>
-						<alwaysReport>true</alwaysReport>
-						<generateXml>true</generateXml>
-						<includesAllSourceRoots>true</includesAllSourceRoots>
-						<excludes>
-							<exclude>**/src/test/**/*.*</exclude>
-							<exclude>**/test-classes/**/*.*</exclude>
-							<exclude>**/selenium/**/*.*</exclude>
-							<exclude>**/selenium/**/*Test.java</exclude>
-						</excludes>
-					</configuration>
-				</plugin>
+				
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-antrun-plugin</artifactId>
@@ -439,6 +404,7 @@
 				<configuration>
 					<reportsDirectory>${surefire.reportsDirectory}</reportsDirectory>
 					<alwaysGenerateFailsafeReport>true</alwaysGenerateFailsafeReport>
+					<testFailureIgnore>${surefire.testFailureIgnore}</testFailureIgnore>
 					<excludes>
 						<exclude>**/selenium/**/*</exclude>
 						<exclude>**/it/**/*</exclude>
@@ -1034,11 +1000,6 @@
 
 		<profile>
 			<id>findbugs</id>
-			<!--<activation>
-				<property>
-					<name>findbugs</name>
-				</property>
-			</activation>-->
 			<properties>
 				<compiler.debug>true</compiler.debug>
 				<findbugs.version>1.3.2</findbugs.version>
@@ -1139,41 +1100,6 @@
 			</build>
 		</profile>
 
-		<profile>
-			<id>sonar</id>
-			<properties>
-				<!-- Dynamic analysis relates to unit tests. By default, those unit tests 
-					are executed but you can optionally decide to do only static analysis or 
-					to reuse existing reports which have been previously generated. Possible 
-					values are true, false, reuseReports. -->
-				<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-
-				<!-- The absolute or relative path of the surefire reports directory. 
-					Used only if sonar.dynamicAnalysis is reuseReports. -->
-				<sonar.surefire.reportsPath>${surefire.reportsDirectory}</sonar.surefire.reportsPath>
-				<!-- The absolute or relative path of the clover xml report file. Used 
-					only if sonar.dynamicAnalysis is reuseReports. -->
-				<sonar.core.codeCoveragePlugin>clover</sonar.core.codeCoveragePlugin>
-				<sonar.clover.reportPath>${clover.outputDirectory}/clover.xml</sonar.clover.reportPath>
-
-				<checkstyle.skip>true</checkstyle.skip>
-				<checkstyle.excludes>**/*.java</checkstyle.excludes>
-				<!-- EXAMPLE FOR MYSQL -->
-				<sonar.jdbc.url><![CDATA[jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8]]></sonar.jdbc.url>
-				<sonar.jdbc.driverClassName>com.mysql.jdbc.Driver</sonar.jdbc.driverClassName>
-				<sonar.jdbc.username>sonar</sonar.jdbc.username>
-				<sonar.jdbc.password>Dx4k7T23x3ox8yS</sonar.jdbc.password>
-				<!-- optional URL to server. Default value is http://localhost:9000 -->
-				<sonar.host.url>http://pulpetti.hard.ware.fi:9000/sonar</sonar.host.url>
-			</properties>
-			<dependencies>
-				<dependency>
-					<groupId>org.codehaus.sonar-plugins</groupId>
-					<artifactId>sonar-clover-plugin</artifactId>
-					<version>2.8</version>
-				</dependency>
-			</dependencies>
-		</profile>
 
 		<profile>
 			<id>restore.reports</id>
@@ -1274,12 +1200,100 @@
 			<properties>
 				<checkstyle.skip>true</checkstyle.skip>
 				<checkstyle.excludes>**/*.java</checkstyle.excludes>
+				<surefire.testFailureIgnore>true</surefire.testFailureIgnore>
+				
+				<clover.version>3.1.4</clover.version>
+				<clover.fullRunEvery>500</clover.fullRunEvery>
+				<clover.generateHistorical>true</clover.generateHistorical>
+				
+				<clover.historyDir>${clover.base}/history/${project.groupId}-${project.artifactId}</clover.historyDir>
+				<clover.snapshot>${clover.base}/snapshot/${project.groupId}-${project.artifactId}/clover.snapshot</clover.snapshot>
+				<clover.cloverDatabase>${clover.base}/db/${project.groupId}-${project.artifactId}/clover.db</clover.cloverDatabase>
 			</properties>
+		
 			<build>
 				<plugins>
 					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.7</version> <!-- failOnError vasta tässä versiossa -->
+						<executions>
+							<execution>
+								<id>clean clover working dirs</id>
+								<phase>clean</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<target>
+										<echo message="Delete clover working directories:" />
+										<echo message=" ${clover.base}/snapshot/${project.groupId}-${project.artifactId}" />
+										<delete dir="${clover.base}/snapshot/${project.groupId}-${project.artifactId}" /> 
+										<echo message=" ${clover.base}/db/${project.groupId}-${project.artifactId}" />
+										<delete dir="${clover.base}/db/${project.groupId}-${project.artifactId}" /> 
+									</target>
+								</configuration>
+							</execution>
+							<execution>
+								<id>clean clover output</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<target>
+										<echo message="Delete old clover report from ${clover.outputDirectory}" />
+										<delete dir="${clover.outputDirectory}" /> 
+									</target>
+								</configuration>
+							</execution>
+						</executions>
+						<dependencies>
+							<dependency>
+								<groupId>ant-contrib</groupId>
+								<artifactId>ant-contrib</artifactId>
+								<version>${ant-contrib.version}</version>
+								<exclusions>
+									<exclusion>
+										<groupId>ant</groupId>
+										<artifactId>ant</artifactId>
+									</exclusion>
+								</exclusions>
+							</dependency>
+						</dependencies>
+					</plugin>
+					
+					<plugin>
 						<groupId>com.atlassian.maven.plugins</groupId>
 						<artifactId>maven-clover2-plugin</artifactId>
+						<version>${clover.version}</version>
+						<configuration>
+							<license><![CDATA[rpRQNMNVbDQGOEFKsVQKeIihqPnFbdDEHvvNdDVKJlFhJhe
+											  mj2KgKqUCcBA763sFqgbibB52L0Cp0MzNnhQ88tyJuOnONl
+											  mQQqssopQmnQMMroQMPVTqPQRnpqrQNQOPTtWuTusvWnvSs
+											  vtWXTmTTTTSosUoWSxxStWuswtMRnmnmUUnppnpuqqmmmmm
+											  UUnppnpuqqmmmmmUU6fkkfpeWEXqflkXiW2lXoaWlcW5arZ
+											  XqflkUUor]]>
+							</license>
+							<snapshot>${clover.snapshot}</snapshot>
+							<singleCloverDatabase>${clover.singleCloverDatabase}</singleCloverDatabase>
+							<cloverDatabase>${clover.cloverDatabase}</cloverDatabase>
+							<outputDirectory>${clover.outputDirectory}</outputDirectory>
+							<generateHistorical>${clover.generateHistorical}</generateHistorical>
+							<historyDir>${clover.historyDir}</historyDir>
+							<alwaysReport>true</alwaysReport>
+							<generateXml>true</generateXml>
+							<generateHtml>false</generateHtml>
+							<generateJson>false</generateJson>
+							<generatePdf>false</generatePdf>
+							<includesAllSourceRoots>true</includesAllSourceRoots>
+							<includesTestSourceRoots>true</includesTestSourceRoots>
+							<excludes>
+								<!--<exclude>${project.basedir}/src/test/**/*.*</exclude>-->
+								<exclude>${project.basedir}/target/generated-sources/**/*.*</exclude>
+								<!--<exclude>**/test-classes/**/*.*</exclude>
+								<exclude>**/selenium/**</exclude>-->
+							</excludes>
+						</configuration>
 						<executions>
 							<execution>
 								<id>clover</id>
@@ -1320,6 +1334,43 @@
 				</dependency>
 			</dependencies>
 		</profile>
+
+		<profile>
+			<id>sonar</id>
+			<properties>
+				<!-- Dynamic analysis relates to unit tests. By default, those unit tests 
+					are executed but you can optionally decide to do only static analysis or 
+					to reuse existing reports which have been previously generated. Possible 
+					values are true, false, reuseReports. -->
+				<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+
+				<!-- The absolute or relative path of the surefire reports directory. 
+					Used only if sonar.dynamicAnalysis is reuseReports. -->
+				<sonar.surefire.reportsPath>${surefire.reportsDirectory}</sonar.surefire.reportsPath>
+				<!-- The absolute or relative path of the clover xml report file. Used 
+					only if sonar.dynamicAnalysis is reuseReports. -->
+				<sonar.core.codeCoveragePlugin>clover</sonar.core.codeCoveragePlugin>
+				<sonar.clover.reportPath>${clover.outputDirectory}/clover.xml</sonar.clover.reportPath>
+
+				<checkstyle.skip>true</checkstyle.skip>
+				<checkstyle.excludes>**/*.java</checkstyle.excludes>
+				<!-- EXAMPLE FOR MYSQL -->
+				<sonar.jdbc.url><![CDATA[jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8]]></sonar.jdbc.url>
+				<sonar.jdbc.driverClassName>com.mysql.jdbc.Driver</sonar.jdbc.driverClassName>
+				<sonar.jdbc.username>sonar</sonar.jdbc.username>
+				<sonar.jdbc.password>Dx4k7T23x3ox8yS</sonar.jdbc.password>
+				<!-- optional URL to server. Default value is http://localhost:9000 -->
+				<sonar.host.url>http://pulpetti.hard.ware.fi:9000/sonar</sonar.host.url>
+			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>org.codehaus.sonar-plugins</groupId>
+					<artifactId>sonar-clover-plugin</artifactId>
+					<version>2.8</version>
+				</dependency>
+			</dependencies>
+		</profile>
+		
 		<profile>
 			<id>jetty</id>
 			<activation>
