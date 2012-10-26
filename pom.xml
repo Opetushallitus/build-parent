@@ -93,7 +93,7 @@
 		<clover.base>/data00/atlassian/application-data/bamboo/clover</clover.base>
 		<clover.outputDirectory>${clover.base}/output/${project.groupId}-${project.artifactId}</clover.outputDirectory>
 
-		<checkstyle.excludes>**/clover/**,**/target/**/src/**,**/target/**/src-test/**,**/ytj-generated-model/**</checkstyle.excludes>
+		<checkstyle.excludes>**/clover/**,**/target/**/src/**,**/target/**/src-test/**,**/*generated*/**</checkstyle.excludes>
 		<checkstyle.skip>false</checkstyle.skip>
 		<checkstyle.failsOnError>true</checkstyle.failsOnError>
 		<checkstyle.consoleOutput>true</checkstyle.consoleOutput>
@@ -1276,7 +1276,7 @@
 							<includesTestSourceRoots>true</includesTestSourceRoots>
 							<excludes>
 								<!--<exclude>${project.basedir}/src/test/**/*.*</exclude>-->
-								<exclude>${project.basedir}/target/generated-sources/**/*.*</exclude>
+								<exclude>${project.basedir}/**/*generated*/**/*.*</exclude>
 								<!--<exclude>**/test-classes/**/*.*</exclude>
 								<exclude>**/selenium/**</exclude>-->
 							</excludes>
@@ -1338,9 +1338,11 @@
 					only if sonar.dynamicAnalysis is reuseReports. -->
 				<sonar.core.codeCoveragePlugin>clover</sonar.core.codeCoveragePlugin>
 				<sonar.clover.reportPath>${clover.outputDirectory}/clover.xml</sonar.clover.reportPath>
-
+				
+				<sonar.exclusions>**/*generated*/**</sonar.exclusions>
+				
 				<checkstyle.skip>true</checkstyle.skip>
-				<checkstyle.excludes>**/*.java</checkstyle.excludes>
+				<checkstyle.excludes>**/*generated*/**</checkstyle.excludes>
 				<!-- EXAMPLE FOR MYSQL -->
 				<sonar.jdbc.url><![CDATA[jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8]]></sonar.jdbc.url>
 				<sonar.jdbc.driverClassName>com.mysql.jdbc.Driver</sonar.jdbc.driverClassName>
