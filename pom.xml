@@ -1276,7 +1276,8 @@
 							<includesTestSourceRoots>true</includesTestSourceRoots>
 							<excludes>
 								<!--<exclude>${project.basedir}/src/test/**/*.*</exclude>-->
-								<exclude>${project.basedir}/**/*generated*/**/*.*</exclude>
+								<exclude>**/generated-sources/**/*.*</exclude>
+								<exclude>**/*generated*/**</exclude>
 								<!--<exclude>**/test-classes/**/*.*</exclude>
 								<exclude>**/selenium/**</exclude>-->
 							</excludes>
@@ -1293,8 +1294,8 @@
 							<execution>
 								<phase>verify</phase>
 								<goals>
-									<goal>clover</goal>
-									<goal>log</goal>
+									<!--<goal>clover</goal>
+									<goal>log</goal>-->
 									<!-- <goal>check</goal> disable check until we have selenium testi 
 										up and running in bamboo -->
 									<goal>save-history</goal>
@@ -1337,12 +1338,13 @@
 				<!-- The absolute or relative path of the clover xml report file. Used 
 					only if sonar.dynamicAnalysis is reuseReports. -->
 				<sonar.core.codeCoveragePlugin>clover</sonar.core.codeCoveragePlugin>
-				<sonar.clover.reportPath>${clover.outputDirectory}/clover.xml</sonar.clover.reportPath>
-				
-				<sonar.exclusions>**/*generated*/**</sonar.exclusions>
+				<sonar.clover.reportPath>/data00/atlassian/application-data/bamboo/www/clover_report/coverage.xml</sonar.clover.reportPath>
+
+				<sonar.exclusions>**/*generated*/**,**/*-api/**</sonar.exclusions>
 				
 				<checkstyle.skip>true</checkstyle.skip>
-				<checkstyle.excludes>**/*generated*/**</checkstyle.excludes>
+				<checkstyle.excludes>**/*generated*/**,**/*-api/**</checkstyle.excludes>
+				
 				<!-- EXAMPLE FOR MYSQL -->
 				<sonar.jdbc.url><![CDATA[jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8]]></sonar.jdbc.url>
 				<sonar.jdbc.driverClassName>com.mysql.jdbc.Driver</sonar.jdbc.driverClassName>
