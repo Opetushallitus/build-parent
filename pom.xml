@@ -93,7 +93,7 @@
 		<clover.base>/data00/atlassian/application-data/bamboo/clover</clover.base>
 		<clover.outputDirectory>${clover.base}/output/${project.groupId}-${project.artifactId}</clover.outputDirectory>
 
-		<checkstyle.excludes>**/clover/**,**/target/**/src/**,**/target/**/src-test/**,**/*generated*/**</checkstyle.excludes>
+		<checkstyle.excludes>**/clover/**,**/target/**/src/**,**/target/**/src-test/**,**/*generated*/**,**/*generated*/**,**/*-api/**,**/src/main/java/com/**,**/src/main/java/org/**,**/src/main/java/net/**</checkstyle.excludes>
 		<checkstyle.skip>false</checkstyle.skip>
 		<checkstyle.failsOnError>true</checkstyle.failsOnError>
 		<checkstyle.consoleOutput>true</checkstyle.consoleOutput>
@@ -1276,8 +1276,12 @@
 							<includesTestSourceRoots>true</includesTestSourceRoots>
 							<excludes>
 								<!--<exclude>${project.basedir}/src/test/**/*.*</exclude>-->
-								<exclude>**/generated-sources/**/*.*</exclude>
+								<exclude>**/generated-sources/**</exclude>
 								<exclude>**/*generated*/**</exclude>
+								<exclude>**/*Mock.*</exclude>
+								<exclude>**/src/main/java/com/**</exclude>
+								<exclude>**/src/main/java/org/**</exclude>
+								<exclude>**/src/main/java/net/**</exclude>
 								<!--<exclude>**/test-classes/**/*.*</exclude>
 								<exclude>**/selenium/**</exclude>-->
 							</excludes>
@@ -1340,10 +1344,10 @@
 				<sonar.core.codeCoveragePlugin>clover</sonar.core.codeCoveragePlugin>
 				<sonar.clover.reportPath>/data00/atlassian/application-data/bamboo/www/clover_report/coverage.xml</sonar.clover.reportPath>
 
-				<sonar.exclusions>**/*generated*/**,**/*-api/**</sonar.exclusions>
-				
+				<sonar.exclusions>**/*generated*/**,**/*-api/**,**/src/main/java/com/**,**/src/main/java/org/**,**/src/main/java/net/**</sonar.exclusions>
+								
 				<checkstyle.skip>true</checkstyle.skip>
-				<checkstyle.excludes>**/*generated*/**,**/*-api/**</checkstyle.excludes>
+				<checkstyle.excludes>**/*generated*/**,**/*-api/**,**/src/main/java/com/**,**/src/main/java/org/**,**/src/main/java/net/**</checkstyle.excludes>
 				
 				<!-- EXAMPLE FOR MYSQL -->
 				<sonar.jdbc.url><![CDATA[jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8]]></sonar.jdbc.url>
