@@ -1274,17 +1274,21 @@
 							<generatePdf>false</generatePdf>
 							<includesAllSourceRoots>true</includesAllSourceRoots>
 							<includesTestSourceRoots>true</includesTestSourceRoots>
-							<excludes>
+							<!--<excludes>
+							-->
 								<!--<exclude>${project.basedir}/src/test/**/*.*</exclude>-->
+								<!--
 								<exclude>**/generated-sources/**</exclude>
 								<exclude>**/*generated*/**</exclude>
 								<exclude>**/*Mock.*</exclude>
 								<exclude>**/src/main/java/com/**</exclude>
 								<exclude>**/src/main/java/org/**</exclude>
 								<exclude>**/src/main/java/net/**</exclude>
+								-->
 								<!--<exclude>**/test-classes/**/*.*</exclude>
 								<exclude>**/selenium/**</exclude>-->
-							</excludes>
+							<!--
+							</excludes>-->
 						</configuration>
 						<executions>
 							<execution>
