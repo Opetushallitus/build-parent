@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2012 The Finnish Board of Education - Opetushallitus
+  ~
+  ~ This program is free software:  Licensed under the EUPL, Version 1.1 or - as
+  ~ soon as they will be approved by the European Commission - subsequent versions
+  ~ of the EUPL (the "Licence");
+  ~
+  ~ You may not use this work except in compliance with the Licence.
+  ~ You may obtain a copy of the Licence at: http://www.osor.eu/eupl/
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ European Union Public Licence for more details.
+  -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -93,7 +108,7 @@
 		<clover.base>/data00/atlassian/application-data/bamboo/clover</clover.base>
 		<clover.outputDirectory>${clover.base}/output/${project.groupId}-${project.artifactId}</clover.outputDirectory>
 
-		<checkstyle.excludes>**/clover/**,**/target/**/src/**,**/target/**/src-test/**,**/*generated*/**,**/*generated*/**,**/*-api/**,**/src/main/java/com/**,**/src/main/java/org/**,**/src/main/java/net/**</checkstyle.excludes>
+		<checkstyle.excludes>**/generated/**/*,**/com/**/*,**/org/**/*,**/net/**/*,**/*Mock.java</checkstyle.excludes>
 		<checkstyle.skip>false</checkstyle.skip>
 		<checkstyle.failsOnError>true</checkstyle.failsOnError>
 		<checkstyle.consoleOutput>true</checkstyle.consoleOutput>
@@ -1199,7 +1214,7 @@
 			<id>clover.all</id>
 			<properties>
 				<checkstyle.skip>true</checkstyle.skip>
-				<checkstyle.excludes>**/*.java</checkstyle.excludes>
+				<checkstyle.excludes>**/*</checkstyle.excludes>
 				<surefire.testFailureIgnore>true</surefire.testFailureIgnore>
 				
 				<clover.version>3.1.4</clover.version>
@@ -1348,11 +1363,8 @@
 				<sonar.core.codeCoveragePlugin>clover</sonar.core.codeCoveragePlugin>
 				<sonar.clover.reportPath>/data00/atlassian/application-data/bamboo/www/clover_report/coverage.xml</sonar.clover.reportPath>
 
-				<sonar.exclusions>**/*generated*/**,**/*-api/**,**/src/main/java/com/**,**/src/main/java/org/**,**/src/main/java/net/**</sonar.exclusions>
-								
-				<checkstyle.skip>true</checkstyle.skip>
-				<checkstyle.excludes>**/*generated*/**,**/*-api/**,**/src/main/java/com/**,**/src/main/java/org/**,**/src/main/java/net/**</checkstyle.excludes>
-				
+                <sonar.exclusions>**/*generated*/**,com/**,org/**,net/**,**/*Mock.java</sonar.exclusions>
+
 				<!-- EXAMPLE FOR MYSQL -->
 				<sonar.jdbc.url><![CDATA[jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8]]></sonar.jdbc.url>
 				<sonar.jdbc.driverClassName>com.mysql.jdbc.Driver</sonar.jdbc.driverClassName>
