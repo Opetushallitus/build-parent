@@ -1770,6 +1770,13 @@
                                                         <then>
                                                             <echo message=" ### DEPLOY: TOMCAT"/>
                                                             <var name="deploy.dir" value="${liferay.dir.new}/tomcat-7.0.23/webapps"/>
+                                                            <!-- delete old -->
+                                                            <!--<delete file="${deploy.dir}/${project.artifactId}.war" failonerror="false" verbose="true"/>-->
+                                                            <!--<sleep seconds="1"/>-->
+                                                            <delete file="${deploy.dir}/${project.artifactId}/WEB-INF/web.xml" failonerror="false" verbose="true"/>
+                                                            <sleep seconds="1"/>
+                                                            <!--<delete dir="${deploy.dir}/${project.artifactId}" failonerror="false" verbose="false"/>-->
+                                                            <!--<sleep seconds="1"/>-->
                                                         </then>
                                                     </elseif>
                                                     <else>
