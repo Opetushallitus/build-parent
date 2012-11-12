@@ -1769,7 +1769,7 @@
                                                         <equals arg1="${deploy.to.server}" arg2="tomcat"/>
                                                         <then>
                                                             <echo message=" ### DEPLOY: TOMCAT"/>
-                                                            <var name="deploy.dir" value="${liferay.dir.new}/tomcat-7.0.23/webapps"/>
+                                                            <var name="deploy.dir" value="${liferay.dir.new}/apache-tomcat-7.0.32/webapps"/>
                                                             <!-- delete old -->
                                                             <!--<delete file="${deploy.dir}/${project.artifactId}.war" failonerror="false" verbose="true"/>-->
                                                             <!--<sleep seconds="1"/>-->
