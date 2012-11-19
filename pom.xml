@@ -1705,7 +1705,7 @@
                                 <property>
                                     <name>ophServerUrl</name>
                                     <!-- TODO: lue build propseista -->
-                                    <value>http://reppu.hard.ware.fi</value>
+                                    <value>http://test-virkailija.oph.ware.fi</value>
                                 </property>
                             </systemProperties>
                         </configuration>
