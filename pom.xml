@@ -1766,30 +1766,32 @@
                                                         </if>
                                                     </then>
                                                     <elseif>
-                                                        <equals arg1="${deploy.to.server}" arg2="tomcat"/>
+                                                        <equals arg1="${deploy.to.server}" arg2="jboss"/>
                                                         <then>
-                                                            <echo message=" ### DEPLOY: TOMCAT"/>
-                                                            <var name="deploy.dir" value="${liferay.dir.new}/apache-tomcat-7.0.32/webapps"/>
-                                                            <!-- delete old -->
-                                                            <!--<delete file="${deploy.dir}/${project.artifactId}.war" failonerror="false" verbose="true"/>-->
-                                                            <!--<sleep seconds="1"/>-->
-                                                            <delete file="${deploy.dir}/${project.artifactId}/WEB-INF/web.xml" failonerror="false" verbose="true"/>
-                                                            <sleep seconds="1"/>
-                                                            <!--<delete dir="${deploy.dir}/${project.artifactId}" failonerror="false" verbose="false"/>-->
-                                                            <!--<sleep seconds="1"/>-->
+                                                            <echo message=" ### DEPLOY: JBOSS"/>
+                                                            <if>
+                                                                <available file="${jboss.dir.new}"/>
+                                                                <then>
+                                                                    <var name="deploy.dir" value="${jboss.dir.new}/standalone/deployments"/>
+                                                                </then>
+                                                                <else>
+                                                                    <var name="deploy.dir" value="${jboss.dir.old}/standalone/deployments"/>
+                                                                </else>
+                                                            </if>
                                                         </then>
                                                     </elseif>
                                                     <else>
-                                                        <echo message=" ### DEPLOY: JBOSS"/>
-                                                        <if>
-                                                            <available file="${jboss.dir.new}"/>
-                                                            <then>
-                                                                <var name="deploy.dir" value="${jboss.dir.new}/standalone/deployments"/>
-                                                            </then>
-                                                            <else>
-                                                                <var name="deploy.dir" value="${jboss.dir.old}/standalone/deployments"/>
-                                                            </else>
-                                                        </if>
+                                                        <echo message=" ### DEPLOY: TOMCAT"/>
+                                                        <var name="deploy.dir" value="${liferay.dir.new}/apache-tomcat-7.0.32/webapps"/>
+                                                        <!-- delete old -->
+                                                        <!--<delete file="${deploy.dir}/${project.artifactId}.war" failonerror="false" verbose="true"/>-->
+                                                        <!--<sleep seconds="1"/>-->
+                                                        <!--
+                                                        <delete file="${deploy.dir}/${project.artifactId}/WEB-INF/web.xml" failonerror="false" verbose="true"/>
+                                                        <sleep seconds="1"/>
+                                                        -->
+                                                        <!--<delete dir="${deploy.dir}/${project.artifactId}" failonerror="false" verbose="false"/>-->
+                                                        <!--<sleep seconds="1"/>-->
                                                     </else>
                                                 </if>
 
