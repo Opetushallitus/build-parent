@@ -1696,6 +1696,19 @@
                     <url>http://penaali.hard.ware.fi/artifactory/oph-sade-release-integration</url>
                 </repository>
             </repositories>
+            <!-- in successful system-test build artifacts are deployed into release repo instead default repo -->
+            <distributionManagement>
+                <repository>
+                    <id>oph-sade-artifactory</id>
+                    <name>oph-sade-artifactory-releases</name>
+                    <url>http://penaali.hard.ware.fi/artifactory/oph-sade-releasecandidates</url>
+                </repository>
+                <snapshotRepository>
+                    <id>oph-sade-artifactory</id>
+                    <name>oph-sade-artifactory-snapshots</name>
+                    <url>http://penaali.hard.ware.fi/artifactory/oph-sade-releasecandidates</url>
+                </snapshotRepository>
+            </distributionManagement>
             <build>
                 <plugins>
                     <plugin>
