@@ -106,9 +106,6 @@
 
 		<embedService.serviceArtifactId>${project.parent.artifactId}-service</embedService.serviceArtifactId>
 
-		<clover.base>/data00/atlassian/application-data/bamboo/clover</clover.base>
-		<clover.outputDirectory>${clover.base}/output/${project.groupId}-${project.artifactId}</clover.outputDirectory>
-
 		<checkstyle.excludes>**/generated/**/*,**/com/**/*,**/org/**/*,**/net/**/*,**/*Mock.java</checkstyle.excludes>
 		<checkstyle.skip>false</checkstyle.skip>
 		<checkstyle.failsOnError>true</checkstyle.failsOnError>
@@ -129,6 +126,15 @@
         <liferay.dir.new>${user.home}/servers/liferay</liferay.dir.new>
         <jboss.dir.old>${project.basedir}/../../../servers/trunk/jboss/target/servers/jboss-as-7.1.1.Final</jboss.dir.old>
         <jboss.dir.new>${user.home}/servers/jboss</jboss.dir.new>
+
+        <!-- common clover properties -->
+        <!-- OLD
+        <clover.base>/data00/atlassian/application-data/bamboo/clover</clover.base>
+		<clover.outputDirectory>${clover.base}/output/${project.groupId}-${project.artifactId}</clover.outputDirectory>
+		-->
+        <clover.version>3.1.8</clover.version>
+        <clover.outputDirectory>${bamboo.data.home}/www/clover/${project.groupId}</clover.outputDirectory>
+        <clover.base>${bamboo.data.home}/clover/${project.groupId}</clover.base>
 
     </properties>
 
@@ -962,11 +968,6 @@
 		</profile>
 		<profile>
 			<id>checkstyle</id>
-			<!--<activation>
-				<property>
-					<name>checkstyle</name>
-				</property>
-			</activation>-->
 			<build>
 				<plugins>
 					<plugin>
@@ -988,15 +989,6 @@
 								</goals>
 							</execution>
 						</executions>
-						<dependencies>
-                            <!--
-							<dependency>
-								<groupId>fi.vm.sade.generic</groupId>
-								<artifactId>build-utilities</artifactId>
-								<version>1.0-SNAPSHOT</version>
-							</dependency>
-							-->
-						</dependencies>
 					</plugin>
 				</plugins>
 			</build>
@@ -1017,7 +1009,6 @@
 				</plugins>
 			</reporting>
 		</profile>
-
 		<profile>
 			<id>findbugs</id>
 			<properties>
@@ -1026,17 +1017,6 @@
 			</properties>
 			<build>
 				<plugins>
-					<!-- findbugs maven blugin is shit (vulgar. Expel feces from the body) -->
-					<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>findbugs-maven-plugin</artifactId> 
-						<version>${findbugs.plugin.version}</version> <executions> <execution> <id>findbugs 
-						findbugs</id> <phase>post-integration-test</phase> <goals> <goal>findbugs</goal> 
-						</goals> </execution> <execution> <id>findbugs check</id> <phase>verify</phase> 
-						<goals> <goal>check</goal> </goals> </execution> </executions> <configuration> 
-						<threshold>High</threshold> <effort>Default</effort> <failOnError>true</failOnError> 
-						<findbugsXmlWithMessages>true</findbugsXmlWithMessages> <outputDirectory>${project.build.directory}/findbugs</outputDirectory> 
-						<findbugsXmlOutputDirectory>${project.build.directory}/findbugs</findbugsXmlOutputDirectory> 
-						</configuration> </plugin> -->
-
 					<plugin>
 						<artifactId>maven-antrun-plugin</artifactId>
 						<executions>
@@ -1120,7 +1100,28 @@
 			</build>
 		</profile>
 
+        <profile>
+            <id>javadoc</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.8.1</version>
+                        <executions>
+                            <execution>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>javadoc</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
 
+<!--
 		<profile>
 			<id>restore.reports</id>
 			<build>
@@ -1188,205 +1189,201 @@
 				</plugins>
 			</build>
 		</profile>
+-->
 
+        <profile>
+            <id>clover-clean-post</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>clean-clover-post</id>
+                                <phase>clean</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target>
+                                        <delete includeemptydirs="true" failonerror="false">
+                                            <fileset dir="${clover.outputDirectory}_old">
+                                                <include name="**/**"/>
+                                            </fileset>
+                                        </delete>
+                                    </target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>ant-contrib</groupId>
+                    <artifactId>ant-contrib</artifactId>
+                    <version>1.0b3</version>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>ant</groupId>
+                            <artifactId>ant</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+            </dependencies>
+        </profile>
 
-		<profile>
-			<id>javadoc</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>2.8.1</version>
-						<!--<configuration>
-						  <show>private</show>
-						  <nohelp>true</nohelp>
-						</configuration>-->
-						<executions>
-							<execution>
-								<phase>install</phase>
-								<goals>
-									<goal>javadoc</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		
-		<profile>
-			<id>clover.all</id>
-			<properties>
-				<checkstyle.skip>true</checkstyle.skip>
-				<checkstyle.excludes>**/*</checkstyle.excludes>
-				<surefire.testFailureIgnore>true</surefire.testFailureIgnore>
-				
-				<clover.version>3.1.4</clover.version>
-				<clover.fullRunEvery>500</clover.fullRunEvery>
-				<clover.generateHistorical>true</clover.generateHistorical>
-				
-				<clover.historyDir>${clover.base}/history/${project.groupId}-${project.artifactId}</clover.historyDir>
-				<clover.snapshot>${clover.base}/snapshot/${project.groupId}-${project.artifactId}/clover.snapshot</clover.snapshot>
-				<clover.cloverDatabase>${clover.base}/db/${project.groupId}-${project.artifactId}/clover.db</clover.cloverDatabase>
-			</properties>
-		
-			<build>
-				<plugins>
-					<plugin>
-						<artifactId>maven-antrun-plugin</artifactId>
-						<version>1.7</version> <!-- failOnError vasta tässä versiossa -->
-						<executions>
-							<execution>
-								<id>clean clover working dirs</id>
-								<phase>clean</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<target>
-										<echo message="Delete clover working directories:" />
-										<echo message=" ${clover.base}/snapshot/${project.groupId}-${project.artifactId}" />
-										<delete dir="${clover.base}/snapshot/${project.groupId}-${project.artifactId}" /> 
-										<echo message=" ${clover.base}/db/${project.groupId}-${project.artifactId}" />
-										<delete dir="${clover.base}/db/${project.groupId}-${project.artifactId}" /> 
-									</target>
-								</configuration>
-							</execution>
-						</executions>
-						<dependencies>
-							<dependency>
-								<groupId>ant-contrib</groupId>
-								<artifactId>ant-contrib</artifactId>
-								<version>${ant-contrib.version}</version>
-								<exclusions>
-									<exclusion>
-										<groupId>ant</groupId>
-										<artifactId>ant</artifactId>
-									</exclusion>
-								</exclusions>
-							</dependency>
-						</dependencies>
-					</plugin>
-					
-					<plugin>
-						<groupId>com.atlassian.maven.plugins</groupId>
-						<artifactId>maven-clover2-plugin</artifactId>
-						<version>${clover.version}</version>
-						<configuration>
-							<license><![CDATA[rpRQNMNVbDQGOEFKsVQKeIihqPnFbdDEHvvNdDVKJlFhJhe
-											  mj2KgKqUCcBA763sFqgbibB52L0Cp0MzNnhQ88tyJuOnONl
-											  mQQqssopQmnQMMroQMPVTqPQRnpqrQNQOPTtWuTusvWnvSs
-											  vtWXTmTTTTSosUoWSxxStWuswtMRnmnmUUnppnpuqqmmmmm
-											  UUnppnpuqqmmmmmUU6fkkfpeWEXqflkXiW2lXoaWlcW5arZ
-											  XqflkUUor]]>
-							</license>
-							<snapshot>${clover.snapshot}</snapshot>
-							<singleCloverDatabase>${clover.singleCloverDatabase}</singleCloverDatabase>
-							<cloverDatabase>${clover.cloverDatabase}</cloverDatabase>
-							<outputDirectory>${clover.outputDirectory}</outputDirectory>
-							<generateHistorical>${clover.generateHistorical}</generateHistorical>
-							<historyDir>${clover.historyDir}</historyDir>
-							<alwaysReport>true</alwaysReport>
-							<generateXml>true</generateXml>
-							<generateHtml>false</generateHtml>
-							<generateJson>false</generateJson>
-							<generatePdf>false</generatePdf>
-							<includesAllSourceRoots>true</includesAllSourceRoots>
-							<includesTestSourceRoots>true</includesTestSourceRoots>
-							<!--<excludes>
-							-->
-								<!--<exclude>${project.basedir}/src/test/**/*.*</exclude>-->
-								<!--
-								<exclude>**/generated-sources/**</exclude>
-								<exclude>**/*generated*/**</exclude>
-								<exclude>**/*Mock.*</exclude>
-								<exclude>**/src/main/java/com/**</exclude>
-								<exclude>**/src/main/java/org/**</exclude>
-								<exclude>**/src/main/java/net/**</exclude>
-								-->
-								<!--<exclude>**/test-classes/**/*.*</exclude>
-								<exclude>**/selenium/**</exclude>-->
-							<!--
-							</excludes>-->
-						</configuration>
-						<executions>
-							<execution>
-								<id>clover</id>
-								<goals>
-									<goal>setup</goal>
-									<goal>optimize</goal>
-									<goal>snapshot</goal>
-								</goals>
-							</execution>
-							<execution>
-								<phase>verify</phase>
-								<goals>
-									<!--<goal>clover</goal>
-									<goal>log</goal>-->
-									<!-- <goal>check</goal> disable check until we have selenium testi 
-										up and running in bamboo -->
-									<goal>save-history</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-			<reporting>
-				<plugins>
-					<plugin>
-						<groupId>com.atlassian.maven.plugins</groupId>
-						<artifactId>maven-clover2-plugin</artifactId>
-						<version>${clover.version}</version>
-					</plugin>
-				</plugins>
-			</reporting>
-			<dependencies>
-				<dependency>
-					<groupId>com.cenqua.clover</groupId>
-					<artifactId>clover</artifactId>
-					<version>${clover.version}</version>
-				</dependency>
-			</dependencies>
-		</profile>
+        <profile>
+            <id>clover-clean-pre</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>clean-clover-pre</id>
+                                <phase>clean</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target>
+                                        <echo>Clean clover output directory from ${clover.base}.</echo>
+                                        <delete includeemptydirs="true" failonerror="false">
+                                            <fileset dir="${clover.base}">
+                                                <include name="**/**"/>
+                                                <exclude name="history/**"/>
+                                            </fileset>
+                                        </delete>
+                                        <move failonerror="false" file="${clover.outputDirectory}" tofile="${clover.outputDirectory}_old" />
+                                    </target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>ant-contrib</groupId>
+                    <artifactId>ant-contrib</artifactId>
+                    <version>1.0b3</version>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>ant</groupId>
+                            <artifactId>ant</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <!--
+           How-to build with Clover and Sonar:
 
-		<profile>
-			<id>sonar</id>
-			<properties>
-				<!-- Dynamic analysis relates to unit tests. By default, those unit tests 
-					are executed but you can optionally decide to do only static analysis or 
-					to reuse existing reports which have been previously generated. Possible 
-					values are true, false, reuseReports. -->
-				<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+           1. clean:
+               $ mvn clean -N -Pclover-clean-pre -Dbamboo.data.home=/my/path/to/bamboo
+           2. test ja clover:
+               $ mvn clean install -Pclover -Dbamboo.data.home=/my/path/to/bamboo
+           3. deploy and test WITHOUT clover:
+               $ mvn clean deploy -DscreenshotMode=true -Pjavadoc -DskipITs
+           4. Sonar reports:
+               $ mvn sonar:sonar -Psonar -Dsonar.jdbc.password=XXXxxxXxx -Dbamboo.data.home=/my/path/to/bamboo
+           5. cleanup after successfully build:
+               $ mvn clean -N -Pclover-clean-pre -Dbamboo.data.home=/my/path/to/bamboo
 
-				<!-- The absolute or relative path of the surefire reports directory. 
-					Used only if sonar.dynamicAnalysis is reuseReports. -->
-				<sonar.surefire.reportsPath>${surefire.reportsDirectory}</sonar.surefire.reportsPath>
-				<!-- The absolute or relative path of the clover xml report file. Used 
-					only if sonar.dynamicAnalysis is reuseReports. -->
-				<sonar.core.codeCoveragePlugin>clover</sonar.core.codeCoveragePlugin>
-				<sonar.clover.reportPath>/data00/atlassian/application-data/bamboo/www/clover_report/coverage.xml</sonar.clover.reportPath>
+           On windows machine you must user following syntax on bamboo.data.home property
+               -Dbamboo.data.home=c:\\\\my\\path\\to\\bamboo
+           and in linux
+               -Dbamboo.data.home=/my/path/to/bamboo
+           -->
+            <id>clover</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.atlassian.maven.plugins</groupId>
+                        <artifactId>maven-clover2-plugin</artifactId>
+                        <version>${clover.version}</version>
+
+                        <configuration>
+                            <licenseLocation>${bamboo.data.home}/clover/clover.license</licenseLocation>
+                            <outputDirectory>${clover.outputDirectory}</outputDirectory>
+                            <snapshot>${clover.base}/snapshot/clover.snapshot</snapshot>
+                            <cloverDatabase>${clover.base}/db/clover.db</cloverDatabase>
+                            <historyDir>${clover.base}/history</historyDir>
+
+                            <singleCloverDatabase>true</singleCloverDatabase>
+                            <generateHistorical>true</generateHistorical>
+                            <alwaysReport>true</alwaysReport>
+                            <generateXml>true</generateXml>
+                            <includesAllSourceRoots>true</includesAllSourceRoots>
+                            <!--  <includes>
+                                      <include>**/api/**/*.java</include>
+                                      <include>some/path/MyFile.java</include>
+                                      [...]
+                                  </includes>  -->
+                            <excludes>
+                                <exclude>**/*Mock.java</exclude>
+                                <!-- TODO, FIXME: exclude "**/*-api/**" modules. -->
+                            </excludes>
+                            <!--  <targetPercentage>50%</targetPercentage>  -->
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>clover</id>
+                                <goals>
+                                    <goal>setup</goal>
+                                    <!--<goal>optimize</goal>-->
+                                    <goal>snapshot</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>clover</goal>
+                                    <goal>log</goal>
+                                    <!-- <goal>check</goal> disable!-->
+                                    <goal>save-history</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>com.cenqua.clover</groupId>
+                    <artifactId>clover</artifactId>
+                    <version>${clover.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>sonar</id>
+            <properties>
+                <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+                <sonar.surefire.reportsPath>${project.build.directory}/surefire-reports</sonar.surefire.reportsPath>
+                <sonar.core.codeCoveragePlugin>clover</sonar.core.codeCoveragePlugin>
+                <sonar.clover.reportPath>${clover.outputDirectory}/clover.xml</sonar.clover.reportPath>
 
                 <sonar.exclusions>**/*generated*/**,com/**,org/**,net/**,**/*Mock.java</sonar.exclusions>
 
-				<!-- EXAMPLE FOR MYSQL -->
-				<sonar.jdbc.url><![CDATA[jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8]]></sonar.jdbc.url>
-				<sonar.jdbc.driverClassName>com.mysql.jdbc.Driver</sonar.jdbc.driverClassName>
-				<sonar.jdbc.username>sonar</sonar.jdbc.username>
-				<sonar.jdbc.password>Dx4k7T23x3ox8yS</sonar.jdbc.password>
-				<!-- optional URL to server. Default value is http://localhost:9000 -->
-				<sonar.host.url>http://pulpetti.hard.ware.fi:9000/sonar</sonar.host.url>
-			</properties>
-			<dependencies>
-				<dependency>
-					<groupId>org.codehaus.sonar-plugins</groupId>
-					<artifactId>sonar-clover-plugin</artifactId>
-					<version>2.8</version>
-				</dependency>
-			</dependencies>
-		</profile>
-		
+                <sonar.jdbc.url>jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8</sonar.jdbc.url>
+                <sonar.jdbc.driverClassName>com.mysql.jdbc.Driver</sonar.jdbc.driverClassName>
+                <sonar.jdbc.username>sonar</sonar.jdbc.username>
+                <sonar.jdbc.password>${sonar.jdbc.password}</sonar.jdbc.password>
+                <sonar.host.url>http://pulpetti.hard.ware.fi:9000/sonar</sonar.host.url>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.codehaus.sonar-plugins</groupId>
+                    <artifactId>sonar-clover-plugin</artifactId>
+                    <version>2.9</version>
+                </dependency>
+            </dependencies>
+        </profile>
+
 		<profile>
 			<id>jetty</id>
 			<activation>
@@ -1424,172 +1421,6 @@
 			</build>
 
 		</profile>
-
-		<!-- servicemix installation profile - TODO: replace with more elegant 
-			solution when available -->
-		<profile>
-			<id>servicemix-install</id>
-			<activation>
-				<file>
-					<exists>profile.servicemix</exists>
-				</file>
-			</activation>
-			<build>
-				<plugins>
-
-					<!-- run servicemix -->
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>exec-maven-plugin</artifactId>
-						<version>1.2.1</version>
-						<executions>
-							<execution>
-								<id>exec-servicemix-start</id>
-								<phase>pre-integration-test</phase>
-								<goals>
-									<goal>java</goal>
-								</goals>
-								<configuration>
-									<mainClass>fi.vm.sade.servicemix.ServicemixStart</mainClass>
-									<arguments>
-										<argument>${project.basedir}/target/servers/apache-servicemix-4.4.1</argument>
-										<argument>${servicemix.waitforBundle}</argument>
-									</arguments>
-								</configuration>
-							</execution>
-							<execution>
-								<id>exec-servicemix-stop</id>
-								<phase>post-integration-test</phase>
-								<goals>
-									<goal>java</goal>
-								</goals>
-								<configuration>
-									<mainClass>fi.vm.sade.servicemix.ServicemixStop</mainClass>
-									<arguments>
-										<argument>${project.basedir}/target/servers/apache-servicemix-4.4.1</argument>
-									</arguments>
-								</configuration>
-							</execution>
-						</executions>
-						<configuration>
-							<classpathScope>test</classpathScope>
-						</configuration>
-					</plugin>
-
-					<!-- TODO: antrun not so elegant but works for now, replace with some 
-						dependency system -->
-					<plugin>
-						<artifactId>maven-antrun-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>servicemix-install-server</id>
-								<!-- package phase so this runs before smx start, which is at pre-integration-test -->
-								<phase>package</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<target>
-										<taskdef resource="net/sf/antcontrib/antcontrib.properties"
-											classpathref="maven.plugin.classpath" />
-										<if>
-											<not>
-												<available
-													file="${project.basedir}/target/servers/apache-servicemix-4.4.1" />
-											</not>
-											<then>
-												<!--<unzip src="${settings.localRepository}/apache/servicemix/4.4.1/servicemix-4.4.1.zip" 
-													dest="${project.basedir}/target/servers"/> -->
-												<if>
-													<os family="windows" />
-													<then>
-														<get
-															src="http://www.nic.funet.fi/pub/mirrors/apache.org/servicemix/servicemix-4/4.4.1/apache-servicemix-4.4.1.zip"
-															dest="${project.basedir}/target/apache-servicemix-4.4.1.zip" />
-														<unzip
-															src="${project.basedir}/target/apache-servicemix-4.4.1.zip"
-															dest="${project.basedir}/target/servers" />
-														<!--<copy file="${project.basedir}/karaf.bat" todir="${project.basedir}/target/servers/apache-servicemix-4.4.1/bin" 
-															failonerror="false"/> -->
-														<!--<copy file="${project.basedir}/servicemix.bat" todir="${project.basedir}/target/servers/apache-servicemix-4.4.1/bin" 
-															failonerror="false"/> -->
-													</then>
-													<else>
-														<get
-															src="http://www.nic.funet.fi/pub/mirrors/apache.org/servicemix/servicemix-4/4.4.1/apache-servicemix-4.4.1.tar.gz"
-															dest="${project.basedir}/target/apache-servicemix-4.4.1.tar.gz" />
-														<gunzip
-															src="${project.basedir}/target/apache-servicemix-4.4.1.tar.gz"
-															dest="${project.basedir}/target/apache-servicemix-4.4.1.tar" />
-														<untar
-															src="${project.basedir}/target/apache-servicemix-4.4.1.tar"
-															dest="${project.basedir}/target/servers" />
-														<!--<copy file="${project.basedir}/karaf" todir="${project.basedir}/target/servers/apache-servicemix-4.4.1/bin" 
-															failonerror="false"/> -->
-														<!--<copy file="${project.basedir}/servicemix" todir="${project.basedir}/target/servers/apache-servicemix-4.4.1/bin" 
-															failonerror="false"/> -->
-													</else>
-												</if>
-												<copy
-													todir="${project.basedir}/target/servers/apache-servicemix-4.4.1"
-													failonerror="false" verbose="true" overwrite="true">
-													<fileset dir="${project.basedir}/smx" includes="**/*.*" />
-												</copy>
-												<if>
-													<os family="windows" />
-													<then>
-													</then>
-													<else>
-														<chmod
-															file="${project.basedir}/target/servers/apache-servicemix-4.4.1/bin/servicemix"
-															perm="755" verbose="true" />
-														<chmod
-															file="${project.basedir}/target/servers/apache-servicemix-4.4.1/bin/karaf"
-															perm="755" verbose="true" />
-														<chmod
-															file="${project.basedir}/target/servers/apache-servicemix-4.4.1/bin/start"
-															perm="755" verbose="true" />
-														<chmod
-															file="${project.basedir}/target/servers/apache-servicemix-4.4.1/bin/stop"
-															perm="755" verbose="true" />
-													</else>
-												</if>
-											</then>
-										</if>
-										<!-- <copy file="../koodisto-webservice/target/koodisto-webservice-1.0-SNAPSHOT.jar" 
-											todir="target/servers/apache-servicemix-4.4.1"/> -->
-										<!-- better memory for jvm in custom karaf script -->
-
-										<!-- copy bundles/features - TODO: hack, depsuina! -->
-										<!--<copy todir="target/servers/apache-servicemix-4.4.1/deploy" 
-											verbose="true" failonerror="false" file="${settings.localRepository}/fi/vm/sade/generic/generic-features/1.0-SNAPSHOT/generic-features-1.0-SNAPSHOT-features.xml" 
-											/> -->
-										<copy todir="target/servers/apache-servicemix-4.4.1/deploy"
-											verbose="true" failonerror="false" file="${servicemix.features.xml.path}" />
-
-									</target>
-								</configuration>
-							</execution>
-						</executions>
-						<dependencies>
-							<dependency>
-								<groupId>ant-contrib</groupId>
-								<artifactId>ant-contrib</artifactId>
-								<version>${ant-contrib.version}</version>
-								<exclusions>
-									<exclusion>
-										<groupId>ant</groupId>
-										<artifactId>ant</artifactId>
-									</exclusion>
-								</exclusions>
-							</dependency>
-						</dependencies>
-					</plugin>
-
-				</plugins>
-			</build>
-		</profile>
-
 		<!-- start and keep sunning servicemix at compile phase (mvn compile -Psmxrun) -->
 		<profile>
 			<id>smxrun</id>
@@ -1619,7 +1450,6 @@
 				</plugins>
 			</build>
 		</profile>
-
 		<!-- profile to embed service dependency inside war in app module -->
 		<profile>
 			<id>embedService</id>
@@ -1634,7 +1464,6 @@
 				</dependency>
 			</dependencies>
 		</profile>
-
 		<profile>
 			<id>development</id>
 			<properties>
@@ -1743,7 +1572,6 @@
 				<env>PRODUCTION</env>
 			</properties>
 		</profile>
-
         <profile>
             <id>deploy</id>
             <build>
@@ -1850,7 +1678,6 @@
                 </plugins>
             </build>
         </profile>
-
         <profile>
             <id>attach-schema-artifact</id>
             <activation>
