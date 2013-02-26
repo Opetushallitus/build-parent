@@ -175,7 +175,6 @@
 			<name>Vaadin addons</name>
 			<url>http://penaali.hard.ware.fi/artifactory/vaadin-addons</url>
 		</repository>
-        <!--
 		<repository>
 			<id>com.springsource.repository.bundles.release</id>
 			<name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Releases</name>
@@ -186,7 +185,6 @@
 			<name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
 			<url>http://penaali.hard.ware.fi/artifactory/spring-ebr/</url>
 		</repository>
-		-->
 		<repository>
 			<releases>
 				<enabled>false</enabled>
