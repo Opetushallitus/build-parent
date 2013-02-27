@@ -1577,6 +1577,26 @@
                         <version>1.7</version>
                         <executions>
                             <execution>
+                                <id>undeploy</id>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="${maven.plugin.classpath}"  />
+                                        <if>
+                                            <equals arg1="${project.packaging}" arg2="war"/>
+                                            <then>
+                                                <var name="undeploy.war" value="${liferay.dir.new}/apache-tomcat-7.0.32/webapps/${project.artifactId}.war"/>
+                                                <echo message=" ### UNDEPLOY: ${undeploy.war}"/>
+                                                <delete file="${undeploy.war}" failonerror="false" verbose="true"/>
+                                            </then>
+                                        </if>
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                            <execution>
                                 <id>deploy-to-liferay-or-jboss</id>
                                 <phase>install</phase>
                                 <goals>
