@@ -1446,35 +1446,6 @@
 			</build>
 
 		</profile>
-		<!-- start and keep sunning servicemix at compile phase (mvn compile -Psmxrun) -->
-		<profile>
-			<id>smxrun</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>exec-maven-plugin</artifactId>
-						<version>1.2.1</version>
-						<executions>
-							<execution>
-								<id>exec-servicemix-run</id>
-								<phase>compile</phase>
-								<goals>
-									<goal>java</goal>
-								</goals>
-								<configuration>
-									<mainClass>fi.vm.sade.servicemix.ServicemixRun</mainClass>
-									<arguments>
-										<argument>${project.basedir}/target/servers/apache-servicemix-4.4.1</argument>
-										<argument>${servicemix.waitforBundle}</argument>
-									</arguments>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
 		<!-- profile to embed service dependency inside war in app module -->
 		<profile>
 			<id>embedService</id>
