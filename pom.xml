@@ -1803,6 +1803,36 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>auto</id>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>my.mvn.repo</id>
+                    <url>https://raw.github.com/asalonen/maven-autobuild/master/mvn-repo</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                        <!--<updatePolicy>always</updatePolicy>-->
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>fi.vm.sade.antin.autobuildi.poc</groupId>
+                        <artifactId>autobuild</artifactId>
+                        <version>1.0-SNAPSHOT</version>
+                        <executions>
+                            <execution>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>deps</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 	<modules>
 		<module>build-utilities</module>
