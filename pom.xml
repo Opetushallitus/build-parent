@@ -66,8 +66,6 @@
 		<postgresql.version>9.1-901-1.jdbc4</postgresql.version>
 		<hsqldb.version>2.0.0</hsqldb.version>
 		<hibernate.version>4.1.0.Final</hibernate.version>
-		<hibernate.ejb.version>4.1.0.Final</hibernate.ejb.version>
-		<hibernate.annotations.common.version>4.1.0.Final</hibernate.annotations.common.version>
 		<commons-dbcp.version>1.4_1</commons-dbcp.version>
 		<commons-lang.version>2.6</commons-lang.version>
         <querydsl.version>2.6.0</querydsl.version>
@@ -361,7 +359,7 @@
                     <artifactId>jetty-maven-plugin</artifactId>
                     <version>${jetty.version}</version>
                     <configuration>
-                        <scanIntervalSeconds>1</scanIntervalSeconds>
+                        <scanIntervalSeconds>0</scanIntervalSeconds>
                         <connectors>
                             <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
                                 <port>${webapp.port}</port>
@@ -370,46 +368,18 @@
                         <stopKey>stop</stopKey>
                         <stopPort>1${webapp.port}</stopPort>
                         <webAppConfig>
+                            <jettyEnvXml>src/main/webapp/META-INF/jetty-env.xml</jettyEnvXml>
                             <contextPath>/${project.artifactId}</contextPath>
-                            <jettyEnvXml>${user.home}/oph-configuration/context-jetty.xml</jettyEnvXml>
                         </webAppConfig>
-                        <!--<scanTargets>-->
-                            <!--<scanTarget>C:\work\oph-svn\generic\module-install-parent\trunk\server-install\config\development\liferay.home\apache-tomcat-7.0.32\lib</scanTarget>-->
-                        <!--</scanTargets>-->
-                        <!--<scanTargetPatterns>-->
-                            <!--<scanTargetPattern>-->
-                                <!--
-                                <directory>src/other-resources</directory>
-                                <includes>
-                                    <include>**/*.xml</include>
-                                    <include>**/*.properties</include>
-                                </includes>
-                                <excludes>
-                                    <exclude>**/myspecial.xml</exclude>
-                                    <exclude>**/myspecial.properties</exclude>
-                                </excludes>
-                                -->
-                                <!--<directory>${project.basedir}</directory>-->
-                                <!--<excludes>-->
-                                    <!--<exclude>pom.xml</exclude>-->
-                                <!--</excludes>-->
-                            <!--</scanTargetPattern>-->
-                        <!--</scanTargetPatterns>-->
-                        <!--<webAppSourceDirectory>${project.basedir}/src/main/webapp</webAppSourceDirectory>-->
                     </configuration>
                     <dependencies>
-                        <!--
+                        <!-- container will provide logging -->
                         <dependency>
-                            <groupId>org.eclipse.jetty</groupId>
-                            <artifactId>jetty-server</artifactId>
-                            <version>${jetty.version}</version>
+                            <groupId>org.slf4j</groupId>
+                            <artifactId>slf4j-simple</artifactId>
+                            <version>${slf4j.version}</version>
+                            <scope>compile</scope>
                         </dependency>
-                        <dependency>
-                            <groupId>org.eclipse.jetty</groupId>
-                            <artifactId>jetty-webapp</artifactId>
-                            <version>${jetty.version}</version>
-                        </dependency>
-                        -->
                         <dependency>
                             <groupId>postgresql</groupId>
                             <artifactId>postgresql</artifactId>
@@ -426,25 +396,6 @@
                             <groupId>com.liferay.portal</groupId>
                             <artifactId>portal-service</artifactId>
                             <version>6.1.0</version>
-                            <scope>compile</scope>
-                        </dependency>
-                        <!-- loggerit tarvitaan -->
-                        <dependency>
-                            <groupId>org.slf4j</groupId>
-                            <artifactId>slf4j-api</artifactId>
-                            <version>${slf4j.version}</version>
-                            <scope>compile</scope>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.slf4j</groupId>
-                            <artifactId>slf4j-log4j12</artifactId>
-                            <version>${slf4j.version}</version>
-                            <scope>compile</scope>
-                        </dependency>
-                        <dependency>
-                            <groupId>log4j</groupId>
-                            <artifactId>log4j</artifactId>
-                            <version>${log4j.version}</version>
                             <scope>compile</scope>
                         </dependency>
                     </dependencies>
@@ -785,28 +736,34 @@
 				<version>${sade-generic.version}</version>
 			</dependency>-->
 
-			<!-- Hibernate libraries -->
-            <!-- todo: depsukat kuntoon ei näitä com.springsource juttuja enää -->
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>com.springsource.org.hibernate</artifactId>
-				<version>${hibernate.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>com.springsource.org.hibernate.ejb</artifactId>
-				<version>${hibernate.ejb.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>com.springsource.org.hibernate.annotations</artifactId>
-				<version>${hibernate.ejb.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate.common</groupId>
-				<artifactId>com.springsource.org.hibernate.annotations.common</artifactId>
-				<version>${hibernate.annotations.common.version}</version>
-			</dependency>
+            <!-- todo: depsukat kuntoon ei com.springsource juttuja enää -->
+
+			<!-- Hibernate libraries (annotations in core nowadays) -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>1.0.0.GA</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-ehcache</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
 
 			<!-- QueryDSL -->
 			<dependency>
