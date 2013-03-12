@@ -1848,7 +1848,7 @@
         <profile>
             <id>jetty</id>
             <properties>
-                <slf4j-api.scope>provided</slf4j-api.scope>
+                <slf4j-api.scope>test</slf4j-api.scope>
             </properties>
         </profile>
     </profiles>
