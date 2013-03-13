@@ -788,16 +788,6 @@
 				<version>${sade-generic.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>fi.vm.sade.generic</groupId>
-				<artifactId>generic-dao</artifactId>
-				<version>${sade-generic.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>fi.vm.sade.generic</groupId>
-				<artifactId>generic-service</artifactId>
-				<version>${sade-generic.version}</version>
-			</dependency>
-			<dependency>
 				<groupId>postgresql</groupId>
 				<artifactId>postgresql</artifactId>
 				<version>${postgresql.version}</version>
@@ -1851,7 +1841,7 @@
     </profiles>
 	<modules>
 		<module>build-utilities</module>
-		<module>parent-vaadin-app</module>
+		<!--<module>parent-vaadin-app</module>-->
 	</modules>
 
 </project>
