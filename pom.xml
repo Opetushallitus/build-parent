@@ -1841,7 +1841,6 @@
     </profiles>
 	<modules>
 		<module>build-utilities</module>
-		<!--<module>parent-vaadin-app</module>-->
 	</modules>
 
 </project>
