@@ -1551,7 +1551,7 @@
                                 <property>
                                     <name>ophServerUrl</name>
                                     <!-- TODO: lue build propseista -->
-                                    <value>http://test-virkailija.oph.ware.fi</value>
+                                    <value>http://reppu.hard.ware.fi</value>
                                 </property>
                             </systemProperties>
                         </configuration>
@@ -1564,6 +1564,22 @@
 			<properties>
 				<env>QA</env>
 			</properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <configuration>
+                            <systemProperties>
+                                <property>
+                                    <name>ophServerUrl</name>
+                                    <!-- TODO: lue build propseista -->
+                                    <value>http://ruokala.hard.ware.fi</value>
+                                </property>
+                            </systemProperties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
 		</profile>
 		<profile>
 			<id>PRODUCTION</id>
