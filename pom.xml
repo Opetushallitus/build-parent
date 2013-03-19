@@ -1573,7 +1573,11 @@
                                 <property>
                                     <name>ophServerUrl</name>
                                     <!-- TODO: lue build propseista -->
-                                    <value>http://ruokala.hard.ware.fi</value>
+                                    <value>https://testi.virkailija.opintopolku.fi</value>
+                                </property>
+                                <property>
+                                    <name>ophServerPort</name>
+                                    <value>443</value>
                                 </property>
                             </systemProperties>
                         </configuration>
