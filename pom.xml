@@ -416,6 +416,7 @@
 					<debug>${compiler.debug}</debug>
 				</configuration>
 			</plugin>
+			<!--
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-enforcer-plugin</artifactId>
@@ -436,6 +437,7 @@
 					</execution>
 				</executions>
 			</plugin>
+			-->
 
 			<!-- Attach sources with distribute package -->
 			<plugin>
