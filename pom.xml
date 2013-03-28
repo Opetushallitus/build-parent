@@ -1384,6 +1384,7 @@
                             <alwaysReport>true</alwaysReport>
                             <generateXml>true</generateXml>
                             <includesAllSourceRoots>true</includesAllSourceRoots>
+                            <copyExcludedFiles>false</copyExcludedFiles>
                             <!--  <includes>
                                       <include>**/api/**/*.java</include>
                                       <include>some/path/MyFile.java</include>
@@ -1391,6 +1392,7 @@
                                   </includes>  -->
                             <excludes>
                                 <exclude>**/*Mock.java</exclude>
+                                <exclude>**/*.scala</exclude>
                                 <!-- TODO, FIXME: exclude "**/*-api/**" modules. -->
                             </excludes>
                             <!--  <targetPercentage>50%</targetPercentage>  -->
