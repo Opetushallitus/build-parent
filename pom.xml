@@ -1384,12 +1384,12 @@
                             <alwaysReport>true</alwaysReport>
                             <generateXml>true</generateXml>
                             <includesAllSourceRoots>true</includesAllSourceRoots>
-                            <copyExcludedFiles>false</copyExcludedFiles>
-                            <!--  <includes>
-                                      <include>**/api/**/*.java</include>
-                                      <include>some/path/MyFile.java</include>
-                                      [...]
-                                  </includes>  -->
+                            <!--<copyExcludedFiles>false</copyExcludedFiles>-->
+							<!--<includes>
+								  <include>**/api/**/*.java</include>
+								  <include>some/path/MyFile.java</include>
+								  [...]
+							  </includes>  -->
                             <excludes>
                                 <exclude>**/*Mock.java</exclude>
                                 <exclude>**/*.scala</exclude>
@@ -1417,13 +1417,47 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>clean-scala-files</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target>
+                                        <echo>Remove Scala files from target/clover directory.</echo>
+                                        <delete failonerror="false" verbose="true">
+                                            <fileset dir="target/clover">
+                                                <include name="**/*.scala"/>
+                                            </fileset>
+                                        </delete>
+                                    </target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
                 </plugins>
+				
             </build>
             <dependencies>
                 <dependency>
                     <groupId>com.cenqua.clover</groupId>
                     <artifactId>clover</artifactId>
                     <version>${clover.version}</version>
+                </dependency>
+				<dependency>
+                    <groupId>ant-contrib</groupId>
+                    <artifactId>ant-contrib</artifactId>
+                    <version>1.0b3</version>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>ant</groupId>
+                            <artifactId>ant</artifactId>
+                        </exclusion>
+                    </exclusions>
                 </dependency>
             </dependencies>
         </profile>
