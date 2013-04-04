@@ -145,11 +145,11 @@
 
     </properties>
 
-	<scm>
-		<connection>scm:svn:${project.svn.base}/trunk</connection>
-		<developerConnection>scm:svn:${project.svn.base}/trunk</developerConnection>
-		<url>${project.svn.base}</url>
-	</scm>
+    <scm>
+        <connection>scm:git:git@github.com:Opetushallitus/build-parent.git</connection>
+        <developerConnection>scm:git:git@github.com:Opetushallitus/build-parent.git</developerConnection>
+        <url>http://github.com/Opetushallitus/build-parent</url>
+    </scm>
 
 	<distributionManagement>
 		<repository>
