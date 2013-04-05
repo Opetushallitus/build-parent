@@ -578,12 +578,10 @@ branch=${branch}
 revision=${revision}
 time=${maven.build.timestamp}
 ]]>
-
-                                    todo: version.txt targetin alle jotta bamboossa voidaan seuraavassa stagessa tietää mikä versio oli
-
                                 </echo>
                                 <loadfile property="buildversiontxt" srcFile="target/${project.build.finalName}/buildversion.txt"/>
                                 <echo message="${buildversiontxt}"/>
+                                <echo file="target/mavenversion.txt">${project.version}</echo>
                             </target>
                         </configuration>
                     </execution>
