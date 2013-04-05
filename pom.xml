@@ -573,10 +573,10 @@
                                 <echo file="target/${project.build.finalName}/buildversion.txt">
                                     <![CDATA[artifactId=${artifactId}
 version=${project.version}
-build=${build}
-branch=${branch}
-revision=${revision}
-time=${maven.build.timestamp}
+buildNumber=${build}
+branchName=${branch}
+vcsRevision=${revision}
+buildTtime=${maven.build.timestamp}
 ]]>
                                 </echo>
                                 <loadfile property="buildversiontxt" srcFile="target/${project.build.finalName}/buildversion.txt"/>
