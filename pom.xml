@@ -558,6 +558,38 @@
 				</configuration>
 			</plugin>
 
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>write buildversion.txt</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <echo message="writing target/${project.build.finalName}/buildversion.txt"/>
+                                <echo file="target/${project.build.finalName}/buildversion.txt">
+                                    <![CDATA[artifactId=${artifactId}
+version=${project.version}
+build=${build}
+branch=${branch}
+revision=${revision}
+time=${maven.build.timestamp}
+]]>
+
+                                    todo: version.txt targetin alle jotta bamboossa voidaan seuraavassa stagessa tietää mikä versio oli
+
+                                </echo>
+                                <loadfile property="buildversiontxt" srcFile="target/${project.build.finalName}/buildversion.txt"/>
+                                <echo message="${buildversiontxt}"/>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
 		</plugins>
 	</build>
 
