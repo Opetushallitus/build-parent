@@ -143,6 +143,8 @@
 
         <blackboard.version>2.1.1</blackboard.version>
 
+        <buildversion_prefix></buildversion_prefix>
+
     </properties>
 
     <scm>
@@ -569,8 +571,8 @@
                         </goals>
                         <configuration>
                             <target>
-                                <echo message="writing target/${project.build.finalName}/buildversion.txt"/>
-                                <echo file="target/${project.build.finalName}/buildversion.txt">
+                                <echo message="writing target/${project.build.finalName}/${buildversion_prefix}buildversion.txt"/>
+                                <echo file="target/${project.build.finalName}/${buildversion_prefix}buildversion.txt">
                                     <![CDATA[artifactId=${artifactId}
 version=${project.version}
 buildNumber=${build}
@@ -579,7 +581,7 @@ vcsRevision=${revision}
 buildTtime=${maven.build.timestamp}
 ]]>
                                 </echo>
-                                <loadfile property="buildversiontxt" srcFile="target/${project.build.finalName}/buildversion.txt"/>
+                                <loadfile property="buildversiontxt" srcFile="target/${project.build.finalName}/${buildversion_prefix}buildversion.txt"/>
                                 <echo message="${buildversiontxt}"/>
                                 <echo file="target/mavenversion.txt">${project.version}</echo>
                             </target>
