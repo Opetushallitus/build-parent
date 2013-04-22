@@ -46,7 +46,7 @@
 		<google.map.widget.version>0.9.13</google.map.widget.version>
 
 		<!-- Our generic components -->
-		<sade-generic.version>1.0-SNAPSHOT</sade-generic.version>
+		<sade-generic.version>4.0-SNAPSHOT</sade-generic.version>
 
 		<!-- ServiceMix components / frameworks -->
 		<cxf.version>2.5.1</cxf.version>
