@@ -1928,6 +1928,39 @@ buildTtime=${maven.build.timestamp}
                 <slf4j-api.scope>test</slf4j-api.scope>
             </properties>
         </profile>
+        <profile>
+            <id>generate-db-diagram</id>
+            <properties>
+                <skipDbDiagramGenerate>true</skipDbDiagramGenerate>
+                <dbDiagramGenerator>/usr/sbin/sql2diagram</dbDiagramGenerator>
+                <dbDiagramOutput>/var/www/html/db/${project.artifactId}-${project.version}</dbDiagramOutput>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.2.1</version>
+                        <executions>
+                            <execution>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <skip>${skipDbDiagramGenerate}</skip>
+                            <executable>${dbDiagramGenerator}</executable>
+                            <arguments>
+                                <argument>${project.basedir}/target/hibernate3/sql/schema.ddl</argument>
+                                <argument>${dbDiagramOutput}</argument>
+                            </arguments>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 	<modules>
 		<module>build-utilities</module>
