@@ -524,40 +524,6 @@
 				</executions>
 			</plugin>
 
-			<!-- print active profiles -->
-			<!-- TODO: nayttaa profiilit vain current pomista, ei parenttien <plugin> 
-				<artifactId>maven-help-plugin</artifactId> <executions> <execution> <phase>validate</phase> 
-				<goals> <goal>active-profiles</goal> </goals> </execution> </executions> 
-				</plugin> -->
-
-			<plugin>
-				<!-- explicitly define maven-deploy-plugin after other to force exec 
-					order -->
-				<artifactId>maven-deploy-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>deploy</id>
-						<phase>deploy</phase>
-						<goals>
-							<goal>deploy</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-				<configuration>
-					<!--<tagBase>${project.svn.base}/releases</tagBase>-->
-				</configuration>
-			</plugin>
-
-			<!--<plugin> -->
-			<!--<groupId>com.googlecode.maven-java-formatter-plugin</groupId> -->
-			<!--<artifactId>maven-java-formatter-plugin</artifactId> -->
-			<!--</plugin> -->
-			<!--<version>0.3.1</version> -->
-
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<configuration>
