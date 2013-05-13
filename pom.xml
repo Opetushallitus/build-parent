@@ -1521,19 +1521,6 @@ buildTtime=${maven.build.timestamp}
 			<properties>
 				<env>integration-test</env>
 			</properties>
-            <!-- in successful integration-test build artifacts are deployed into stable repo instead default repo -->
-            <distributionManagement>
-                <repository>
-                    <id>oph-sade-artifactory</id>
-                    <name>oph-sade-artifactory-releases</name>
-                    <url>http://penaali.hard.ware.fi/artifactory/oph-sade-release-integration</url>
-                </repository>
-                <snapshotRepository>
-                    <id>oph-sade-artifactory</id>
-                    <name>oph-sade-artifactory-snapshots</name>
-                    <url>http://penaali.hard.ware.fi/artifactory/oph-sade-snapshot-integration</url>
-                </snapshotRepository>
-            </distributionManagement>
             <build>
                 <plugins>
                     <plugin>
@@ -1556,33 +1543,6 @@ buildTtime=${maven.build.timestamp}
             <properties>
                 <env>system-test</env>
             </properties>
-            <!-- in system-test build artifacts are loaded from stable repo instead default repo -->
-            <repositories>
-                <repository>
-                    <id>oph-sade-artifactory-snapshots</id>
-                    <url>http://penaali.hard.ware.fi/artifactory/oph-sade-snapshot-integration</url>
-                    <snapshots>
-                        <enabled>true</enabled>
-                    </snapshots>
-                </repository>
-                <repository>
-                    <id>oph-sade-artifactory-releases</id>
-                    <url>http://penaali.hard.ware.fi/artifactory/oph-sade-release-integration</url>
-                </repository>
-            </repositories>
-            <!-- in successful system-test build artifacts are deployed into release repo instead default repo -->
-            <distributionManagement>
-                <repository>
-                    <id>oph-sade-artifactory</id>
-                    <name>oph-sade-artifactory-releases</name>
-                    <url>http://penaali.hard.ware.fi/artifactory/oph-sade-releasecandidates</url>
-                </repository>
-                <snapshotRepository>
-                    <id>oph-sade-artifactory</id>
-                    <name>oph-sade-artifactory-snapshots</name>
-                    <url>http://penaali.hard.ware.fi/artifactory/oph-sade-releasecandidates</url>
-                </snapshotRepository>
-            </distributionManagement>
             <build>
                 <plugins>
                     <plugin>
