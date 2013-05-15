@@ -461,27 +461,6 @@
 				</executions>
 			</plugin>
 
-			<!-- create also tests jar -->
-			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-jar-plugin</artifactId> 
-				<executions> <execution> <goals> <goal>test-jar</goal> </goals> </execution> 
-				</executions> </plugin> -->
-			<!-- build test-jar which can be used to reuse module's tests from another 
-				module (case: system tests) -->
-			<!-- suositeltiin kayttamaan ennemmin tata urlissa: http://stackoverflow.com/questions/1725476/maven-test-dependency-in-multi-module-project -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.2</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>test-jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-
 			<!-- separate unit tests and integration/system tests -->
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
