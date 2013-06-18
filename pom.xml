@@ -393,7 +393,7 @@
                         <!-- container will provide logging -->
                         <dependency>
                             <groupId>org.slf4j</groupId>
-                            <artifactId>slf4j-simple</artifactId>
+                            <artifactId>slf4j-log4j12</artifactId>
                             <version>${slf4j.version}</version>
                             <scope>compile</scope>
                         </dependency>
@@ -611,11 +611,6 @@ buildTtime=${maven.build.timestamp}
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
-				<version>${slf4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-simple</artifactId>
 				<version>${slf4j.version}</version>
 			</dependency>
 			<dependency>
