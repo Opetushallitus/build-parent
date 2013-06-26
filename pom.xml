@@ -21,7 +21,7 @@
 	<!-- default build configuration for all projects and modules, can be overridden -->
 	<groupId>fi.vm.sade.generic</groupId>
 	<artifactId>build-parent</artifactId>
-	<version>5.0-SNAPSHOT</version>
+	<version>5.0</version>
 	<packaging>pom</packaging>
 	
 	<properties>
@@ -46,7 +46,7 @@
 		<google.map.widget.version>0.9.13</google.map.widget.version>
 
 		<!-- Our generic components -->
-		<sade-generic.version>5.0-SNAPSHOT</sade-generic.version>
+		<sade-generic.version>5.0</sade-generic.version>
 
 		<!-- ServiceMix components / frameworks -->
 		<cxf.version>2.5.1</cxf.version>
