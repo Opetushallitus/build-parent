@@ -14,14 +14,13 @@
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ European Union Public Licence for more details.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<!-- default build configuration for all projects and modules, can be overridden -->
 	<groupId>fi.vm.sade.generic</groupId>
 	<artifactId>build-parent</artifactId>
-	<version>5.1-SNAPSHOT</version>
+	<version>6.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
 	<properties>
@@ -144,7 +143,7 @@
 
         <blackboard.version>2.1.1</blackboard.version>
 
-        <buildversion_prefix></buildversion_prefix>
+        <buildversion_prefix />
 
         <httpcomponents.version>4.2.5</httpcomponents.version>
         <gson.version>2.2.2</gson.version>
@@ -549,7 +548,7 @@
                         </goals>
                         <configuration>
                             <target>
-                                <echo message="writing target/${project.build.finalName}/${buildversion_prefix}buildversion.txt"/>
+                                <echo message="writing target/${project.build.finalName}/${buildversion_prefix}buildversion.txt" />
                                 <echo file="target/${project.build.finalName}/${buildversion_prefix}buildversion.txt">
                                     <![CDATA[artifactId=${artifactId}
 version=${project.version}
@@ -559,8 +558,8 @@ vcsRevision=${revision}
 buildTtime=${maven.build.timestamp}
 ]]>
                                 </echo>
-                                <loadfile property="buildversiontxt" srcFile="target/${project.build.finalName}/${buildversion_prefix}buildversion.txt"/>
-                                <echo message="${buildversiontxt}"/>
+                                <loadfile property="buildversiontxt" srcFile="target/${project.build.finalName}/${buildversion_prefix}buildversion.txt" />
+                                <echo message="${buildversiontxt}" />
                                 <echo file="target/mavenversion.txt">${project.version}</echo>
                             </target>
                         </configuration>
@@ -1100,14 +1099,11 @@ buildTtime=${maven.build.timestamp}
 								</goals>
 								<configuration>
 									<target>
-										<taskdef resource="net/sf/antcontrib/antcontrib.properties"
-											classpathref="maven.plugin.classpath" />
+										<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath" />
 										<if>
 											<available file="${project.build.directory}/classes/fi" />
 											<then>
-												<taskdef name="findbugs"
-													classname="edu.umd.cs.findbugs.anttask.FindBugsTask"
-													classpathref="maven.plugin.classpath" />
+												<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpathref="maven.plugin.classpath" />
 
 												<property name="findbugsclasspath" refid="maven.plugin.classpath" />
 												<property name="runtime_classpath" refid="maven.runtime.classpath" />
@@ -1115,12 +1111,7 @@ buildTtime=${maven.build.timestamp}
 
 												<mkdir dir="${project.build.directory}/findbugs" />
 												<echo>Using localRepository: ${settings.localRepository}</echo>
-												<findbugs output="html"
-													outputFile="${project.build.directory}/findbugs/findbugs.html"
-													classpath="${findbugsclasspath}"
-													pluginlist="${settings.localRepository}/net/sourceforge/findbugs/coreplugin/${findbugs.version}/coreplugin-${findbugs.version}.jar"
-													jvmargs="-Xmx256m" reportLevel="medium" effort="default"
-													failOnError="true">
+												<findbugs output="html" outputFile="${project.build.directory}/findbugs/findbugs.html" classpath="${findbugsclasspath}" pluginlist="${settings.localRepository}/net/sourceforge/findbugs/coreplugin/${findbugs.version}/coreplugin-${findbugs.version}.jar" jvmargs="-Xmx256m" reportLevel="medium" effort="default" failOnError="true">
 													<sourcePath location="${project.basedir}/src/main/java" />
 													<class location="${project.build.directory}/classes" />
 													<auxClasspath>
@@ -1209,8 +1200,8 @@ buildTtime=${maven.build.timestamp}
 									<target>
 										<echo>Deploy: ${project.version} to ${server}</echo>
 										
-										<ant antfile="${project.basedir}\build.xml" >
-											<property name="pom.version" value="${project.version}"/>
+										<ant antfile="${project.basedir}\build.xml">
+											<property name="pom.version" value="${project.version}" />
 										</ant>
 									</target>
 								</configuration>
@@ -1248,15 +1239,11 @@ buildTtime=${maven.build.timestamp}
 								</goals>
 								<configuration>
 									<target>
-										<copy failonerror="false" verbose="true"
-											todir="${project.build.directory}/surefire-reports">
-											<fileset
-												dir="${user.home}/.surefire-reports/${project.groupId}-${project.artifactId}/surefire-reports" />
+										<copy failonerror="false" verbose="true" todir="${project.build.directory}/surefire-reports">
+											<fileset dir="${user.home}/.surefire-reports/${project.groupId}-${project.artifactId}/surefire-reports" />
 										</copy>
-										<copy failonerror="false" verbose="true"
-											todir="${project.build.directory}/failsafe-reports">
-											<fileset
-												dir="${user.home}/.surefire-reports/${project.groupId}-${project.artifactId}/failsafe-reports" />
+										<copy failonerror="false" verbose="true" todir="${project.build.directory}/failsafe-reports">
+											<fileset dir="${user.home}/.surefire-reports/${project.groupId}-${project.artifactId}/failsafe-reports" />
 										</copy>
 									</target>
 								</configuration>
@@ -1281,15 +1268,12 @@ buildTtime=${maven.build.timestamp}
 								</goals>
 								<configuration>
 									<target>
-										<delete
-											dir="${user.home}/.surefire-reports/${project.groupId}-${project.artifactId}" />
+										<delete dir="${user.home}/.surefire-reports/${project.groupId}-${project.artifactId}" />
 
-										<copy failonerror="false" verbose="true"
-											todir="${user.home}/.surefire-reports/${project.groupId}-${project.artifactId}/failsafe-reports">
+										<copy failonerror="false" verbose="true" todir="${user.home}/.surefire-reports/${project.groupId}-${project.artifactId}/failsafe-reports">
 											<fileset dir="${project.build.directory}/failsafe-reports" />
 										</copy>
-										<copy failonerror="false" verbose="true"
-											todir="${user.home}/.surefire-reports/${project.groupId}-${project.artifactId}/surefire-reports">
+										<copy failonerror="false" verbose="true" todir="${user.home}/.surefire-reports/${project.groupId}-${project.artifactId}/surefire-reports">
 											<fileset dir="${project.build.directory}/surefire-reports" />
 
 										</copy>
@@ -1320,7 +1304,7 @@ buildTtime=${maven.build.timestamp}
                                     <target>
                                         <delete includeemptydirs="true" failonerror="false">
                                             <fileset dir="${clover.outputDirectory}_old">
-                                                <include name="**/**"/>
+                                                <include name="**/**" />
                                             </fileset>
                                         </delete>
                                     </target>
@@ -1363,8 +1347,8 @@ buildTtime=${maven.build.timestamp}
                                         <echo>Clean clover output directory from ${clover.base}.</echo>
                                         <delete includeemptydirs="true" failonerror="false">
                                             <fileset dir="${clover.base}">
-                                                <include name="**/**"/>
-                                                <exclude name="history/**"/>
+                                                <include name="**/**" />
+                                                <exclude name="history/**" />
                                             </fileset>
                                         </delete>
                                         <move failonerror="false" file="${clover.outputDirectory}" tofile="${clover.outputDirectory}_old" />
@@ -1476,7 +1460,7 @@ buildTtime=${maven.build.timestamp}
                                         <echo>Remove Scala files from target/clover directory.</echo>
                                         <delete failonerror="false" verbose="true">
                                             <fileset dir="target/clover">
-                                                <include name="**/*.scala"/>
+                                                <include name="**/*.scala" />
                                             </fileset>
                                         </delete>
                                     </target>
@@ -1650,13 +1634,13 @@ buildTtime=${maven.build.timestamp}
                                 </goals>
                                 <configuration>
                                     <tasks>
-                                        <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="${maven.plugin.classpath}"  />
+                                        <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="${maven.plugin.classpath}" />
                                         <if>
-                                            <equals arg1="${project.packaging}" arg2="war"/>
+                                            <equals arg1="${project.packaging}" arg2="war" />
                                             <then>
-                                                <var name="undeploy.war" value="${liferay.dir.new}/apache-tomcat-7.0.32/webapps/${project.artifactId}.war"/>
-                                                <echo message=" ### UNDEPLOY: ${undeploy.war}"/>
-                                                <delete file="${undeploy.war}" failonerror="false" verbose="true"/>
+                                                <var name="undeploy.war" value="${liferay.dir.new}/apache-tomcat-7.0.32/webapps/${project.artifactId}.war" />
+                                                <echo message=" ### UNDEPLOY: ${undeploy.war}" />
+                                                <delete file="${undeploy.war}" failonerror="false" verbose="true" />
                                             </then>
                                         </if>
                                     </tasks>
@@ -1670,72 +1654,69 @@ buildTtime=${maven.build.timestamp}
                                 </goals>
                                 <configuration>
                                     <tasks>
-                                        <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="${maven.plugin.classpath}"  />
+                                        <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="${maven.plugin.classpath}" />
 
                                         <if>
-                                            <equals arg1="${project.packaging}" arg2="war"/>
+                                            <equals arg1="${project.packaging}" arg2="war" />
                                             <then>
 
                                                 <if>
                                                     <or>
-                                                        <available file="${project.basedir}/src/main/webapp/WEB-INF/portlet.xml"/>
-                                                        <equals arg1="${deploy.to.server}" arg2="liferay"/>
+                                                        <available file="${project.basedir}/src/main/webapp/WEB-INF/portlet.xml" />
+                                                        <equals arg1="${deploy.to.server}" arg2="liferay" />
                                                     </or>
                                                     <then>
-                                                        <echo message=" ### DEPLOY: LIFERAY"/>
+                                                        <echo message=" ### DEPLOY: LIFERAY" />
                                                         <if>
-                                                            <available file="${liferay.dir.new}"/>
+                                                            <available file="${liferay.dir.new}" />
                                                             <then>
-                                                                <var name="deploy.dir" value="${liferay.dir.new}/deploy"/>
+                                                                <var name="deploy.dir" value="${liferay.dir.new}/deploy" />
                                                             </then>
                                                             <else>
-                                                                <var name="deploy.dir" value="${liferay.dir.old}/deploy"/>
+                                                                <var name="deploy.dir" value="${liferay.dir.old}/deploy" />
                                                             </else>
                                                         </if>
                                                     </then>
                                                     <elseif>
-                                                        <equals arg1="${deploy.to.server}" arg2="jboss"/>
+                                                        <equals arg1="${deploy.to.server}" arg2="jboss" />
                                                         <then>
-                                                            <echo message=" ### DEPLOY: JBOSS"/>
+                                                            <echo message=" ### DEPLOY: JBOSS" />
                                                             <if>
-                                                                <available file="${jboss.dir.new}"/>
+                                                                <available file="${jboss.dir.new}" />
                                                                 <then>
-                                                                    <var name="deploy.dir" value="${jboss.dir.new}/standalone/deployments"/>
+                                                                    <var name="deploy.dir" value="${jboss.dir.new}/standalone/deployments" />
                                                                 </then>
                                                                 <else>
-                                                                    <var name="deploy.dir" value="${jboss.dir.old}/standalone/deployments"/>
+                                                                    <var name="deploy.dir" value="${jboss.dir.old}/standalone/deployments" />
                                                                 </else>
                                                             </if>
                                                         </then>
                                                     </elseif>
                                                     <else>
-                                                        <echo message=" ### DEPLOY: TOMCAT"/>
-                                                        <var name="deploy.dir" value="${liferay.dir.new}/apache-tomcat-7.0.32/webapps"/>
+                                                        <echo message=" ### DEPLOY: TOMCAT" />
+                                                        <var name="deploy.dir" value="${liferay.dir.new}/apache-tomcat-7.0.32/webapps" />
                                                         <!-- delete old -->
-                                                        <!--<delete file="${deploy.dir}/${project.artifactId}.war" failonerror="false" verbose="true"/>-->
-                                                        <!--<sleep seconds="1"/>-->
+                                                        <!--<delete file="${deploy.dir}/${project.artifactId}.war" failonerror="false" verbose="true" />-->
+                                                        <!--<sleep seconds="1" />-->
                                                         <!--
-                                                        <delete file="${deploy.dir}/${project.artifactId}/WEB-INF/web.xml" failonerror="false" verbose="true"/>
-                                                        <sleep seconds="1"/>
+                                                        <delete file="${deploy.dir}/${project.artifactId}/WEB-INF/web.xml" failonerror="false" verbose="true" />
+                                                        <sleep seconds="1" />
                                                         -->
-                                                        <!--<delete dir="${deploy.dir}/${project.artifactId}" failonerror="false" verbose="false"/>-->
-                                                        <!--<sleep seconds="1"/>-->
+                                                        <!--<delete dir="${deploy.dir}/${project.artifactId}" failonerror="false" verbose="false" />-->
+                                                        <!--<sleep seconds="1" />-->
                                                     </else>
                                                 </if>
 
-                                                <echo message=" ### DEPLOY: DIR: ${deploy.dir}"/>
+                                                <echo message=" ### DEPLOY: DIR: ${deploy.dir}" />
 
                                                 <!-- deploy webapp -->
                                                 <!--<mkdir dir="${deploy.dir}" />-->
-                                                <copy tofile="${deploy.dir}/${project.artifactId}.war"
-                                                      failonerror="true" verbose="true"
-                                                      overwrite="true"
-                                                      file="${project.basedir}/target/${project.build.finalName}.war">
+                                                <copy tofile="${deploy.dir}/${project.artifactId}.war" failonerror="true" verbose="true" overwrite="true" file="${project.basedir}/target/${project.build.finalName}.war">
                                                 </copy>
 
                                             </then>
                                             <else>
-                                                <echo message=" ### DEPLOY: skipped because packaging is not war"/>
+                                                <echo message=" ### DEPLOY: skipped because packaging is not war" />
                                             </else>
                                         </if>
 
