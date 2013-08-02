@@ -1185,6 +1185,18 @@ buildTtime=${maven.build.timestamp}
         </profile>
 
 		<profile>
+			<id>default-ant-file</id>
+			<activation>
+				<property>
+					<name>!ant.file</name>
+				</property>
+			</activation>
+			<properties>
+				<ant.file>build.xml</ant.file>
+			</properties>
+		</profile>
+		
+		<profile>
 			<id>deploy.remote</id>
 			<build>
 				<plugins>
@@ -1198,9 +1210,9 @@ buildTtime=${maven.build.timestamp}
 								</goals>
 								<configuration>
 									<target>
-										<echo>Deploy: ${project.version} to ${server}</echo>
+										<echo>Deploy: ${project.version} to ${tomcat-host}</echo>
 										
-										<ant antfile="${project.basedir}\build.xml">
+										<ant antfile="${project.basedir}\${ant.file}">
 											<property name="pom.version" value="${project.version}" />
 										</ant>
 									</target>
