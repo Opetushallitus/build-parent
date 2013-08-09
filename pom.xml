@@ -36,7 +36,7 @@
 		<liferay.version>6.1.0</liferay.version>
 		
 		<!-- UI libraries -->
-		<vaadin.version>6.8.5</vaadin.version>
+		<vaadin.version>6.8.12</vaadin.version>
 		<gwt.version>2.3.0</gwt.version>
 		<gwt.plugin.version>2.2.0</gwt.plugin.version>
 		<servlet.version>3.0.1</servlet.version>
