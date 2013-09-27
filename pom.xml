@@ -20,7 +20,7 @@
 	<!-- default build configuration for all projects and modules, can be overridden -->
 	<groupId>fi.vm.sade.generic</groupId>
 	<artifactId>build-parent</artifactId>
-	<version>6.2</version>
+	<version>6.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
 	<properties>
