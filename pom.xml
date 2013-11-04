@@ -20,7 +20,7 @@
 	<!-- default build configuration for all projects and modules, can be overridden -->
 	<groupId>fi.vm.sade.generic</groupId>
 	<artifactId>build-parent</artifactId>
-	<version>6.3-SNAPSHOT</version>
+	<version>7.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
 	<properties>
@@ -46,7 +46,7 @@
 		<google.map.widget.version>0.9.13</google.map.widget.version>
 
 		<!-- Our generic components -->
-		<sade-generic.version>${project.version}</sade-generic.version>
+		<sade-generic.version>7.0-SNAPSHOT</sade-generic.version>
 
 		<!-- ServiceMix components / frameworks -->
 		<cxf.version>2.5.1</cxf.version>
@@ -168,7 +168,7 @@
 		 <snapshotRepository>
 			<id>oph-sade-artifactory</id>
 			<name>oph-sade-artifactory-snapshots</name>
-			<url>http://penaali.hard.ware.fi/artifactory/oph-sade-snapshot-local</url>
+             <url>http://penaali.hard.ware.fi/artifactory/oph-sade-snapshot-local</url>
 		</snapshotRepository>
 	</distributionManagement>
 
