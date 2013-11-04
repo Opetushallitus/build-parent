@@ -65,7 +65,7 @@
 		<jpa-api.version>2.0.0</jpa-api.version>
 		<atomikos.version>3.6.6</atomikos.version>
 		<jta.version>1.1</jta.version>
-		<postgresql.version>9.2-1004.jdbc4</postgresql.version>
+		<postgresql.version>9.2-1003-jdbc4</postgresql.version>
 		<hsqldb.version>2.0.0</hsqldb.version>
 		<hibernate.version>4.1.0.Final</hibernate.version>
 		<commons-dbcp.version>1.4_1</commons-dbcp.version>
