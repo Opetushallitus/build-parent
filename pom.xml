@@ -380,6 +380,7 @@
                         <connectors>
                             <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
                                 <port>${webapp.port}</port>
+				<requestHeaderSize>8192</requestHeaderSize>
                             </connector>
                         </connectors>
                         <stopKey>stop</stopKey>
