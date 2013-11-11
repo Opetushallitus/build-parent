@@ -313,6 +313,16 @@
 		<!--</extension> -->
 		<!--</extensions> -->
 
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>1.7</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -445,7 +455,9 @@
 			</plugin>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
                 <executions>
                     <execution>
                         <id>write buildversion.txt</id>
@@ -572,7 +584,9 @@ buildTtime=${maven.build.timestamp}
 			<build>
 				<plugins>
 					<plugin>
-						<artifactId>maven-antrun-plugin</artifactId>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.7</version>
 						<executions>
 							<execution>
 								<id>antrun-findbugs</id>
@@ -725,7 +739,9 @@ buildTtime=${maven.build.timestamp}
 			<build>
 				<plugins>
 					<plugin>
-						<artifactId>maven-antrun-plugin</artifactId>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.7</version>
 						<executions>
 							<execution>
 								<phase>validate</phase>
@@ -766,7 +782,9 @@ buildTtime=${maven.build.timestamp}
 			<build>
 				<plugins>
 					<plugin>
-						<artifactId>maven-antrun-plugin</artifactId>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.7</version>
 						<executions>
 							<execution>
 								<phase>install</phase>
@@ -795,7 +813,9 @@ buildTtime=${maven.build.timestamp}
 			<build>
 				<plugins>
 					<plugin>
-						<artifactId>maven-antrun-plugin</artifactId>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.7</version>
 						<executions>
 							<execution>
 								<phase>install</phase>
@@ -828,7 +848,9 @@ buildTtime=${maven.build.timestamp}
             <build>
                 <plugins>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.7</version>
                         <executions>
                             <execution>
                                 <id>clean-clover-post</id>
@@ -870,7 +892,9 @@ buildTtime=${maven.build.timestamp}
             <build>
                 <plugins>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.7</version>
                         <executions>
                             <execution>
                                 <id>clean-clover-pre</id>
@@ -983,7 +1007,9 @@ buildTtime=${maven.build.timestamp}
                         </executions>
                     </plugin>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.7</version>
                         <executions>
                             <execution>
                                 <id>clean-scala-files</id>
@@ -1159,6 +1185,7 @@ buildTtime=${maven.build.timestamp}
             <build>
                 <plugins>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-antrun-plugin</artifactId>
                         <version>1.7</version>
                         <executions>
