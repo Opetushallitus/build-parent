@@ -34,8 +34,6 @@
 		<daemon>false</daemon>
 		<daemon>false</daemon>
 
-		<liferay.version>6.1.0</liferay.version>
-		
 		<!-- UI libraries -->
 		<vaadin.version>6.8.12</vaadin.version>
 		<gwt.version>2.3.0</gwt.version>
@@ -44,9 +42,6 @@
 		<vaadin.formbinder.version>2.1.1</vaadin.formbinder.version>
 		<portlet.api.version>2.0</portlet.api.version>
 		<google.map.widget.version>0.9.13</google.map.widget.version>
-
-		<!-- Our generic components -->
-		<sade-generic.version>7.0-SNAPSHOT</sade-generic.version>
 
 		<!-- ServiceMix components / frameworks -->
 		<cxf.version>2.5.1</cxf.version>
@@ -82,7 +77,7 @@
 
 		<!-- Testing -->
 		<junit.version>4.10</junit.version>
-		<selenium.version>2.31.0</selenium.version>
+		<selenium.version>2.37.0</selenium.version>
 		<dbunit.version>2.4.8</dbunit.version>
 		<mockito.version>1.9.0</mockito.version>
 
@@ -120,11 +115,6 @@
         <ant-contrib.version>1.0b3</ant-contrib.version>
         <ant-jsch.version>1.8.1</ant-jsch.version>
         <jsch.version>0.1.48</jsch.version>
-
-        <liferay.dir.old>${project.basedir}/../../../servers/trunk/liferay/target/servers/liferay-portal-6.1.0-ce-ga1</liferay.dir.old>
-        <liferay.dir.new>${user.home}/servers/liferay</liferay.dir.new>
-        <jboss.dir.old>${project.basedir}/../../../servers/trunk/jboss/target/servers/jboss-as-7.1.1.Final</jboss.dir.old>
-        <jboss.dir.new>${user.home}/servers/jboss</jboss.dir.new>
 
         <!-- common clover properties -->
         <!-- OLD
@@ -1181,130 +1171,6 @@ buildTtime=${maven.build.timestamp}
 			</properties>
 		</profile>
         <profile>
-            <id>deploy</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <version>1.7</version>
-                        <executions>
-                            <execution>
-                                <id>undeploy</id>
-                                <phase>compile</phase>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                                <configuration>
-                                    <tasks>
-                                        <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="${maven.plugin.classpath}" />
-                                        <if>
-                                            <equals arg1="${project.packaging}" arg2="war" />
-                                            <then>
-                                                <var name="undeploy.war" value="${liferay.dir.new}/apache-tomcat-7.0.32/webapps/${project.artifactId}.war" />
-                                                <echo message=" ### UNDEPLOY: ${undeploy.war}" />
-                                                <delete file="${undeploy.war}" failonerror="false" verbose="true" />
-                                            </then>
-                                        </if>
-                                    </tasks>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>deploy-to-liferay-or-jboss</id>
-                                <phase>install</phase>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                                <configuration>
-                                    <tasks>
-                                        <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="${maven.plugin.classpath}" />
-
-                                        <if>
-                                            <equals arg1="${project.packaging}" arg2="war" />
-                                            <then>
-
-                                                <if>
-                                                    <or>
-                                                        <available file="${project.basedir}/src/main/webapp/WEB-INF/portlet.xml" />
-                                                        <equals arg1="${deploy.to.server}" arg2="liferay" />
-                                                    </or>
-                                                    <then>
-                                                        <echo message=" ### DEPLOY: LIFERAY" />
-                                                        <if>
-                                                            <available file="${liferay.dir.new}" />
-                                                            <then>
-                                                                <var name="deploy.dir" value="${liferay.dir.new}/deploy" />
-                                                            </then>
-                                                            <else>
-                                                                <var name="deploy.dir" value="${liferay.dir.old}/deploy" />
-                                                            </else>
-                                                        </if>
-                                                    </then>
-                                                    <elseif>
-                                                        <equals arg1="${deploy.to.server}" arg2="jboss" />
-                                                        <then>
-                                                            <echo message=" ### DEPLOY: JBOSS" />
-                                                            <if>
-                                                                <available file="${jboss.dir.new}" />
-                                                                <then>
-                                                                    <var name="deploy.dir" value="${jboss.dir.new}/standalone/deployments" />
-                                                                </then>
-                                                                <else>
-                                                                    <var name="deploy.dir" value="${jboss.dir.old}/standalone/deployments" />
-                                                                </else>
-                                                            </if>
-                                                        </then>
-                                                    </elseif>
-                                                    <else>
-                                                        <echo message=" ### DEPLOY: TOMCAT" />
-                                                        <var name="deploy.dir" value="${liferay.dir.new}/apache-tomcat-7.0.32/webapps" />
-                                                        <!-- delete old -->
-                                                        <!--<delete file="${deploy.dir}/${project.artifactId}.war" failonerror="false" verbose="true" />-->
-                                                        <!--<sleep seconds="1" />-->
-                                                        <!--
-                                                        <delete file="${deploy.dir}/${project.artifactId}/WEB-INF/web.xml" failonerror="false" verbose="true" />
-                                                        <sleep seconds="1" />
-                                                        -->
-                                                        <!--<delete dir="${deploy.dir}/${project.artifactId}" failonerror="false" verbose="false" />-->
-                                                        <!--<sleep seconds="1" />-->
-                                                    </else>
-                                                </if>
-
-                                                <echo message=" ### DEPLOY: DIR: ${deploy.dir}" />
-
-                                                <!-- deploy webapp -->
-                                                <!--<mkdir dir="${deploy.dir}" />-->
-                                                <copy tofile="${deploy.dir}/${project.artifactId}.war" failonerror="true" verbose="true" overwrite="true" file="${project.basedir}/target/${project.build.finalName}.war">
-                                                </copy>
-
-                                            </then>
-                                            <else>
-                                                <echo message=" ### DEPLOY: skipped because packaging is not war" />
-                                            </else>
-                                        </if>
-
-                                    </tasks>
-                                </configuration>
-                            </execution>
-                        </executions>
-                        <dependencies>
-                            <dependency>
-                                <groupId>ant-contrib</groupId>
-                                <artifactId>ant-contrib</artifactId>
-                                <version>${ant-contrib.version}</version>
-                                <exclusions>
-                                    <exclusion>
-                                        <groupId>ant</groupId>
-                                        <artifactId>ant</artifactId>
-                                    </exclusion>
-                                </exclusions>
-                            </dependency>
-                        </dependencies>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
             <id>attach-schema-artifact</id>
             <activation>
                 <file><exists>src/main/resources/META-INF/persistence.xml</exists></file>
@@ -1364,7 +1230,7 @@ buildTtime=${maven.build.timestamp}
                                         <artifactItem>
                                             <groupId>fi.vm.sade.generic</groupId>
                                             <artifactId>build-utilities</artifactId>
-                                            <version>${sade-generic.version}</version>
+                                            <version>${project.version}</version>
                                             <outputDirectory>${project.build.directory}/xsl</outputDirectory>
                                             <includes>**\/*.xsl</includes>
                                         </artifactItem>
