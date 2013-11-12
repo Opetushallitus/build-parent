@@ -253,6 +253,11 @@
             <name>Plugin local release</name>
             <url>http://penaali.hard.ware.fi/artifactory/plugins-release-local</url>
         </pluginRepository>
+        <pluginRepository>
+            <id>libs-3rd-party</id>
+            <name>libs-3rd-party</name>
+            <url>http://penaali.hard.ware.fi/artifactory/libs-3rd-party</url>
+        </pluginRepository>
 		<!--<pluginRepository>
 			<id>com.springsource.repository.bundles.release</id>
 			<name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Releases</name>
