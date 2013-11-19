@@ -1058,7 +1058,7 @@ buildTtime=${maven.build.timestamp}
 
                 <sonar.exclusions>**/*generated*/**,com/**,org/**,net/**,**/*Mock.java</sonar.exclusions>
 
-                <sonar.jdbc.url>jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8</sonar.jdbc.url>
+                <sonar.jdbc.url>jdbc:mysql://pulpetti.hard.ware.fi:3306/sonar?useUnicode=true&amp;characterEncoding=utf8</sonar.jdbc.url>
                 <sonar.jdbc.driverClassName>com.mysql.jdbc.Driver</sonar.jdbc.driverClassName>
                 <sonar.jdbc.username>sonar</sonar.jdbc.username>
                 <sonar.jdbc.password>${sonar.jdbc.password}</sonar.jdbc.password>
