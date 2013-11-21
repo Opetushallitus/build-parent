@@ -676,19 +676,8 @@ buildTtime=${maven.build.timestamp}
             </build>
         </profile>
 
-		<profile>
-			<id>default-ant-file</id>
-			<activation>
-				<property>
-					<name>!ant.file</name>
-				</property>
-			</activation>
-			<properties>
-				<ant.file>build.xml</ant.file>
-			</properties>
-		</profile>
-
-		<profile>
+		<profile><!-- Update build artifacts from artifactory to local maven repository.
+					  Used on Bamboo deployment plans update before calloing 'deploy.remote'. -->
 			<id>update.artifacts</id>
 			<build>
 				<plugins>
@@ -729,7 +718,18 @@ buildTtime=${maven.build.timestamp}
 			</dependencies>
 		</profile>
 	
-		<profile>
+		<profile><!-- Set default ant file for -Pdeploy.remote if -Dant.file=xxx is not spesified. -->
+			<id>default-ant-file</id>
+			<activation>
+				<property>
+					<name>!ant.file</name>
+				</property>
+			</activation>
+			<properties>
+				<ant.file>build.xml</ant.file>
+			</properties>
+		</profile>
+		<profile><!-- Deploy artifacts to remote server. Used on Bamboo deployment plans. -->
 			<id>deploy.remote</id>
 			<build>
 				<plugins>
@@ -771,73 +771,6 @@ buildTtime=${maven.build.timestamp}
 				
 			</build>
 		</profile>
-<!--
-		<profile>
-			<id>restore.reports</id>
-			<build>
-				<plugins>
-					<plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <version>1.7</version>
-						<executions>
-							<execution>
-								<phase>install</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<target>
-										<copy failonerror="false" verbose="true" todir="${project.build.directory}/surefire-reports">
-											<fileset dir="${user.home}/.surefire-reports/${project.groupId}-${project.artifactId}/surefire-reports" />
-										</copy>
-										<copy failonerror="false" verbose="true" todir="${project.build.directory}/failsafe-reports">
-											<fileset dir="${user.home}/.surefire-reports/${project.groupId}-${project.artifactId}/failsafe-reports" />
-										</copy>
-									</target>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-
-		<profile>
-			<id>save.reports</id>
-			<build>
-				<plugins>
-					<plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <version>1.7</version>
-						<executions>
-							<execution>
-								<phase>install</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<target>
-										<delete dir="${user.home}/.surefire-reports/${project.groupId}-${project.artifactId}" />
-
-										<copy failonerror="false" verbose="true" todir="${user.home}/.surefire-reports/${project.groupId}-${project.artifactId}/failsafe-reports">
-											<fileset dir="${project.build.directory}/failsafe-reports" />
-										</copy>
-										<copy failonerror="false" verbose="true" todir="${user.home}/.surefire-reports/${project.groupId}-${project.artifactId}/surefire-reports">
-											<fileset dir="${project.build.directory}/surefire-reports" />
-
-										</copy>
-									</target>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
--->
-
         <profile>
             <id>clover-clean-post</id>
             <build>
@@ -1073,8 +1006,7 @@ buildTtime=${maven.build.timestamp}
             </dependencies>
         </profile>
 
-		<!-- profile to embed service dependency inside war in app module -->
-		<profile>
+		<profile><!-- profile to embed service dependency inside war in app module -->
 			<id>embedService</id>
 			<properties>
 				<profileEnv>embedService</profileEnv>
