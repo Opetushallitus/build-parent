@@ -20,7 +20,7 @@
 	<!-- default build configuration for all projects and modules, can be overridden -->
 	<groupId>fi.vm.sade.generic</groupId>
 	<artifactId>build-parent</artifactId>
-	<version>7.0</version>
+	<version>8.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
 	<properties>
@@ -34,8 +34,6 @@
 		<daemon>false</daemon>
 		<daemon>false</daemon>
 
-		<liferay.version>6.1.0</liferay.version>
-		
 		<!-- UI libraries -->
 		<vaadin.version>6.8.12</vaadin.version>
 		<gwt.version>2.3.0</gwt.version>
@@ -44,9 +42,6 @@
 		<vaadin.formbinder.version>2.1.1</vaadin.formbinder.version>
 		<portlet.api.version>2.0</portlet.api.version>
 		<google.map.widget.version>0.9.13</google.map.widget.version>
-
-		<!-- Our generic components -->
-		<sade-generic.version>7.0-SNAPSHOT</sade-generic.version>
 
 		<!-- ServiceMix components / frameworks -->
 		<cxf.version>2.5.1</cxf.version>
@@ -82,7 +77,7 @@
 
 		<!-- Testing -->
 		<junit.version>4.10</junit.version>
-		<selenium.version>2.31.0</selenium.version>
+		<selenium.version>2.37.0</selenium.version>
 		<dbunit.version>2.4.8</dbunit.version>
 		<mockito.version>1.9.0</mockito.version>
 
@@ -120,11 +115,6 @@
         <ant-contrib.version>1.0b3</ant-contrib.version>
         <ant-jsch.version>1.8.1</ant-jsch.version>
         <jsch.version>0.1.48</jsch.version>
-
-        <liferay.dir.old>${project.basedir}/../../../servers/trunk/liferay/target/servers/liferay-portal-6.1.0-ce-ga1</liferay.dir.old>
-        <liferay.dir.new>${user.home}/servers/liferay</liferay.dir.new>
-        <jboss.dir.old>${project.basedir}/../../../servers/trunk/jboss/target/servers/jboss-as-7.1.1.Final</jboss.dir.old>
-        <jboss.dir.new>${user.home}/servers/jboss</jboss.dir.new>
 
         <!-- common clover properties -->
         <!-- OLD
@@ -263,6 +253,11 @@
             <name>Plugin local release</name>
             <url>http://penaali.hard.ware.fi/artifactory/plugins-release-local</url>
         </pluginRepository>
+        <pluginRepository>
+            <id>libs-3rd-party</id>
+            <name>libs-3rd-party</name>
+            <url>http://penaali.hard.ware.fi/artifactory/libs-3rd-party</url>
+        </pluginRepository>
 		<!--<pluginRepository>
 			<id>com.springsource.repository.bundles.release</id>
 			<name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Releases</name>
@@ -313,100 +308,16 @@
 		<!--</extension> -->
 		<!--</extensions> -->
 
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>${compiler.plugin.version}</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-enforcer-plugin</artifactId>
-					<version>${enforcer.plugin.version}</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-source-plugin</artifactId>
-					<version>${source.plugin.version}</version>
-				</plugin>
-				<plugin>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>${surefire.plugin.version}</version>
-				</plugin>
-				<plugin>
-					<artifactId>maven-failsafe-plugin</artifactId>
-					<version>${failsafe.plugin.version}</version>
-				</plugin>
-				<plugin>
-					<artifactId>maven-deploy-plugin</artifactId>
-					<version>${deploy.plugin.version}</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-release-plugin</artifactId>
-					<version>${release.plugin.version}</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-checkstyle-plugin</artifactId>
-					<version>${checkstyle.plugin.version}</version>
-				</plugin>
-				<plugin>
-					<artifactId>maven-resources-plugin</artifactId>
-					<version>${resources.plugin.version}</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-jar-plugin</artifactId>
-					<version>${jar.plugin.version}</version>
-				</plugin>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>xml-maven-plugin</artifactId>
-                    <version>${xml.plugin.version}</version>
-                </plugin>
+        <pluginManagement>
+            <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-antrun-plugin</artifactId>
                     <version>1.7</version>
                 </plugin>
-                <plugin>
-                    <groupId>org.mortbay.jetty</groupId>
-                    <artifactId>jetty-maven-plugin</artifactId>
-                    <version>${jetty.version}</version>
-                    <configuration>
-                        <scanIntervalSeconds>0</scanIntervalSeconds>
-                        <connectors>
-                            <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-                                <port>${webapp.port}</port>
-                            </connector>
-                        </connectors>
-                        <stopKey>stop</stopKey>
-                        <stopPort>1${webapp.port}</stopPort>
-                        <webAppConfig>
-                            <jettyEnvXml>src/main/webapp/META-INF/jetty-env.xml</jettyEnvXml>
-                            <contextPath>/${project.artifactId}</contextPath>
-                        </webAppConfig>
-                    </configuration>
-                    <dependencies>
-                        <!-- container will provide logging -->
-                        <dependency>
-                            <groupId>org.slf4j</groupId>
-                            <artifactId>slf4j-log4j12</artifactId>
-                            <version>${slf4j.version}</version>
-                            <scope>compile</scope>
-                        </dependency>
-                        <dependency>
-                            <groupId>postgresql</groupId>
-                            <artifactId>postgresql</artifactId>
-                            <version>${postgresql.version}</version>
-                            <scope>compile</scope>
-                        </dependency>
-                    </dependencies>
-                </plugin>
-			</plugins>
-		</pluginManagement>
+            </plugins>
+        </pluginManagement>
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -497,12 +408,6 @@
 				</executions>
 			</plugin>
 
-			<!-- print active profiles -->
-			<!-- TODO: nayttaa profiilit vain current pomista, ei parenttien <plugin>
-				<artifactId>maven-help-plugin</artifactId> <executions> <execution> <phase>validate</phase>
-				<goals> <goal>active-profiles</goal> </goals> </execution> </executions>
-				</plugin> -->
-
 			<plugin>
 				<!-- explicitly define maven-deploy-plugin after other to force exec
 					order -->
@@ -525,12 +430,6 @@
 				</configuration>
 			</plugin>
 
-			<!--<plugin> -->
-			<!--<groupId>com.googlecode.maven-java-formatter-plugin</groupId> -->
-			<!--<artifactId>maven-java-formatter-plugin</artifactId> -->
-			<!--</plugin> -->
-			<!--<version>0.3.1</version> -->
-
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<configuration>
@@ -539,7 +438,9 @@
 			</plugin>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
                 <executions>
                     <execution>
                         <id>write buildversion.txt</id>
@@ -570,430 +471,6 @@ buildTtime=${maven.build.timestamp}
 
 		</plugins>
 	</build>
-
-	<dependencyManagement>
-		<dependencies>
-			<!-- Testing -->
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>${junit.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.mockito</groupId>
-				<artifactId>mockito-all</artifactId>
-				<version>${mockito.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>fi.vm.sade.generic</groupId>
-				<artifactId>generic-test-support</artifactId>
-				<version>${sade-generic.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>fi.vm.sade.generic</groupId>
-				<artifactId>dbunit-support</artifactId>
-				<version>${sade-generic.version}</version>
-			</dependency>
-
-			<!-- Logging -->
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-api</artifactId>
-				<version>${slf4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-log4j12</artifactId>
-				<version>${slf4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>log4j</groupId>
-				<artifactId>log4j</artifactId>
-				<version>${log4j.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>javax.servlet</groupId>
-				<artifactId>javax.servlet-api</artifactId>
-				<version>${servlet.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>javax.portlet</groupId>
-				<artifactId>portlet-api</artifactId>
-				<version>${portlet.api.version}</version>
-			</dependency>
-
-			<!-- CXF dependencies -->
-			<dependency>
-				<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-api</artifactId>
-				<version>${cxf.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-bundle</artifactId>
-				<version>${cxf.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-rt-frontend-jaxrs</artifactId>
-				<version>${cxf.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-rt-frontend-jaxws</artifactId>
-				<version>${cxf.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-rt-core</artifactId>
-				<version>${cxf.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-rt-transports-local</artifactId>
-				<version>${cxf.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-rt-transports-http</artifactId>
-				<version>${cxf.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-common-utilities</artifactId>
-				<version>${cxf.version}</version>
-			</dependency>
-
-			<!-- Camel dependencies -->
-			<!-- Camel libraries -->
-			<dependency>
-				<groupId>org.apache.camel</groupId>
-				<artifactId>camel-core</artifactId>
-				<version>${camel.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.camel</groupId>
-				<artifactId>camel-spring</artifactId>
-				<version>${camel.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.camel</groupId>
-				<artifactId>camel-bindy</artifactId>
-				<version>${camel.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.camel</groupId>
-				<artifactId>camel-csv</artifactId>
-				<version>${camel.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.camel</groupId>
-				<artifactId>camel-castor</artifactId>
-				<version>${camel.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.camel</groupId>
-				<artifactId>camel-cxf</artifactId>
-				<version>${camel.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.camel</groupId>
-				<artifactId>camel-http</artifactId>
-				<version>${camel.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.camel</groupId>
-				<artifactId>camel-jms</artifactId>
-				<version>${camel.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.camel</groupId>
-				<artifactId>camel-test</artifactId>
-				<version>${camel.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.camel</groupId>
-				<artifactId>camel-mail</artifactId>
-				<version>${camel.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.camel</groupId>
-				<artifactId>camel-velocity</artifactId>
-				<version>${camel.version}</version>
-			</dependency>
-
-			<!-- ActiveMQ -->
-			<dependency>
-				<groupId>org.apache.activemq</groupId>
-				<artifactId>activemq-camel</artifactId>
-				<version>${activemq.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.activemq</groupId>
-				<artifactId>activemq-core</artifactId>
-				<version>${activemq.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.activemq</groupId>
-				<artifactId>activemq-pool</artifactId>
-				<version>${activemq.version}</version>
-			</dependency>
-
-			<!-- dublicate
-			<dependency>
-				<groupId>fi.vm.sade.generic</groupId>
-				<artifactId>generic-test-support</artifactId>
-				<version>${sade-generic.version}</version>
-			</dependency>-->
-
-            <!-- todo: depsukat kuntoon ei com.springsource juttuja enää -->
-
-			<!-- Hibernate libraries (annotations in core nowadays) -->
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-core</artifactId>
-                <version>${hibernate.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-entitymanager</artifactId>
-                <version>${hibernate.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.validation</groupId>
-                <artifactId>validation-api</artifactId>
-                <version>1.0.0.GA</version>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-validator</artifactId>
-                <version>${hibernate.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-ehcache</artifactId>
-                <version>${hibernate.version}</version>
-            </dependency>
-
-			<!-- QueryDSL -->
-			<dependency>
-				<groupId>com.mysema.querydsl</groupId>
-				<artifactId>querydsl-apt</artifactId>
-				<version>${querydsl.version}</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>com.mysema.querydsl</groupId>
-				<artifactId>querydsl-jpa</artifactId>
-				<version>${querydsl.version}</version>
-			</dependency>
-			
-			<dependency>
-				<groupId>fi.vm.sade.generic</groupId>
-				<artifactId>generic-common</artifactId>
-				<version>${sade-generic.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>postgresql</groupId>
-				<artifactId>postgresql</artifactId>
-				<version>${postgresql.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.hsqldb</groupId>
-				<artifactId>hsqldb</artifactId>
-				<version>${hsqldb.version}</version>
-			</dependency>
-
-			<!-- Spring libraries used in APP and Service -->
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-expression</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-orm</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-context</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context-support</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-beans</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-core</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-tx</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-aspects</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-asm</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-aop</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-test</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-jms</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-jdbc</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-
-			<!-- Utilities -->
-			<dependency>
-				<groupId>joda-time</groupId>
-				<artifactId>joda-time</artifactId>
-				<version>${jodatime.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-lang</groupId>
-				<artifactId>commons-lang</artifactId>
-				<version>${commons-lang.version}</version>
-			</dependency>
-
-			<!-- Database -->
-			<dependency>
-				<groupId>javax.transaction</groupId>
-				<artifactId>jta</artifactId>
-				<version>${jta.version}</version>
-			</dependency>
-
-            <!--
-			<dependency>
-				<groupId>org.apache.servicemix.bundles</groupId>
-				<artifactId>org.apache.servicemix.bundles.commons-dbcp</artifactId>
-				<version>${commons-dbcp.version}</version>
-			</dependency>
-			-->
-			<dependency>
-				<groupId>javax.persistence</groupId>
-				<artifactId>com.springsource.javax.persistence</artifactId>
-				<version>${jpa-api.version}</version>
-				<scope>provided</scope>
-			</dependency>
-
-			<!-- UI -->
-			<dependency>
-				<groupId>com.vaadin</groupId>
-				<artifactId>vaadin</artifactId>
-				<version>${vaadin.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-web</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-webmvc</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-webmvc-portlet</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-			<!-- duplicate <dependency> <groupId>javax.servlet</groupId> <artifactId>javax.servlet-api</artifactId>
-				<version>${servlet.version}</version> </dependency> -->
-			<!-- duplicate <dependency> <groupId>javax.portlet</groupId> <artifactId>portlet-api</artifactId> 
-				<version>${portlet.api.version}</version> </dependency> -->
-			<dependency>
-				<groupId>org.aspectj</groupId>
-				<artifactId>aspectjrt</artifactId>
-				<version>${aspectj.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.aspectj</groupId>
-				<artifactId>aspectjweaver</artifactId>
-				<version>${aspectj.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.aspectj</groupId>
-				<artifactId>aspectjtools</artifactId>
-				<version>${aspectj.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>aopalliance</groupId>
-				<artifactId>aopalliance</artifactId>
-				<version>${aopalliance.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.vaadin.addons</groupId>
-				<artifactId>formbinder</artifactId>
-				<version>${vaadin.formbinder.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>javax.activation</groupId>
-				<artifactId>activation</artifactId>
-				<version>1.1.1</version>
-			</dependency>
-
-            <!-- spring security -->
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-core</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-config</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-web</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-cas</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-ldap</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>net.sf.ehcache</groupId>
-                <artifactId>ehcache-core</artifactId>
-                <version>${ehcache.version}</version>
-            </dependency>
-		</dependencies>
-	</dependencyManagement>
 
 	<reporting>
 		<plugins>
@@ -1090,7 +567,9 @@ buildTtime=${maven.build.timestamp}
 			<build>
 				<plugins>
 					<plugin>
-						<artifactId>maven-antrun-plugin</artifactId>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.7</version>
 						<executions>
 							<execution>
 								<id>antrun-findbugs</id>
@@ -1185,19 +664,8 @@ buildTtime=${maven.build.timestamp}
             </build>
         </profile>
 
-		<profile>
-			<id>default-ant-file</id>
-			<activation>
-				<property>
-					<name>!ant.file</name>
-				</property>
-			</activation>
-			<properties>
-				<ant.file>build.xml</ant.file>
-			</properties>
-		</profile>
-
-		<profile>
+		<profile><!-- Update build artifacts from artifactory to local maven repository.
+					  Used on Bamboo deployment plans update before calloing 'deploy.remote'. -->
 			<id>update.artifacts</id>
 			<build>
 				<plugins>
@@ -1238,12 +706,25 @@ buildTtime=${maven.build.timestamp}
 			</dependencies>
 		</profile>
 	
-		<profile>
+		<profile><!-- Set default ant file for -Pdeploy.remote if -Dant.file=xxx is not spesified. -->
+			<id>default-ant-file</id>
+			<activation>
+				<property>
+					<name>!ant.file</name>
+				</property>
+			</activation>
+			<properties>
+				<ant.file>build.xml</ant.file>
+			</properties>
+		</profile>
+		<profile><!-- Deploy artifacts to remote server. Used on Bamboo deployment plans. -->
 			<id>deploy.remote</id>
 			<build>
 				<plugins>
 					<plugin>
-						<artifactId>maven-antrun-plugin</artifactId>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.7</version>
 						<executions>
 							<execution>
 								<phase>validate</phase>
@@ -1278,75 +759,14 @@ buildTtime=${maven.build.timestamp}
 				
 			</build>
 		</profile>
-<!--
-		<profile>
-			<id>restore.reports</id>
-			<build>
-				<plugins>
-					<plugin>
-						<artifactId>maven-antrun-plugin</artifactId>
-						<executions>
-							<execution>
-								<phase>install</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<target>
-										<copy failonerror="false" verbose="true" todir="${project.build.directory}/surefire-reports">
-											<fileset dir="${user.home}/.surefire-reports/${project.groupId}-${project.artifactId}/surefire-reports" />
-										</copy>
-										<copy failonerror="false" verbose="true" todir="${project.build.directory}/failsafe-reports">
-											<fileset dir="${user.home}/.surefire-reports/${project.groupId}-${project.artifactId}/failsafe-reports" />
-										</copy>
-									</target>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-
-		<profile>
-			<id>save.reports</id>
-			<build>
-				<plugins>
-					<plugin>
-						<artifactId>maven-antrun-plugin</artifactId>
-						<executions>
-							<execution>
-								<phase>install</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<target>
-										<delete dir="${user.home}/.surefire-reports/${project.groupId}-${project.artifactId}" />
-
-										<copy failonerror="false" verbose="true" todir="${user.home}/.surefire-reports/${project.groupId}-${project.artifactId}/failsafe-reports">
-											<fileset dir="${project.build.directory}/failsafe-reports" />
-										</copy>
-										<copy failonerror="false" verbose="true" todir="${user.home}/.surefire-reports/${project.groupId}-${project.artifactId}/surefire-reports">
-											<fileset dir="${project.build.directory}/surefire-reports" />
-
-										</copy>
-									</target>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
--->
-
         <profile>
             <id>clover-clean-post</id>
             <build>
                 <plugins>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.7</version>
                         <executions>
                             <execution>
                                 <id>clean-clover-post</id>
@@ -1388,7 +808,9 @@ buildTtime=${maven.build.timestamp}
             <build>
                 <plugins>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.7</version>
                         <executions>
                             <execution>
                                 <id>clean-clover-pre</id>
@@ -1501,7 +923,9 @@ buildTtime=${maven.build.timestamp}
                         </executions>
                     </plugin>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.7</version>
                         <executions>
                             <execution>
                                 <id>clean-scala-files</id>
@@ -1555,7 +979,7 @@ buildTtime=${maven.build.timestamp}
 
                 <sonar.exclusions>**/*generated*/**,com/**,org/**,net/**,**/*Mock.java</sonar.exclusions>
 
-                <sonar.jdbc.url>jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8</sonar.jdbc.url>
+                <sonar.jdbc.url>jdbc:mysql://pulpetti.hard.ware.fi:3306/sonar?useUnicode=true&amp;characterEncoding=utf8</sonar.jdbc.url>
                 <sonar.jdbc.driverClassName>com.mysql.jdbc.Driver</sonar.jdbc.driverClassName>
                 <sonar.jdbc.username>sonar</sonar.jdbc.username>
                 <sonar.jdbc.password>${sonar.jdbc.password}</sonar.jdbc.password>
@@ -1570,8 +994,7 @@ buildTtime=${maven.build.timestamp}
             </dependencies>
         </profile>
 
-		<!-- profile to embed service dependency inside war in app module -->
-		<profile>
+		<profile><!-- profile to embed service dependency inside war in app module -->
 			<id>embedService</id>
 			<properties>
 				<profileEnv>embedService</profileEnv>
@@ -1673,129 +1096,6 @@ buildTtime=${maven.build.timestamp}
 			</properties>
 		</profile>
         <profile>
-            <id>deploy</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <version>1.7</version>
-                        <executions>
-                            <execution>
-                                <id>undeploy</id>
-                                <phase>compile</phase>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                                <configuration>
-                                    <tasks>
-                                        <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="${maven.plugin.classpath}" />
-                                        <if>
-                                            <equals arg1="${project.packaging}" arg2="war" />
-                                            <then>
-                                                <var name="undeploy.war" value="${liferay.dir.new}/apache-tomcat-7.0.32/webapps/${project.artifactId}.war" />
-                                                <echo message=" ### UNDEPLOY: ${undeploy.war}" />
-                                                <delete file="${undeploy.war}" failonerror="false" verbose="true" />
-                                            </then>
-                                        </if>
-                                    </tasks>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>deploy-to-liferay-or-jboss</id>
-                                <phase>install</phase>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                                <configuration>
-                                    <tasks>
-                                        <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="${maven.plugin.classpath}" />
-
-                                        <if>
-                                            <equals arg1="${project.packaging}" arg2="war" />
-                                            <then>
-
-                                                <if>
-                                                    <or>
-                                                        <available file="${project.basedir}/src/main/webapp/WEB-INF/portlet.xml" />
-                                                        <equals arg1="${deploy.to.server}" arg2="liferay" />
-                                                    </or>
-                                                    <then>
-                                                        <echo message=" ### DEPLOY: LIFERAY" />
-                                                        <if>
-                                                            <available file="${liferay.dir.new}" />
-                                                            <then>
-                                                                <var name="deploy.dir" value="${liferay.dir.new}/deploy" />
-                                                            </then>
-                                                            <else>
-                                                                <var name="deploy.dir" value="${liferay.dir.old}/deploy" />
-                                                            </else>
-                                                        </if>
-                                                    </then>
-                                                    <elseif>
-                                                        <equals arg1="${deploy.to.server}" arg2="jboss" />
-                                                        <then>
-                                                            <echo message=" ### DEPLOY: JBOSS" />
-                                                            <if>
-                                                                <available file="${jboss.dir.new}" />
-                                                                <then>
-                                                                    <var name="deploy.dir" value="${jboss.dir.new}/standalone/deployments" />
-                                                                </then>
-                                                                <else>
-                                                                    <var name="deploy.dir" value="${jboss.dir.old}/standalone/deployments" />
-                                                                </else>
-                                                            </if>
-                                                        </then>
-                                                    </elseif>
-                                                    <else>
-                                                        <echo message=" ### DEPLOY: TOMCAT" />
-                                                        <var name="deploy.dir" value="${liferay.dir.new}/apache-tomcat-7.0.32/webapps" />
-                                                        <!-- delete old -->
-                                                        <!--<delete file="${deploy.dir}/${project.artifactId}.war" failonerror="false" verbose="true" />-->
-                                                        <!--<sleep seconds="1" />-->
-                                                        <!--
-                                                        <delete file="${deploy.dir}/${project.artifactId}/WEB-INF/web.xml" failonerror="false" verbose="true" />
-                                                        <sleep seconds="1" />
-                                                        -->
-                                                        <!--<delete dir="${deploy.dir}/${project.artifactId}" failonerror="false" verbose="false" />-->
-                                                        <!--<sleep seconds="1" />-->
-                                                    </else>
-                                                </if>
-
-                                                <echo message=" ### DEPLOY: DIR: ${deploy.dir}" />
-
-                                                <!-- deploy webapp -->
-                                                <!--<mkdir dir="${deploy.dir}" />-->
-                                                <copy tofile="${deploy.dir}/${project.artifactId}.war" failonerror="true" verbose="true" overwrite="true" file="${project.basedir}/target/${project.build.finalName}.war">
-                                                </copy>
-
-                                            </then>
-                                            <else>
-                                                <echo message=" ### DEPLOY: skipped because packaging is not war" />
-                                            </else>
-                                        </if>
-
-                                    </tasks>
-                                </configuration>
-                            </execution>
-                        </executions>
-                        <dependencies>
-                            <dependency>
-                                <groupId>ant-contrib</groupId>
-                                <artifactId>ant-contrib</artifactId>
-                                <version>${ant-contrib.version}</version>
-                                <exclusions>
-                                    <exclusion>
-                                        <groupId>ant</groupId>
-                                        <artifactId>ant</artifactId>
-                                    </exclusion>
-                                </exclusions>
-                            </dependency>
-                        </dependencies>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
             <id>attach-schema-artifact</id>
             <activation>
                 <file><exists>src/main/resources/META-INF/persistence.xml</exists></file>
@@ -1828,150 +1128,94 @@ buildTtime=${maven.build.timestamp}
                 </plugins>
             </build>
         </profile>
-        <profile>
-            <id>wsdl2html</id>
-            <!-- Uncomment the following to autogenerate always
-            <activation>
-                <file>
-                    <exists>src/main/resources/wsdl</exists>
-                    <missing>target/generated-resources/xml/xslt</missing>
-                </file>
-            </activation>
-            -->
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-dependency-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>unpack</id>
-                                <phase>generate-sources</phase>
-                                <goals>
-                                    <goal>unpack</goal>
-                                </goals>
-                                <configuration>
-                                    <artifactItems>
-                                        <artifactItem>
-                                            <groupId>fi.vm.sade.generic</groupId>
-                                            <artifactId>build-utilities</artifactId>
-                                            <version>${sade-generic.version}</version>
-                                            <outputDirectory>${project.build.directory}/xsl</outputDirectory>
-                                            <includes>**\/*.xsl</includes>
-                                        </artifactItem>
-                                    </artifactItems>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>xml-maven-plugin</artifactId>
-                        <version>${xml.plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <phase>generate-resources</phase>
-                                <goals>
-                                    <goal>transform</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <transformationSets>
-                                <transformationSet>
-                                    <dir>src/main/resources/wsdl</dir>
-                                    <stylesheet>target/xsl/wsdl2html-oph.xsl</stylesheet>
-                                    <fileMappers>
-                                        <fileMapper implementation="org.codehaus.plexus.components.io.filemappers.FileExtensionMapper">
-                                            <targetExtension>.html</targetExtension>
-                                        </fileMapper>
-                                    </fileMappers>
-                                </transformationSet>
-                            </transformationSets>
-                        </configuration>
-                        <dependencies>
-                            <dependency>
-                                <groupId>net.sf.saxon</groupId>
-                                <artifactId>saxon</artifactId>
-                                <version>8.7</version>
-                            </dependency>
-                        </dependencies>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>auto</id>
-            <pluginRepositories>
-                <pluginRepository>
-                    <id>my.mvn.repo</id>
-                    <url>https://raw.github.com/asalonen/maven-autobuild/master/mvn-repo</url>
-                    <snapshots>
-                        <enabled>true</enabled>
-                        <!--<updatePolicy>always</updatePolicy>-->
-                    </snapshots>
-                </pluginRepository>
-            </pluginRepositories>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>fi.vm.sade.antin.autobuildi.poc</groupId>
-                        <artifactId>autobuild-maven-plugin</artifactId>
-                        <version>1.0-SNAPSHOT</version>
-                        <executions>
-                            <execution>
-                                <phase>process-resources</phase>
-                                <goals>
-                                    <goal>deps</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
+
         <profile>
             <id>jetty</id>
             <properties>
                 <slf4j-api.scope>test</slf4j-api.scope>
             </properties>
         </profile>
-        <profile>
-            <id>generate-db-diagram</id>
-            <properties>
-                <skipDbDiagramGenerate>true</skipDbDiagramGenerate>
-                <dbDiagramGenerator>/usr/sbin/sql2diagram</dbDiagramGenerator>
-                <dbDiagramOutput>/var/www/html/db/${project.artifactId}-${project.version}</dbDiagramOutput>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <version>1.2.1</version>
-                        <executions>
-                            <execution>
-                                <phase>install</phase>
-                                <goals>
-                                    <goal>exec</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <skip>${skipDbDiagramGenerate}</skip>
-                            <executable>${dbDiagramGenerator}</executable>
-                            <arguments>
-                                <argument>${project.basedir}/target/hibernate3/sql/schema.ddl</argument>
-                                <argument>${dbDiagramOutput}</argument>
-                            </arguments>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
-	<modules>
-		<module>build-utilities</module>
-	</modules>
+        
+        <profile><!-- Generate db diagram on Bamboo master branch builds -->
+			<id>generate-db-diagram</id>
+			<activation>
+				<property>
+					<name>branch</name>
+					<value>master</value>
+				</property>
+			</activation>
+			<properties>
+				<schema.file>${project.basedir}/target/hibernate3/sql/schema.ddl</schema.file>
+				<dbdiagram.generator>/usr/sbin/sql2diagram</dbdiagram.generator>
+				<dbdiagram.output>${project.basedir}/target/sql2diagram/</dbdiagram.output>
+				<dbdiagram.filename>${project.artifactId}-${project.version}</dbdiagram.filename>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.7</version>
+						<executions>
+							<execution>
+								<phase>install</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<target>
+										<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath" />
+										<if>
+											<available file="${schema.file}" />
+											<then>
+												<echo>Generate DB Diagrams fom file '${schema.file}'.</echo>
+												<mkdir dir="${dbdiagram.output}" />
+												<exec executable="${dbdiagram.generator}">
+													<arg value="${schema.file}" />
+													<arg value="${dbdiagram.output}/${dbdiagram.filename}" />
+												</exec>
+												<scp todir="bamboo@pulpetti:/var/www/html/db/" trust="true"
+													 keyfile="${user.home}/.ssh/id_rsa" passphrase="">
+													<fileset dir="${dbdiagram.output}">
+														<include name="**/*" />
+													</fileset>
+												</scp>
+											</then>
+											<else>
+												<echo>Skip DBDiagramGenerator, because file '${schema.file}' not found.</echo>
+											</else>
+										</if>
+									</target>
+								</configuration>
+							</execution>
+						</executions>
+						<dependencies>
+							<dependency>
+								<groupId>org.apache.ant</groupId>
+								<artifactId>ant-jsch</artifactId>
+								<version>1.8.1</version>
+							</dependency>
+							<dependency>
+								<groupId>com.jcraft</groupId>
+								<artifactId>jsch</artifactId>
+								<version>0.1.50</version>
+							</dependency>
+							<dependency>
+								<groupId>ant-contrib</groupId>
+								<artifactId>ant-contrib</artifactId>
+								<version>${ant-contrib.version}</version>
+								<exclusions>
+									<exclusion>
+										<groupId>ant</groupId>
+										<artifactId>ant</artifactId>
+									</exclusion>
+								</exclusions>
+							</dependency>
+						</dependencies>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 </project>
