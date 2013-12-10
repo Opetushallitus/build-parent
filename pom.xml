@@ -357,6 +357,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+                <version>${compiler.plugin.version}</version>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
@@ -390,6 +391,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
+                <version>${source.plugin.version}</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
@@ -404,6 +406,7 @@
 			<!-- separate unit tests and integration/system tests -->
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire.plugin.version}</version>
 				<configuration>
 					<reportsDirectory>${surefire.reportsDirectory}</reportsDirectory>
 					<alwaysGenerateFailsafeReport>true</alwaysGenerateFailsafeReport>
@@ -420,6 +423,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-failsafe-plugin</artifactId>
+                <version>${failsafe.plugin.version}</version>
 				<configuration>
 					<reportsDirectory>${surefire.reportsDirectory}</reportsDirectory>
 					<alwaysGenerateFailsafeReport>true</alwaysGenerateFailsafeReport>
@@ -447,6 +451,7 @@
 				<!-- explicitly define maven-deploy-plugin after other to force exec
 					order -->
 				<artifactId>maven-deploy-plugin</artifactId>
+                <version>${deploy.plugin.version}</version>
 				<!--<executions>--> <!--otin tämän pois, koska se aiheutti artifactien deployn kahteen kertaan - wuoti -->
 					<!--<execution>-->
 						<!--<id>deploy</id>-->
@@ -460,6 +465,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
+                <version>${release.plugin.version}</version>
 				<configuration>
 					<!--<tagBase>${project.svn.base}/releases</tagBase>-->
 				</configuration>
@@ -467,6 +473,7 @@
 
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
+                <version>${resources.plugin.version}</version>
 				<configuration>
 					<overwrite>true</overwrite>
 				</configuration>
