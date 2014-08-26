@@ -1033,7 +1033,7 @@ buildTtime=${maven.build.timestamp}
                 <dependency>
                     <groupId>org.codehaus.sonar-plugins</groupId>
                     <artifactId>sonar-clover-plugin</artifactId>
-                    <version>4.4</version>
+                    <version>3.0</version>
                 </dependency>
             </dependencies>
         </profile>
