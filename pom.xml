@@ -121,7 +121,7 @@
         <clover.base>/data00/atlassian/application-data/bamboo/clover</clover.base>
 		<clover.outputDirectory>${clover.base}/output/${project.groupId}-${project.artifactId}</clover.outputDirectory>
 		-->
-        <clover.version>3.1.8</clover.version>
+        <clover.version>3.3.0</clover.version>
         <clover.outputDirectory>${bamboo.data.home}/www/clover/${project.groupId}</clover.outputDirectory>
         <clover.base>${bamboo.data.home}/clover/${project.groupId}</clover.base>
 
