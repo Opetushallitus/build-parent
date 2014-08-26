@@ -878,6 +878,8 @@ buildTtime=${maven.build.timestamp}
                         <version>${clover.version}</version>
 
                         <configuration>
+                            <instrumentLambda>block</instrumentLambda>
+
                             <licenseLocation>${bamboo.data.home}/clover/clover.license</licenseLocation>
                             <outputDirectory>${clover.outputDirectory}</outputDirectory>
                             <snapshot>${clover.base}/snapshot/clover.snapshot</snapshot>
