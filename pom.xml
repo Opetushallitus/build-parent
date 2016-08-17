@@ -567,6 +567,7 @@ buildTtime=${maven.build.timestamp}
 						<artifactId>maven-checkstyle-plugin</artifactId>
 						<configuration>
 							<excludes>${checkstyle.excludes}</excludes>
+							<encoding>UTF-8</encoding>
 							<skip>${checkstyle.skip}</skip>
 							<configLocation>${checkstyle.configLocation}</configLocation>
 							<failsOnError>${checkstyle.failsOnError}</failsOnError>
@@ -592,6 +593,7 @@ buildTtime=${maven.build.timestamp}
 						<version>${checkstyle.plugin.version}</version>
 						<configuration>
 							<excludes>${checkstyle.excludes}</excludes>
+							<encoding>UTF-8</encoding>
 							<skip>${checkstyle.skip}</skip>
 							<configLocation>${checkstyle.configLocation}</configLocation>
 							<failsOnError>${checkstyle.failsOnError}</failsOnError>
