@@ -21,7 +21,7 @@
   <!-- default build configuration for all projects and modules, can be overridden -->
   <groupId>fi.vm.sade.generic</groupId>
   <artifactId>build-parent</artifactId>
-  <version>15.0-SNAPSHOT</version>
+  <version>16.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <properties>
@@ -48,8 +48,8 @@
     <cxf.codegen.version>2.4.6</cxf.codegen.version>
     <wss4j.version>1.6.4</wss4j.version>
     <camel.version>2.8.3</camel.version>
-    <spring.version>3.1.3.RELEASE</spring.version>
-    <spring.security.version>${spring.version}</spring.security.version>
+    <spring.version>4.3.2.RELEASE</spring.version>
+    <spring.security.version>4.1.2.RELEASE</spring.security.version>
     <activemq.version>5.5.1</activemq.version>
 
     <!-- Logging -->
@@ -83,7 +83,7 @@
 
     <!-- Plugins versions -->
     <compiler.plugin.version>2.3.2</compiler.plugin.version>
-    <enforcer.plugin.version>1.0.1</enforcer.plugin.version>
+    <enforcer.plugin.version>1.4.1</enforcer.plugin.version>
     <surefire.plugin.version>2.12</surefire.plugin.version>
     <failsafe.plugin.version>2.12</failsafe.plugin.version>
     <deploy.plugin.version>2.7</deploy.plugin.version>
@@ -366,6 +366,30 @@
           <debug>${compiler.debug}</debug>
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>${enforcer.plugin.version}</version>
+        <executions>
+          <execution>
+            <id>enforce-versions</id>
+            <phase>clean</phase>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <!--<requireJavaVersion>
+                  <version>[1.6,1.6.1]</version>
+                </requireJavaVersion>-->
+                <dependencyConvergence/>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
       <!--
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
