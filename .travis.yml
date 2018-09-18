@@ -1,0 +1,31 @@
+sudo: required
+
+language: java
+
+jdk:
+- oraclejdk8
+
+cache:
+  directories:
+  - $HOME/.m2
+
+env:
+  global:
+  # ARTIFACTORY_USERNAME
+  - secure:
+  # ARTIFACTORY_PASSWORD
+  - secure: 
+
+install:
+- git clone https://github.com/Opetushallitus/ci-tools.git
+- source ci-tools/common/setup-tools.sh
+
+script:
+- mvn clean package
+
+deploy:
+  provider: script
+  script: "mvn deploy -DskipTests --settings ci-tools/common/maven-settings.xml"
+  skip_cleanup: true
+  on:
+    branch: master
