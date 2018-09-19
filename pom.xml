@@ -205,7 +205,7 @@
 <repository>
   <id>mysema</id>
   <name>Mysema source</name>
-  <url>http://penaali.hard.ware.fi/artifactory/mysema/</url>
+  <url>https://artifactory.opintopolku.fi/artifactory/mysema/</url>
 </repository>-->
 
   </repositories>
