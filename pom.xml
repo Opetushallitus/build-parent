@@ -62,8 +62,6 @@
     <xml.plugin.version>1.0</xml.plugin.version>
     <versioneye-maven-plugin.version>3.11.4</versioneye-maven-plugin.version>
 
-    <project.svn.base>https://penaali.hard.ware.fi/svn/generic/${project.artifactId}</project.svn.base>
-
     <embedService.serviceArtifactId>${project.parent.artifactId}-service</embedService.serviceArtifactId>
 
     <checkstyle.excludes>**/generated/**/*,**/com/**/*,**/org/**/*,**/net/**/*,**/*Mock.java</checkstyle.excludes>
