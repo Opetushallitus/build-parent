@@ -21,7 +21,7 @@
   <!-- default build configuration for all projects and modules, can be overridden -->
   <groupId>fi.vm.sade.generic</groupId>
   <artifactId>build-parent</artifactId>
-  <version>2018-37-SNAPSHOT</version>
+  <version>2019-06-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <properties>
@@ -132,67 +132,19 @@
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
     </repository>
     <repository>
       <id>oph-sade-artifactory-releases</id>
       <url>https://artifactory.opintopolku.fi/artifactory/oph-sade-release-local</url>
-    </repository>
-    <repository>
-      <id>vaadin-addons</id>
-      <name>Vaadin addons</name>
-      <url>https://artifactory.opintopolku.fi/artifactory/vaadin-addons</url>
-    </repository>
-    <repository>
-      <id>com.springsource.repository.bundles.release</id>
-      <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Releases</name>
-      <url>https://artifactory.opintopolku.fi/artifactory/springsource-ebr/</url>
-    </repository>
-    <repository>
-      <id>com.springsource.repository.bundles.external</id>
-      <name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
-      <url>https://artifactory.opintopolku.fi/artifactory/spring-ebr/</url>
-    </repository>
-    <repository>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <id>com.springsource.repository.maven.snapshot</id>
-      <name>SpringSource Enterprise Bundle Maven Repository - SpringSource Snapshot Releases</name>
-      <url>https://artifactory.opintopolku.fi/artifactory/com.springsource.repository.maven.snapshot/</url>
-    </repository>
-    <repository>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
-      <id>com.springsource.repository.maven.milestone</id>
-      <name>Spring Framework Maven Milestone Releases (Maven Central Format)</name>
-      <url>https://artifactory.opintopolku.fi/artifactory/com.springsource.repository.maven.milestone/</url>
-    </repository>
-    <repository>
-      <id>atomikos</id>
-      <name>Atomikos repository</name>
-      <url>https://artifactory.opintopolku.fi/artifactory/atomikos/</url>
-    </repository>
-    <repository>
-      <id>shibboleth</id>
-      <name>Shibboleth</name>
-      <url>https://artifactory.opintopolku.fi/artifactory/shibboleth/</url>
-    </repository>
-    <repository>
-      <id>libs-3rd-party</id>
-      <name>libs-3rd-party</name>
-      <url>https://artifactory.opintopolku.fi/artifactory/libs-3rd-party</url>
-    </repository>
-    <repository>
-      <id>bedatadriven</id>
-      <name>bedatadriven</name>
-      <url>https://artifactory.opintopolku.fi/artifactory/bedatadriven/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
     </repository>
     <repository>
       <id>cpdetector</id>
